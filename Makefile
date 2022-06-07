@@ -11,7 +11,7 @@ src = main.c\
 OBJS = ${addprefix $(OBJDIR),$(src:.c=.o)}
 #################################################################
 CFLAGS = -Wall -Wextra -Werror
-LINK = -lft
+LINK = -lft -lreadline
 CC = gcc
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)
@@ -20,7 +20,7 @@ NAME = minishell
 all: ${NAME}
  
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	$(CC) -c $(CFLAGS) $(INCPATH) $< -o $@
+	$(CC) $(CFLAGS) $(INCPATH) -c $< -o $@
 
 ${NAME}: ${OBJS} $(LIBFT) $(MLX)
 	$(CC) ${OBJS} $(LIBPATH) $(LINK) -o $(NAME)
