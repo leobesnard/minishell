@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/08 15:00:18 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:12:57 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char *command_buf;
 
-int	main()
+int	main(int argc ,char ** argv,char **env)
 {
 	while (1)
 	{
