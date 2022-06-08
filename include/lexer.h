@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:17:39 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/08 18:54:09 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:25:21 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_token_type
 
 typedef struct s_cmd_line
 {
-	t_token	*token_list;
+	char	*word;
 	struct cmd_line	*next;
 }	t_cmd_line;
 
