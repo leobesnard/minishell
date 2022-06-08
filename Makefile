@@ -22,17 +22,20 @@ all: ${NAME}
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(INCPATH) -c $< -o $@
 
-${NAME}: ${OBJS} $(LIBFT) $(MLX)
+${NAME}: ${OBJDIR} ${OBJS} $(LIBFT) $(MLX)
 	$(CC) ${OBJS} $(LIBPATH) $(LINK) -o $(NAME)
 
 $(LIBFT): 
 	make -C $(FTPATH)
 
+${OBJDIR}:
+	mkdir -p ${OBJDIR}
+
 lft:
 	make -C $(FTPATH)
 
 clean:
-	rm -f ${OBJS}
+	rm -rf ${OBJDIR}
 
 fclean: clean
 	rm -f ${NAME}
