@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/08 21:12:57 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/08 21:26:40 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 char *command_buf;
 
-int	main(int argc ,char ** argv,char **env)
+int	main(int argc ,char **argv, char **env)
 {
+	(void) argc;
+	(void) argv;
+	(void) env;
 	while (1)
 	{
 		command_buf = readline("minishell> ");
