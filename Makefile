@@ -23,7 +23,7 @@ all: $(NAME)
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(INCPATH) -c $< -o $@
 
-$(NAME): $(OBJDIR) $(OBJS) $(LIBFT)
+$(NAME): $(OBJDIR) $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) $(LIBPATH) $(LINK) -o $(NAME)
 
 $(LIBFT): 
