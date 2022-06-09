@@ -5,40 +5,43 @@ FTPATH = libft/
 INDIR = $(FTPATH)include/
 LIBFT = $(FTPATH)libft.a
 
-#################################################################
-src = main.c\
+SRC = main.c lexer.c
+OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
-OBJS = ${addprefix $(OBJDIR),$(src:.c=.o)}
-#################################################################
 CFLAGS = -Wall -Wextra -Werror
 LINK = -lft -lreadline
-CC = gcc
+
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)
+
+CC = gcc
+
 NAME = minishell
 
-all: ${NAME}
+all: $(NAME)
  
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(INCPATH) -c $< -o $@
 
-${NAME}: ${OBJDIR} ${OBJS} $(LIBFT) $(MLX)
-	$(CC) ${OBJS} $(LIBPATH) $(LINK) -o $(NAME)
+$(NAME): $(OBJDIR) $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(LIBPATH) $(LINK) -o $(NAME)
 
 $(LIBFT): 
-	make -C $(FTPATH)
+	@printf "Compiling libft...\n"
+	@$(MAKE) -s -C $(FTPATH)
+	@printf "Done!\n\n"
 
-${OBJDIR}:
-	mkdir -p ${OBJDIR}
-
-lft:
-	make -C $(FTPATH)
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
 clean:
-	rm -rf ${OBJDIR}
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -f ${NAME}
+	rm -f $(NAME)
+
+libclean:
+	$(MAKE) -C $(FTPATH) fclean
 
 re: fclean all
 
