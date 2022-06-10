@@ -1,52 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 14:50:48 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/13 14:03:50 by rmorel           ###   ########.fr       */
+/*   Created: 2022/06/13 09:36:38 by rmorel            #+#    #+#             */
+/*   Updated: 2022/06/13 12:39:01 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*create_cmd(t_token *token_list)
-{
-	t_cmd	*cmd;
-
-	cmd = cmd_new(create_s_cmd(token_list));
-	while (token_list->next)
-	{
-		while (token_list->next && !token_list->type != PIPE)
-		{
-			token_list = token_list->next;
-		}
-		if (token_list-next)
-		{
-			token_list = token_list->next;
-			cmd_add_back(cmd_new(create_s_cmd(token_list)));
-		}
-	}
-	return (cmd)
-}
-
-t_simple_cmd	*create_s_cmd(t_token *token_list)
-{
-	t_simple_cmd	*s_cmd;
-
-	if (!token_list)
-		return (NULL);
-	s_cmd = s_cmd_new(token_list->word);
-	while (token_list->next && !token_list->type != PIPE)
-	{
-		token_list = token_list->next;
-		s_cmd_add_back(&s_cmd, s_cmd_new(token_list->word));
-	}
-	return (s_cmd);
-}
-
+/*
 void	s_cmd_add_back(t_simple_cmd **alst, t_simple_cmd *lst_new)
 {
 	t_simple_cmd	*last;
@@ -61,7 +27,7 @@ void	s_cmd_add_back(t_simple_cmd **alst, t_simple_cmd *lst_new)
 		last = last-next;
 	last->next = lst_new;
 	return ;
-}
+} PAS SUR QUE CE SOIT UTILE, CME FT_LSTADDBACK*/
 
 t_simple_cmd	*s_cmd_new(char *arg)
 {
@@ -75,6 +41,7 @@ t_simple_cmd	*s_cmd_new(char *arg)
 	return (s_cmd);
 }
 
+/*
 void	cmd_add_back(t_cmd **alst, t_cmd *lst_new)
 {
 	t_cmd	*last;
@@ -89,7 +56,7 @@ void	cmd_add_back(t_cmd **alst, t_cmd *lst_new)
 		last = last-next;
 	last->next = lst_new;
 	return ;
-}
+} IDEM*/
 
 t_cmd	*cmd_new(t_simple_cmd *s_cmd)
 {
@@ -102,4 +69,3 @@ t_cmd	*cmd_new(t_simple_cmd *s_cmd)
 	cmd->next = NULL;
 	return (cmd);
 }
-
