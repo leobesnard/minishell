@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:50:48 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/13 20:47:07 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/13 23:53:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*create_cmd_list(t_list *list)
 		return (NULL);
 	cmd_lst = NULL;
 	token = (t_token *)list->content;
-	while (list->next && token->type != PIPE)
+	while (list)
 	{
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
@@ -30,7 +30,15 @@ t_list	*create_cmd_list(t_list *list)
 		ft_bzero(cmd, sizeof(t_cmd));
 		if (fill_cmd(cmd, list) == -1)
 			return (NULL);
+		printf("mdr je suis nul\n");
 		ft_lstadd_back(&cmd_lst, ft_lstnew(cmd));
+		while (list && token->type != PIPE)
+		{
+			list = list->next;
+			token = (t_token *)list->content;
+		}
+		list = list->next;
+		token = (t_token *)list->content;
 	}
 	return (cmd_lst);
 }
@@ -49,6 +57,7 @@ int	fill_cmd(t_cmd *cmd, t_list *list)
 	{
 		while (list && token->type == WORD)
 		{
+			printf("mdr je suis nul\n");
 			cmd->arg[i] = ft_strdup(token->word);
 			list = list->next;
 			token = (t_token *)list->content;

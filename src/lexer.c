@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/13 14:03:42 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/13 21:40:18 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_list	*lexer(char *str)
 			if (!token)
 				return (NULL);
 			token->word = ft_substr(start, 0, str - start);
+			token->type = WORD;
 			ft_lstadd_back(&token_list, ft_lstnew(token));
 			start = str;
 		}
