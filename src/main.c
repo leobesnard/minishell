@@ -6,22 +6,29 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/08 21:26:40 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/09 18:59:40 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
-char *command_buf;
 
-int	main(int argc ,char **argv, char **env)
+int	main()
 {
-	(void) argc;
-	(void) argv;
-	(void) env;
-	while (1)
+	t_list *test;
+	char *command_buf;
+
+	command_buf = readline("minishell> ");
+	test = lexer(command_buf);
+	while (test)
 	{
-		command_buf = readline("minishell> ");
+		t_token *token = test->content;
+		printf("[%s]\n", token->word);
+		test = test->next;
+	}
+	/* while (1)
+	{
 		if(strlen(command_buf) > 0)
 			add_history(command_buf);
 		if (!strcmp(command_buf, "ifconfig"))
@@ -34,6 +41,6 @@ int	main(int argc ,char **argv, char **env)
 			printf("%s\n", getcwd(command_buf, 1000));
 		else if (!strcmp(command_buf, "exit") || !strcmp(command_buf, "quit"))
 			break;
-	}
+	} */
 	return (0);
 }

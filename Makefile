@@ -8,13 +8,14 @@ LIBFT = $(FTPATH)libft.a
 SRC = main.c lexer.c
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LINK = -lft -lreadline
+
+CC = gcc
 
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)
 
-CC = gcc
 
 NAME = minishell
 

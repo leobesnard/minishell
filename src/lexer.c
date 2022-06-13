@@ -6,42 +6,58 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/08 23:33:33 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:34:39 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-int	is_separator(char c)
+int	is_separator(char str)
 {
-	if (c == ' ')
+	if (str == ' ')
 		return (1);
-	if (c == '<')
+	if (str == '<')
 		return (1);
-	if (c == '>')
+	if (str == '>')
 		return (1);
 	return (0);
 }
 
-t_token_list	*lexer(char *str)
+void	skip_quotes(char **str)
 {
-	char			*start;
-	char			*end;
-	t_token_list	*token_list;
+	char	quote_type;
+
+	quote_type = **str;
+	(*str)++;
+	while (**str && **str != quote_type)
+		(*str)++;
+	(*str)--;
+}
+
+t_list	*lexer(char *str)
+{
+	char	*start;
+	t_list	*token_list;
+	t_token	*token;
 	
-	bonjour;
 	start = str;
-	end = str;
 	token_list = NULL;
-	while (str)
+	while (*str)
 	{
-		if (is_separator(end))
-			ft_lstadd_back(token_list,
-			ft_lstnew(ft_substr(start, start, start - end)));
-		if (end == '"' || end == '\'')
-			skip_quotes(end);
-		else
-			start++;
+		printf("%c: %d\n", *str, is_separator(*str));
+		if (is_separator(*str) || *(str + 1) == '\0')
+		{
+			token = malloc(sizeof(*token));
+			if (!token)
+				return (NULL);
+			token->word = ft_substr(start, 0, str - start);
+			ft_lstadd_back(&token_list, ft_lstnew(token));
+			start = str;
+		}
+		if (*str == '\'' || *str == '"')
+			skip_quotes(&str);
+		str++;
 	}
+	return (token_list);
 }
