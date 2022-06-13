@@ -5,7 +5,7 @@ FTPATH = libft/
 INDIR = $(FTPATH)include/
 LIBFT = $(FTPATH)libft.a
 
-SRC = main.c lexer.c
+SRC = main.c lexer.c parser.c parser_utils.c
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 CFLAGS = -Wall -Wextra -Werror -g

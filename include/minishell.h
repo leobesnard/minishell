@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/09 17:50:29 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:37:46 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "libft.h"
-
+# include "lexer.h"
+# include "parser.h"
 
 
 

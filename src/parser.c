@@ -6,100 +6,78 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:50:48 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/13 14:03:50 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/13 20:47:07 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*create_cmd(t_token *token_list)
+t_list	*create_cmd_list(t_list *list)
 {
-	t_cmd	*cmd;
+	t_list			*cmd_lst;
+	t_cmd			*cmd;
+	t_token			*token;
 
-	cmd = cmd_new(create_s_cmd(token_list));
-	while (token_list->next)
+	if (!list)
+		return (NULL);
+	cmd_lst = NULL;
+	token = (t_token *)list->content;
+	while (list->next && token->type != PIPE)
 	{
-		while (token_list->next && !token_list->type != PIPE)
+		cmd = malloc(sizeof(t_cmd));
+		if (!cmd)
+			return (NULL);
+		ft_bzero(cmd, sizeof(t_cmd));
+		if (fill_cmd(cmd, list) == -1)
+			return (NULL);
+		ft_lstadd_back(&cmd_lst, ft_lstnew(cmd));
+	}
+	return (cmd_lst);
+}
+
+int	fill_cmd(t_cmd *cmd, t_list *list)
+{
+	int				i;
+	t_token_type	tmp_token_rd;
+	t_token			*token;
+	t_token			*token_next;
+
+	i = 0;
+	tmp_token_rd = 0;
+	token = (t_token *)list->content;
+	while (list && token->type != PIPE)
+	{
+		while (list && token->type == WORD)
 		{
-			token_list = token_list->next;
+			cmd->arg[i] = ft_strdup(token->word);
+			list = list->next;
+			token = (t_token *)list->content;
+			i++;
 		}
-		if (token_list-next)
+		if (list && (token->type >= 1 && token->type <= 4))
 		{
-			token_list = token_list->next;
-			cmd_add_back(cmd_new(create_s_cmd(token_list)));
+			if (!list->next)
+				return (-1);
+			tmp_token_rd = token->type;
+			list = list->next;
+			token = (t_token *)list->content;
+			token_next = (t_token *)list->next->content;
+			if (token->type != WORD)
+				return (-1);
+			while (list && list->next && token_next->type == WORD)
+			{
+				list = list->next;
+				token_next = (t_token *)list->next->content;
+			}
+			if (tmp_token_rd == 5 || tmp_token_rd == 7)
+				cmd->outfile = ft_strdup(token->word);
+			if (tmp_token_rd == 7)
+				cmd->append_outfile = 1;
+			else if (tmp_token_rd == 6)
+				cmd->infile = ft_strdup(token->word);
+			list = list->next;
+			token = (t_token *)list->content;
 		}
 	}
-	return (cmd)
+	return (0);
 }
-
-t_simple_cmd	*create_s_cmd(t_token *token_list)
-{
-	t_simple_cmd	*s_cmd;
-
-	if (!token_list)
-		return (NULL);
-	s_cmd = s_cmd_new(token_list->word);
-	while (token_list->next && !token_list->type != PIPE)
-	{
-		token_list = token_list->next;
-		s_cmd_add_back(&s_cmd, s_cmd_new(token_list->word));
-	}
-	return (s_cmd);
-}
-
-void	s_cmd_add_back(t_simple_cmd **alst, t_simple_cmd *lst_new)
-{
-	t_simple_cmd	*last;
-
-	last = *alst;
-	if (!*alst)
-	{
-		*alst = lst_new;
-		return ;
-	}
-	while (last->next)
-		last = last-next;
-	last->next = lst_new;
-	return ;
-}
-
-t_simple_cmd	*s_cmd_new(char *arg)
-{
-	t_simple_cmd	*s_cmd;
-
-	s_cmd = malloc(sizeof(t_simple_cmd));
-	if (!s_cmd)
-		return (NULL);
-	s_cmd->arg = arg;
-	s_cmd->next = NULL;
-	return (s_cmd);
-}
-
-void	cmd_add_back(t_cmd **alst, t_cmd *lst_new)
-{
-	t_cmd	*last;
-
-	last = *alst;
-	if (!*alst)
-	{
-		*alst = lst_new;
-		return ;
-	}
-	while (last->next)
-		last = last-next;
-	last->next = lst_new;
-	return ;
-}
-
-t_cmd	*cmd_new(t_simple_cmd *s_cmd)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->s_cmd = s_cmd;
-	cmd->next = NULL;
-	return (cmd);
-}
-
