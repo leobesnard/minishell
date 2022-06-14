@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:10:17 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/13 22:25:57 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/14 15:41:32 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct s_cmd
 {
+	int				nb_arg;
 	char			**arg;
 	char			*outfile;
 	int				append_outfile;
