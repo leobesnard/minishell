@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/15 16:50:36 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:17:14 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ void	skip_spaces(char **str)
 		*(str) += 1;
 }
 
+t_token_type token_type(char *str)
+{
+	if (!ft_strncmp(str, ">>", 2))
+		return (D_GREAT);
+	if (!ft_strncmp(str, "<<", 2))
+		return (D_LESS);
+	if (!ft_strncmp(str, "<", 1))
+		return (LESS);
+	if (!ft_strncmp(str, ">", 1))
+		return (GREAT);
+	if (!ft_strncmp(str, "|", 1))
+		return (PIPE);
+	return (0);
+}
+
 t_list	*lexer(char *str)
 {
 	char	*start;
@@ -69,6 +84,7 @@ t_list	*lexer(char *str)
 			if (!token)
 				return (NULL);
 			token->word = ft_substr(start, 0, str - start);
+			token->type = token_type(token->word);
 			ft_lstadd_back(&token_list, ft_lstnew(token));	
 			}
 			if (*str == ' ')
@@ -81,6 +97,7 @@ t_list	*lexer(char *str)
 				if (!token)
 					return (NULL);
 				token->word = ft_substr(start, 0, is_separator(str));
+				token->type = token_type(token->word);
 				ft_lstadd_back(&token_list, ft_lstnew(token));
 				str += is_separator(str);
 			}

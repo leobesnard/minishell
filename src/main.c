@@ -6,26 +6,49 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/14 14:57:36 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/15 23:40:26 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
 
 int	main()
 {
-	t_list *test;
-	char *command_buf;
+	t_list	*test;
+	t_list 	*tmp;
+	t_list	*parsed;
+	char	*command_buf;
 
 	command_buf = readline("minishell> ");
 	test = lexer(command_buf);
+	tmp = test;
 	while (test)
 	{
 		t_token *token = test->content;
 		printf("[%s]\n", token->word);
 		test = test->next;
+	}
+	test = tmp;
+	parsed = create_cmd_list(test);
+	printf("%p\n", parsed);
+	while (parsed)
+	{
+		t_cmd *cmd = parsed->content;
+		while (cmd->arg)
+		{
+			t_token *token2 = cmd->arg->content;
+			printf("[%s]\n", token2->word);
+			cmd->arg = cmd->arg->next;
+		}
+		printf("fin arg\n");
+		while (cmd->rd)
+		{
+			t_token *token3 = cmd->rd->content;
+			printf("[%s]\n", token3->word);
+			cmd->rd = cmd->rd->next;
+		}
+		parsed = parsed->next;
 	}
 	/* while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:17:39 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/13 14:36:13 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:50:23 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 typedef enum e_token_type
 {
-	WORD,
-	GREAT,
-	LESS,
-	D_GREAT,
-	D_LESS,
-	PIPE,
+	WORD = 0,
+	GREAT = 1,
+	LESS = 2,
+	D_GREAT = 3,
+	D_LESS = 4,
+	PIPE = 5,
 }	t_token_type;
 
 typedef struct s_cmd_line
