@@ -1,37 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   print_tools.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 15:37:52 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 16:38:32 by rmorel           ###   ########.fr       */
+/*   Created: 2022/06/16 14:23:04 by rmorel            #+#    #+#             */
+/*   Updated: 2022/06/16 14:24:05 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER2_H
-# define PARSER2_H
+#ifndef PRINT_TOOLS_H
+# define PRINT_TOOLS_H
 
-typedef enum e_cmd_type
-{
-	CMD,
-	PIPE_CMD,
-	ERR_CMD,
-}	t_cmd_type;
-
-typedef struct s_cmd
-{
-	t_cmd_type	type;
-	t_list		*arg;
-	t_list		*rd;
-
-}	t_cmd;
-
-t_list	*create_cmd_list(t_list *list);
-t_list	*exit_cmd(t_list *cmd_list);
-int		fill_cmd_pipe(t_cmd *cmd, t_list **alst);
-int		fill_cmd(t_cmd *cmd, t_list **alst);
-int 	fill_cmd_rd(t_list **alst, t_list *tmp, t_cmd *cmd);
+void	print_cmd(t_list *list);
+void	print_token_list(t_list *list, char *str);
 
 #endif
