@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 12:06:09 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/16 14:24:24 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,13 @@ int	main()
 	tmp = test;
 	while (test)
 	{
-		while (test)
-		{
-			t_token *token = test->content;
-			printf("[%s] type = %d\n", token->word, token->type);
-			test = test->next;
-		}
-		while (parsed)
-		{
-			t_cmd	*cmd = parsed->content;
-			printf("[%s]\n", cmd->arg[0]);
-			printf("[%s]\n", cmd->arg[1]);
-			parsed = parsed->next;
-		}
-		command_buf = readline("minishell> ");
-		test = lexer(command_buf);
-		parsed = create_cmd_list(test); 
+		t_token *token = test->content;
+		printf("[%s] type = %d\n", token->word, token->type);
+		test = test->next;
 	}
 	test = tmp;
 	parsed = create_cmd_list(test);
-	printf("%p\n", parsed);
-	while (parsed)
-	{
-		t_cmd *cmd = parsed->content;
-		while (cmd->arg)
-		{
-			t_token *token2 = cmd->arg->content;
-			printf("[%s]\n", token2->word);
-			cmd->arg = cmd->arg->next;
-		}
-		printf("fin arg\n");
-		while (cmd->rd)
-		{
-			t_token *token3 = cmd->rd->content;
-			printf("[%s]\n", token3->word);
-			cmd->rd = cmd->rd->next;
-		}
-		parsed = parsed->next;
-	}
+	print_cmd(parsed);
 	/* while (1)
 	   {
 	   if(strlen(command_buf) > 0)

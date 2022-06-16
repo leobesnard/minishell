@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/15 23:55:58 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/16 15:15:07 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_list	*lexer(char *str)
 			if (*str == ' ')
 				skip_spaces(&str);
 			start = str;
-			printf("start = %c\n", *start);
 			if (is_separator(str) && (*str != ' ' && *start != '\0'))
 			{
 				token = malloc(sizeof(*token));
@@ -104,7 +103,6 @@ t_list	*lexer(char *str)
 			if (*str == ' ')
 				skip_spaces(&str);
 			start = str;
-			printf("start = %c\n", *start);
 		}
 		while (ft_isalpha(*str) && *(str + 1) != '\0')
 			str++;
