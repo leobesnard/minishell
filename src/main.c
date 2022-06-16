@@ -6,16 +6,11 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/15 23:40:26 by rmorel           ###   ########.fr       */
-=======
-/*   Updated: 2022/06/13 21:41:04 by rmorel           ###   ########.fr       */
->>>>>>> rmorel
+/*   Updated: 2022/06/16 12:06:09 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-<<<<<<< HEAD
 
 
 int	main()
@@ -29,19 +24,6 @@ int	main()
 	test = lexer(command_buf);
 	tmp = test;
 	while (test)
-=======
-
-int	main()
-{
-	t_list *test;
-	t_list *parsed;
-	char *command_buf;
-
-	command_buf = readline("minishell> ");
-	test = lexer(command_buf);
-	parsed = create_cmd_list(test);
-	while (1)
->>>>>>> rmorel
 	{
 		while (test)
 		{
