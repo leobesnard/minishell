@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 16:56:57 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/20 13:21:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@ t_list	*create_cmd_list(t_list *list)
 	t_list			*cmd_lst;
 	t_cmd			*cmd;
 
-	if (!list)
-		return (NULL);
 	cmd_lst = NULL;
-	if (list && ((t_token *)list->content)->type == PIPE)
+	if (!list || (list && ((t_token *)list->content)->type == PIPE))
 		return (NULL);
 	while (list)
 	{
-		cmd = malloc(sizeof(t_cmd));
+		cmd = empty_cmd();
 		if (!cmd)
 			return (exit_cmd(cmd_lst));
-		ft_bzero(cmd, sizeof(t_cmd));
 		if (list && ((t_token *)list->content)->type == PIPE)
 		{
 			if (fill_cmd_pipe(cmd, &list) == -1)
