@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/16 15:15:07 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/20 17:47:49 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,6 @@ int	is_separator(char *str)
 	return (0);
 }
 
-void	skip_quotes(char **str)
-{
-	char	quote_type;
-
-	quote_type = **str;
-	(*str)++;
-	while (**str && **str != quote_type)
-		(*str)++;
-	(*str)++;
-}
-
-void	skip_spaces(char **str)
-{
-	while (**(str) == ' ')
-		*(str) += 1;
-}
-
 t_token_type token_type(char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))
@@ -62,11 +45,48 @@ t_token_type token_type(char *str)
 	return (0);
 }
 
+int	new_node(t_list **token_list, char *start, int size)
+{
+	t_token	*token;
+	
+	token = malloc(sizeof(*token));
+	if (!token)
+		return (0);
+	token->word = ft_substr(start, 0, size);
+	if (!token->word)
+		return (0);
+	token->type = token_type(token->word);
+	ft_lstadd_back(token_list, ft_lstnew(token));
+	return (1);
+}
+
+/* void	fill_list(t_list **token_list, char **str, char **start)
+{
+	if (**(str + 1) == '\0' && **str != ' ')
+		*str++;
+	if (*start != *str)
+	{
+		if (!new_node(&token_list, *start, *str - *start))
+			return (free_list(&token_list));
+	}
+	if (**str == ' ')
+		skip_spaces(str);
+	*start = *str;
+	if (is_separator(*str) && (*str != ' ' && *start != '\0'))
+	{
+		if (!new_node(&token_list, start, is_separator(str)))
+			return (free_list(&token_list));
+		str += is_separator(str);
+	}
+	if (*str == ' ')
+		skip_spaces(&str);
+	start = str;
+} */
+
 t_list	*lexer(char *str)
 {
 	char	*start;
 	t_list	*token_list;
-	t_token	*token;
 	
 	start = str;
 	token_list = NULL;
@@ -74,30 +94,22 @@ t_list	*lexer(char *str)
 	{
 		if (*str == '\'' || *str == '"')
 			skip_quotes(&str);
-		if (is_separator(str) || *(str + 1) == '\0')// || *str == '\0')
+		if (is_separator(str) || *(str + 1) == '\0')
 		{
-			if (*(str + 1) == '\0')
+			if (*(str + 1) == '\0' && *str != ' ')
 				str++;
 			if (start != str)
 			{
-			token = malloc(sizeof(*token));
-			if (!token)
-				return (NULL);
-			token->word = ft_substr(start, 0, str - start);
-			token->type = token_type(token->word);
-			ft_lstadd_back(&token_list, ft_lstnew(token));	
+				if (!new_node(&token_list, start, str - start))
+					return (free_list(&token_list));
 			}
 			if (*str == ' ')
 				skip_spaces(&str);
 			start = str;
 			if (is_separator(str) && (*str != ' ' && *start != '\0'))
 			{
-				token = malloc(sizeof(*token));
-				if (!token)
-					return (NULL);
-				token->word = ft_substr(start, 0, is_separator(str));
-				token->type = token_type(token->word);
-				ft_lstadd_back(&token_list, ft_lstnew(token));
+				if (!new_node(&token_list, start, is_separator(str)))
+					return (free_list(&token_list));
 				str += is_separator(str);
 			}
 			if (*str == ' ')
