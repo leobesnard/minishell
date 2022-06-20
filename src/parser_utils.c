@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 09:36:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/20 15:13:43 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/20 17:09:27 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,20 @@ t_cmd	*empty_cmd(void)
 	return (cmd);
 }
 
-/*
+int	check_all_quotes(t_list *list)
+{
+	while (list)
+	{
+		if (((t_token *)list->content)->type == WORD)
+		{
+			if (check_quotes((t_token *)list->content) != 0)
+				return (-1);
+		}
+		list = list->next;
+	}
+	return (0);
+}
+
 int	check_quotes(t_token *token)
 {
 	int		i;
@@ -31,29 +44,22 @@ int	check_quotes(t_token *token)
 	char	quote;
 
 	i = 0;
-	quote = FALSE;
-	if (token->type != WORD)
-		return (0);
+	is_quoted = false;
 	while (token->word[i])
 	{
-		if (token->word[i] == '"' || token->word[i] == ''')
+		if (token->word[i] == '"' || token->word[i] == '\'')
 		{
-			is_quoted = TRUE;
-			quote = token->word[i];
-			i++;
-			while (token->word[i])
+			if (is_quoted && token->word[i] == quote)
+				is_quoted ^= 1;
+			else if (!is_quoted)
 			{
-				if (token->word[i] == quote)
-				{
-					is_quoted = FALSE;
-					break;
-				}
-				i++;
+				is_quoted ^= 1;
+				quote = token->word[i];
 			}
 		}
 		i++;
 	}
-	if (is_quoted == TRUE)
+	if (is_quoted == true)
 		return (-1);
 	return (0);
-}*/
+}

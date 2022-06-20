@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/20 13:21:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/20 17:29:51 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_list	*create_cmd_list(t_list *list)
 	t_cmd			*cmd;
 
 	cmd_lst = NULL;
-	if (!list || (list && ((t_token *)list->content)->type == PIPE))
+	if (!list || (list && ((t_token *)list->content)->type == PIPE)
+		|| check_all_quotes(list))
 		return (NULL);
 	while (list)
 	{
@@ -27,13 +28,12 @@ t_list	*create_cmd_list(t_list *list)
 			return (exit_cmd(cmd_lst));
 		if (list && ((t_token *)list->content)->type == PIPE)
 		{
-			if (fill_cmd_pipe(cmd, &list) == -1)
+			if (fill_cmd_pipe(cmd, &list, PIPE_CMD) == -1)
 				return (exit_cmd(cmd_lst));
 		}
 		else if (list)
 		{
-			cmd->type = CMD;
-			if (fill_cmd(cmd, &list) == -1)
+			if (fill_cmd(cmd, &list, CMD) == -1)
 				return (NULL);
 		}
 		ft_lstadd_back(&cmd_lst, ft_lstnew(cmd));
@@ -62,25 +62,22 @@ t_list	*exit_cmd(t_list *cmd_list)
 	return (NULL);
 }
 
-int	fill_cmd_pipe(t_cmd *cmd, t_list **alst)
+int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)
 {
 	t_list	*list;
 	t_list	*tmp;
 
 	list = *alst;
-	tmp = ft_lstnew((t_token *)list->content);
-	if (!tmp)
-		return (-1);
-	ft_lstadd_back(&cmd->arg, tmp);
-	cmd->type = PIPE_CMD;
-	tmp = list;
-	list = list->next;
-	free(tmp);
+	tmp = list->next;
+	list->next = NULL;
+	ft_lstadd_back(&cmd->arg, list);
+	list = tmp;
 	*alst = list;
+	cmd->type = cmd_type;
 	return (0);
 }
 
-int	fill_cmd(t_cmd *cmd, t_list **alst)
+int	fill_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)
 {
 	t_list	*list;
 	t_list	*tmp;
@@ -105,6 +102,7 @@ int	fill_cmd(t_cmd *cmd, t_list **alst)
 	}
 	(void) tmp;
 	*alst = list;
+	cmd->type = cmd_type;
 	return (0);
 }
 

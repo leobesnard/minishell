@@ -12,7 +12,7 @@ OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 CFLAGS = -Wall -Wextra -Werror -g
 LINK = -lft -lreadline
 
-CC = gcc
+CC = gcc -g
 
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)
