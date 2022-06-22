@@ -6,23 +6,34 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 14:24:24 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/22 23:09:59 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int	main()
+int	main(int argc, char **argv, char **envp)
 {
 	t_list	*test;
 	t_list 	*tmp;
 	t_list	*parsed;
 	char	*command_buf;
+	t_list	*env_dup;
 
+	(void)argc;
+	(void)argv;
+	env_dup = dup_env(envp);
 	command_buf = readline("minishell> ");
 	test = lexer(command_buf);
 	tmp = test;
+	/* env_dup = add_var(env_dup, "BONJOUR=lol"); */
+	/* printf("%s\n", find_env_var(env_dup, "bonjour")); */
+	while(env_dup)
+	{
+		printf("%s\n", (char *)env_dup->content);
+		env_dup = env_dup->next;
+	}
 	while (test)
 	{
 		t_token *token = test->content;

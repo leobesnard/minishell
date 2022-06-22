@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/20 17:47:20 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:48:31 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,24 @@ t_list *free_list(t_list **list)
 	}
 	*list = tmp;
 	return (NULL);
+}
+
+char	**free_ptr(char **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
+	return (NULL);
+}
+
+void	free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }

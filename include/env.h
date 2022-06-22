@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 16:57:51 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/22 22:48:52 by lbesnard         ###   ########.fr       */
+/*   Created: 2022/06/21 15:52:47 by lbesnard          #+#    #+#             */
+/*   Updated: 2022/06/22 23:10:22 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#ifndef ENV_H
+# define ENV_H
 
-#include "libft.h"
+#include "minishell.h"
 
-/* free */
-t_list	*free_list(t_list **list);
-char	**free_ptr(char **ptr);
-void	free_env(char **env);
-
+/* env.c */
+char	*find_env_var(char **env, char *var);
+char	**add_var(char **env, char *var);
+t_list	*dup_env(char **envp);
 #endif

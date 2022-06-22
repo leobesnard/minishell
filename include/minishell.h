@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/20 17:57:50 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:57:45 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 # include "parser.h"
 # include "print_tools.h"
 # include "free.h"
+# include "env.h"
 
 #endif
