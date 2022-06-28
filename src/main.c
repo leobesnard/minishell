@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/04 17:11:50 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:57:49 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 	test = tmp;
 	parsed = create_cmd_list(test);
 	print_cmd(parsed);
+	execute_command(parsed);
 	/* while (1)
 	   {
 	   if(strlen(command_buf) > 0)

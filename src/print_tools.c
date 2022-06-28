@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 14:22:34 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/27 12:47:44 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,17 @@ void	print_token_list(t_list *list, char *str)
 	{
 		printf("%s[%d] : %s\n", str, j++, ((t_token *)list->content)->word);
 		list = list->next;
+	}
+}
+
+void	print_tab(char **tab, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("%s[%d] = %s\n", str, i, tab[i]);
+		i++;
 	}
 }
