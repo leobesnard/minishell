@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 14:24:24 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/23 16:57:51 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main()
 	command_buf = readline("minishell> ");
 	test = lexer(command_buf);
 	tmp = test;
+	printf("env = %s\n", getenv("PATH"));
 	while (test)
 	{
 		t_token *token = test->content;
@@ -32,6 +33,7 @@ int	main()
 	test = tmp;
 	parsed = create_cmd_list(test);
 	print_cmd(parsed);
+	execute_command(parsed);
 	/* while (1)
 	   {
 	   if(strlen(command_buf) > 0)

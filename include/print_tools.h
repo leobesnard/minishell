@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:23:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/16 14:24:05 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/27 12:47:36 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 void	print_cmd(t_list *list);
 void	print_token_list(t_list *list, char *str);
+void	print_tab(char **tab, char *str);
 
 #endif
