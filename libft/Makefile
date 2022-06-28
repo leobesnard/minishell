@@ -15,7 +15,7 @@ MANOBJ = $(addprefix $(MANDIR), $(SRCS:.c=.o))
 EXTOBJ = $(addprefix $(EXTDIR), $(XFILES:.c=.o))
 
 AR = ar rc
-CC = gcc
+CC = gcc -g
 
 CFLAGS = -Wall -Wextra -Werror
 INCPATH = -I$(INCDIR)

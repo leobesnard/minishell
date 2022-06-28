@@ -6,12 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/22 23:09:59 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/27 14:46:48 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_global_var global;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,12 +24,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	global.trash = NULL;
 	env_dup = dup_env(envp);
 	command_buf = readline("minishell> ");
 	test = lexer(command_buf);
 	tmp = test;
-	/* env_dup = add_var(env_dup, "BONJOUR=lol"); */
-	/* printf("%s\n", find_env_var(env_dup, "bonjour")); */
+	env_dup = add_var(env_dup, "BONJOUR=lol");
+	printf("%s\n", find_env_var(env_dup, "BONJOUR"));
 	while(env_dup)
 	{
 		printf("%s\n", (char *)env_dup->content);

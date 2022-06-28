@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/21 15:57:45 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:39:15 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,10 @@
 # include "print_tools.h"
 # include "free.h"
 # include "env.h"
+
+typedef struct s_global_var
+{
+	t_list	*trash;
+}	t_global_var;
 
 #endif
