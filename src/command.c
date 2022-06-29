@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/29 10:48:17 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/30 00:50:23 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,32 +53,35 @@ void	free_all_except_one_str(char **array, int x)
 	return ;
 }
 
-int	fill_cmd_fd(t_cmd_fd *cmd_fd, t_cmd	*cmd)
+int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd	*cmd)
 {
 	while (cmd->rd)
 	{
 		if (((t_token *)cmd->rd->content)->type == GREAT)
 		{
 			cmd->rd = cmd->rd->next;
-			cmd_fd->fdout = open(((t_token *)cmd->rd->content)->word,
+			close(cmd_fd->fd[1]);
+			cmd_fd->fd[1] = open(((t_token *)cmd->rd->content)->word,
 					O_WRONLY | O_CREAT, 0777);
-			if (cmd_fd->fdout == -1)
+			if (cmd_fd->fd[1] == -1)
 				return (-1);
 		}
 		else if (((t_token *)cmd->rd->content)->type == D_GREAT)
 		{
 			cmd->rd = cmd->rd->next;
-			cmd_fd->fdout = open(((t_token *)cmd->rd->content)->word,
+			close(cmd_fd->fd[1]);
+			cmd_fd->fd[1] = open(((t_token *)cmd->rd->content)->word,
 					O_WRONLY | O_CREAT | O_APPEND, 0777);
-			if (cmd_fd->fdout == -1)
+			if (cmd_fd->fd[1] == -1)
 				return (-1);
 		}
 		else if (((t_token *)cmd->rd->content)->type == LESS)
 		{
 			cmd->rd = cmd->rd->next;
-			cmd_fd->fdin = open(((t_token *)cmd->rd->content)->word,
+			close(cmd_fd->fd[2]);
+			cmd_fd->fd[2] = open(((t_token *)cmd->rd->content)->word,
 					O_RDONLY);
-			if (cmd_fd->fdin == -1)
+			if (cmd_fd->fd[2] == -1)
 				return (-1);
 		}
 		cmd->rd = cmd->rd->next;
@@ -93,11 +96,24 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	cmd_fd = malloc(sizeof(t_cmd_fd));
 	if (!cmd_fd)
 		return (NULL);
-	cmd_fd->tmpin = dup(0);
-	cmd_fd->tmpout = dup(1);
-	cmd_fd->fdin = -1;
-	cmd_fd->fdout = -1;
+	cmd_fd->pid = -1;
+	cmd_fd->fd[0] = -1;
+	cmd_fd->fd[1] = 1;
+	cmd_fd->fd[2] = 0;
 	return (cmd_fd);
+}
+
+int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd)
+{
+	if (cmd_fd->fd[1] > 1)
+		close(cmd_fd->fd[1]);
+	if (cmd_fd->fd[2] > 0)
+		close(cmd_fd->fd[2]);
+	if (pipe(cmd_fd->fd) == -1)
+		return (-1);
+	if (fill_fd_rd(cmd_fd, cmd) == -1)
+		return (-1);
+	return (0);
 }
 
 int	execute_command(t_list *parsed)
@@ -114,50 +130,28 @@ int	execute_command(t_list *parsed)
 		return (-1);
 	while (parsed)
 	{
-		printf("Debut de boucle\n");
 		cmd = (t_cmd *)parsed->content;
-		if (fill_cmd_fd(cmd_fd, cmd) == -1)
-			return (-1);
-		printf("FD before RD: tmpin = %d, tmpout = %d, fdin = %d, fdout = %d\n",
-				cmd_fd->tmpin, cmd_fd->tmpout, cmd_fd->fdin, cmd_fd->fdout);
-		if (cmd_fd->fdin == -1)
-			cmd_fd->fdin = dup(cmd_fd->tmpin);
-		if (cmd_fd->fdout == -1)
-			cmd_fd->fdout = dup(cmd_fd->tmpout);
-		printf("FD after RD : tmpin = %d, tmpout = %d, fdin = %d, fdout = %d\n",
-				cmd_fd->tmpin, cmd_fd->tmpout, cmd_fd->fdin, cmd_fd->fdout);
-		dup2(cmd_fd->fdin, 0);
-		close(cmd_fd->fdin);
-		if (cmd->type != PIPE_CMD && parsed->next)
-		{
-			if (pipe(cmd_fd->fd) == -1)
-				return (-1);
-			cmd_fd->fdin = cmd_fd->fd[0];
-			cmd_fd->fdout = cmd_fd->fd[1];
-		}
-		dup2(cmd_fd->fdout, 1);
-		close(cmd_fd->fdout);
+		print_cmd_fd(cmd_fd, "After RD");
+		if (parsed->next) // If it's not the last command
+			fill_fd_pipe(cmd_fd, cmd);
+		print_cmd_fd(cmd_fd, "After pipe");
 		printf("i = %d\n", ++i);
-		if (cmd->type != PIPE_CMD)
+		argv = get_args(cmd->arg);
+		print_tab(argv, "argv");
+		cmd_fd->ret = fork();
+		if (cmd_fd->ret == 0)
 		{
-			argv = get_args(cmd->arg);
-			print_tab(argv, "argv");
-			cmd_fd->ret = fork();
-			if (cmd_fd->ret == 0)
-			{
-				execve(argv[0], argv, newenviron);
-				//perror("execve");
-			}
-			free(argv);
+			dup2(cmd_fd->fd[2], 0);
+			dup2(cmd_fd->fd[1], 1);
+			close(cmd_fd->fd[0]);
+			execve(argv[0], argv, newenviron); // Besoin de free apres l'exec ?
+			//perror("execve");
 		}
-		cmd_fd->fdin = -1;
-		cmd_fd->fdout = -1;
+		free(argv);
 		parsed = parsed->next;
+		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
+			parsed = parsed->next;
 	}
-	dup2(cmd_fd->tmpin, 0);
-	dup2(cmd_fd->tmpout, 1);
-	close(cmd_fd->tmpin);
-	close(cmd_fd->tmpout);
 	return (0);
 }
 

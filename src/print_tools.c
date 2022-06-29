@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/27 12:47:44 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/29 22:22:06 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,10 @@ void	print_tab(char **tab, char *str)
 		i++;
 	}
 }
+
+void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)
+{
+	printf("%s: STDIN[%d]-STDOU[%d]-fd[0][%d]-fd[1][%d]-fd[2][%d]\n", str,
+			STDIN_FILENO, STDOUT_FILENO, cmd_fd->fd[0], cmd_fd->fd[1], 
+			cmd_fd->fd[2]);
+}	
