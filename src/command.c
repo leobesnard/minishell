@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/28 14:57:27 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/29 10:48:17 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,88 +53,111 @@ void	free_all_except_one_str(char **array, int x)
 	return ;
 }
 
+int	fill_cmd_fd(t_cmd_fd *cmd_fd, t_cmd	*cmd)
+{
+	while (cmd->rd)
+	{
+		if (((t_token *)cmd->rd->content)->type == GREAT)
+		{
+			cmd->rd = cmd->rd->next;
+			cmd_fd->fdout = open(((t_token *)cmd->rd->content)->word,
+					O_WRONLY | O_CREAT, 0777);
+			if (cmd_fd->fdout == -1)
+				return (-1);
+		}
+		else if (((t_token *)cmd->rd->content)->type == D_GREAT)
+		{
+			cmd->rd = cmd->rd->next;
+			cmd_fd->fdout = open(((t_token *)cmd->rd->content)->word,
+					O_WRONLY | O_CREAT | O_APPEND, 0777);
+			if (cmd_fd->fdout == -1)
+				return (-1);
+		}
+		else if (((t_token *)cmd->rd->content)->type == LESS)
+		{
+			cmd->rd = cmd->rd->next;
+			cmd_fd->fdin = open(((t_token *)cmd->rd->content)->word,
+					O_RDONLY);
+			if (cmd_fd->fdin == -1)
+				return (-1);
+		}
+		cmd->rd = cmd->rd->next;
+	}
+	return (0);
+}
+
+t_cmd_fd	*initiate_cmd_fd(void)
+{
+	t_cmd_fd	*cmd_fd;
+
+	cmd_fd = malloc(sizeof(t_cmd_fd));
+	if (!cmd_fd)
+		return (NULL);
+	cmd_fd->tmpin = dup(0);
+	cmd_fd->tmpout = dup(1);
+	cmd_fd->fdin = -1;
+	cmd_fd->fdout = -1;
+	return (cmd_fd);
+}
 
 int	execute_command(t_list *parsed)
 {
-	int		tmp_in;
-	int		tmp_out;
-	int		fdin;
-	int		fdout;
-	int		fd[2];
-	t_cmd	*cmd;
-	int		ret;
-	char	**argv;
-	char	*newenviron[] = { NULL };
+	t_cmd_fd	*cmd_fd;
+	t_cmd		*cmd;
+	char		**argv;
+	char		*newenviron[] = { NULL };
+	int			i;
 
-	tmp_in = dup(0);
-	tmp_out = dup(1);
-	fdin = -1;
-	fdout = -1;
+	i = 0;
+	cmd_fd = initiate_cmd_fd();
+	if (!cmd_fd)
+		return (-1);
 	while (parsed)
 	{
+		printf("Debut de boucle\n");
 		cmd = (t_cmd *)parsed->content;
-		while (cmd->rd)
-		{
-			if (((t_token *)cmd->rd->content)->type == GREAT)
-			{
-				cmd->rd = cmd->rd->next;
-				fdout = open(((t_token *)cmd->rd->content)->word, O_WRONLY | O_CREAT, 0777);
-				if (fdout == -1)
-					return (-1);
-			}
-			else if (((t_token *)cmd->rd->content)->type == D_GREAT)
-			{
-				cmd->rd = cmd->rd->next;
-				fdout = open(((t_token *)cmd->rd->content)->word, O_WRONLY | O_CREAT | O_APPEND, 0777);
-				if (fdout == -1)
-					return (-1);
-			}
-			else if (((t_token *)cmd->rd->content)->type == LESS)
-			{
-				cmd->rd = cmd->rd->next;
-				fdin = open(((t_token *)cmd->rd->content)->word, O_RDONLY);
-				if (fdin == -1)
-				{
-					printf("< non trouve, fin boucle\n");
-					return (-1);
-				}
-			}
-			cmd->rd = cmd->rd->next;
-		}
-		if (fdin == -1)
-			fdin = dup(tmp_in);
-		if (fdout == -1)
-			fdout = dup(tmp_out);
-		printf("tmpin = %d, tmpout = %d, fdin = %d, fdout = %d\n", tmp_in, tmp_out, fdin, fdout);
-		dup2(fdin, 0);
-		close(fdin);
-		dup2(fdout, 1);
-		close(fdout);
+		if (fill_cmd_fd(cmd_fd, cmd) == -1)
+			return (-1);
+		printf("FD before RD: tmpin = %d, tmpout = %d, fdin = %d, fdout = %d\n",
+				cmd_fd->tmpin, cmd_fd->tmpout, cmd_fd->fdin, cmd_fd->fdout);
+		if (cmd_fd->fdin == -1)
+			cmd_fd->fdin = dup(cmd_fd->tmpin);
+		if (cmd_fd->fdout == -1)
+			cmd_fd->fdout = dup(cmd_fd->tmpout);
+		printf("FD after RD : tmpin = %d, tmpout = %d, fdin = %d, fdout = %d\n",
+				cmd_fd->tmpin, cmd_fd->tmpout, cmd_fd->fdin, cmd_fd->fdout);
+		dup2(cmd_fd->fdin, 0);
+		close(cmd_fd->fdin);
 		if (cmd->type != PIPE_CMD && parsed->next)
 		{
-			pipe(fd);
-			fdin = fd[0];
-			fdout = fd[1];
+			if (pipe(cmd_fd->fd) == -1)
+				return (-1);
+			cmd_fd->fdin = cmd_fd->fd[0];
+			cmd_fd->fdout = cmd_fd->fd[1];
 		}
+		dup2(cmd_fd->fdout, 1);
+		close(cmd_fd->fdout);
+		printf("i = %d\n", ++i);
 		if (cmd->type != PIPE_CMD)
 		{
 			argv = get_args(cmd->arg);
-			ret = fork();
-			if (ret == 0)
+			print_tab(argv, "argv");
+			cmd_fd->ret = fork();
+			if (cmd_fd->ret == 0)
 			{
 				execve(argv[0], argv, newenviron);
 				//perror("execve");
 			}
 			free(argv);
 		}
-		fdin = -1;
-		fdout = -1;
+		cmd_fd->fdin = -1;
+		cmd_fd->fdout = -1;
 		parsed = parsed->next;
 	}
-	dup2(tmp_in, 0);
-	dup2(tmp_out, 1);
-	close(tmp_in);
-	close(tmp_out);
+	dup2(cmd_fd->tmpin, 0);
+	dup2(cmd_fd->tmpout, 1);
+	close(cmd_fd->tmpin);
+	close(cmd_fd->tmpout);
 	return (0);
 }
 

@@ -6,19 +6,32 @@
 /*   By: rmorel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/23 18:36:29 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/06/28 23:37:34 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
 
+typedef struct s_cmd_fd
+{
+	int	tmpin;
+	int	tmpout;
+	int	fdin;
+	int	fdout;
+	int	ret;
+	int	fd[2];
+}	t_cmd_fd;
+
 //		command.c
 
-char	*get_path(char *arg);
-void	free_all_except_one_str(char **array, int x);
-int		execute_command(t_list *parsed);
-char	**get_args(t_list *list);
+char		*get_path(char *arg);
+int			fill_cmd_fd(t_cmd_fd *cmd_fd, t_cmd	*cmd);
+t_cmd_fd	*initiate_cmd_fd(void);
+int			execute_command(t_list *parsed);
+void		free_all_except_one_str(char **array, int x);
+int			execute_command(t_list *parsed);
+char		**get_args(t_list *list);
 
 //		list_utils.c
 
