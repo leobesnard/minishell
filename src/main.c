@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/27 14:46:48 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:24:32 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	main(int argc, char **argv, char **envp)
 	tmp = test;
 	env_dup = add_var(env_dup, "BONJOUR=lol");
 	printf("%s\n", find_env_var(env_dup, "BONJOUR"));
+	env_dup = del_var(env_dup, "BONJOUR");
+	env_dup = del_var(env_dup, "GJS_DEBUG_TOPICS");
+	printf("%s\n", find_env_var(env_dup, "GJS_DEBUG_TOPICS"));
 	while(env_dup)
 	{
 		printf("%s\n", (char *)env_dup->content);

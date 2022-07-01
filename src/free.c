@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/22 22:48:31 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:41:14 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ void	free_env(char **env)
 		i++;
 	}
 	free(env);
+}
+
+void	add_trash(t_list *trash, void *ptr)
+{
+	t_list	*new_node;
+
+	new_node = ft_lstnew(ptr);
+	if (!new_node)
+		return (NULL);
+	ft_lstadd_back(&trash, new_node);
 }

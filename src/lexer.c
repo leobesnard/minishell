@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/23 18:00:50 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:33:46 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_list	*lexer(char *str)
 				skip_spaces(&str);
 			start = str;
 		}
-		while (*(str + 1) != '\0' && (!is_separator(str)))
+		while (is_alpha_spe(*str) && *(str + 1) != '\0')
 			str++;
 	}
 	return (token_list);

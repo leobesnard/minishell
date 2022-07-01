@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:42:05 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/20 16:42:51 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:18:06 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,17 @@ void	skip_spaces(char **str)
 {
 	while (**(str) == ' ')
 		*(str) += 1;
+}
+
+int	is_alpha_spe(int c)
+{
+	if (c < 40 || c > 126)
+	{
+		if (c < 35 || c > 38)
+		{
+			if (c != 33)
+				return (0);
+		}
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/28 14:58:37 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:18:03 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,28 @@ char	*find_env_var(t_list *env, char *var)
 	return ("variable inexistante\n");
 }
 
-t_list	*del_var(t_list *env, char	*var);
+t_list	*del_var(t_list *env, char	*var)
 {
 	t_list	*tmp;
 	t_list	*node;
 
 	node = env;
+	if (!strcmp(var, node->content))
+	{
+		env = env->next;
+		return (env);
+	}
+	tmp = node;
+	node = node->next;
 	while (node)
 	{
 		if (!strcmp(var, node->content))
-			break;
+		{
+			tmp->next = node->next;
+			return (env);
+		}
 		tmp = node;
 		node = node->next;
 	}
-	
+	return (env);
 }
