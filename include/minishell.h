@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/20 16:10:55 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/04 18:04:52 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,13 @@
 # include "lexer.h"
 # include "parser.h"
 # include "print_tools.h"
+# include "free.h"
+# include "env.h"
+# include "builtin.h"
+
+typedef struct s_global_var
+{
+	t_list	*trash;
+}	t_global_var;
 
 #endif

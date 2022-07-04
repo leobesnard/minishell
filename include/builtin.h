@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/26 16:36:35 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:44 by lbesnard         ###   ########.fr       */
+/*   Created: 2022/07/04 15:36:34 by lbesnard          #+#    #+#             */
+/*   Updated: 2022/07/04 17:10:28 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
-{
-	t_list	*last;
+# include "minishell.h"
 
-	if (!*alst)
-	{
-		*alst = new;
-		return ;
-	}
-	last = *alst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-}
+/* builtin.c */
+t_list	*unset(t_list *env, char *str);
+void	echo(char **str);
+void	pwd(t_list *env);
+void	env(t_list *env);
+
+#endif

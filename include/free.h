@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/26 16:36:35 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:44 by lbesnard         ###   ########.fr       */
+/*   Created: 2022/06/20 16:57:51 by lbesnard          #+#    #+#             */
+/*   Updated: 2022/06/22 22:48:52 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FREE_H
+# define FREE_H
+
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
-{
-	t_list	*last;
+/* free */
+t_list	*free_list(t_list **list);
+char	**free_ptr(char **ptr);
+void	free_env(char **env);
 
-	if (!*alst)
-	{
-		*alst = new;
-		return ;
-	}
-	last = *alst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-}
+#endif

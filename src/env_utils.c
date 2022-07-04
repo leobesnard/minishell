@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/26 16:36:35 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:44 by lbesnard         ###   ########.fr       */
+/*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
+/*   Updated: 2022/06/27 15:22:26 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+int	strcmp(const char *s1, const char *s2)
 {
-	t_list	*last;
+	int		i;
+	int		n;
+	char	*equal;
 
-	if (!*alst)
-	{
-		*alst = new;
-		return ;
-	}
-	last = *alst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
+	i = 0;
+	equal = ft_strchr(s2, '=');
+	n = equal - s2;
+	while (s1[i] == s2[i] && s1[i] && s2[i] && i < (n - 1))
+		i++;
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+}
+
+char	*get_var(char *env_i)
+{
+	char *equal;
+
+	equal = ft_strchr(env_i, '=') + 1;
+	return (equal);
 }
