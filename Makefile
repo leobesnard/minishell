@@ -5,13 +5,9 @@ FTPATH = libft/
 INDIR = $(FTPATH)include/
 LIBFT = $(FTPATH)libft.a
 
-<<<<<<< HEAD
 SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	free.c lexer_utils.c env.c env_utils.c builtin.c redirection.c command.c \
 	command_utils.c
-=======
-SRC = main.c lexer.c parser.c parser_utils.c print_tools.c command_utils.c command.c redirection.c
->>>>>>> 57da91e6b679e8277707a0d7103138454ee86889
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
