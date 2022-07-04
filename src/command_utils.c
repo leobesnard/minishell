@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/06/27 13:01:06 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/04 17:57:22 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_array(char **args)
 
 	i = 0;
 	if (!args)
-		return;
+		return ;
 	while (args[i])
 	{
 		free(args[i]);
@@ -56,4 +56,45 @@ char	*concat_path(char *dest, char *src)
 	concat[len_dest - 1] = '/';
 	ft_memcpy(concat + len_dest, src, len_src + 1);
 	return (concat);
+}
+
+char	*get_path(char *arg)
+{
+	char	**path_array;
+	char	*str;
+	int		i;
+
+	path_array = ft_split(getenv("PATH"), ':');
+	if (!path_array)
+		return (NULL);
+	i = 0;
+	str = NULL;
+	while (path_array[i])
+	{
+		str = concat_path(path_array[i], arg);
+		if (!str)
+			return (NULL);
+		if (access(str, X_OK) == 0)
+		{
+			free_array(path_array);
+			return (str);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	free_all_except_one_str(char **array, int x)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		if (i != x)
+			free(array[i]);
+		i++;
+	}
+	free(array);
+	return ;
 }
