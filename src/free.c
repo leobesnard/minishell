@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/01 16:41:14 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:41:12 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	add_trash(t_list *trash, void *ptr)
 
 	new_node = ft_lstnew(ptr);
 	if (!new_node)
-		return (NULL);
+		return ;
 	ft_lstadd_back(&trash, new_node);
 }
