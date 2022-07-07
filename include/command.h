@@ -6,7 +6,7 @@
 /*   By: rmorel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/04 17:18:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/07 18:19:28 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 typedef struct s_cmd_fd
 {
-	int			pid;
-	int			status;
-	int			fd[2];
-	int			tmp;
+	int	pid;
+	int	status;
+	int	fd[2];
+	int	tmp;
+	int	ret;
 }	t_cmd_fd;
 
 //		command.c
@@ -45,4 +46,6 @@ int			rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd);
 
+int			exit_exec_no_error(t_cmd_fd *cmd_fd, t_list **parsed);
+int			exit_exec_error(t_cmd_fd *cmd_fd);
 #endif

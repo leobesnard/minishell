@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/04 17:21:01 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/07 18:19:24 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed)
 	cmd_fd->tmp = cmd_fd->fd[0];
 	if (parsed->next)
 	{
-		if (pipe(cmd_fd->fd) == -1)
-			return (-1);
+		if (pipe(cmd_fd->fd) == PIPE_ERROR)
+			return (PIPE_ERROR);
 	}
 	else
 		cmd_fd->fd[1] = 1;
-	print_cmd_fd(cmd_fd, "After pipe");
-	if (fill_fd_rd(cmd_fd, cmd) == -1)
-		return (-1);
+	if (fill_fd_rd(cmd_fd, cmd) == FD_ERROR)
+		return (FD_ERROR);
 	return (0);
 }
 
@@ -54,8 +53,12 @@ int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)
 
 	parsed = *aparsed;
 	cmd = (t_cmd *)parsed->content;
-	fill_fd_pipe(cmd_fd, cmd, parsed);
+	cmd_fd->ret = fill_fd_pipe(cmd_fd, cmd, parsed);
+	if (cmd_fd->ret != 0)
+		return (cmd_fd->ret);
 	argv = get_args(cmd->arg);
+	if (!argv)
+		return (MEM_ERROR);
 	cmd_fd->pid = fork();
 	if (cmd_fd->pid > 0)
 		(*nb)++;
@@ -82,10 +85,11 @@ int	execute_command(t_list *parsed)
 	i = 0;
 	cmd_fd = initiate_cmd_fd();
 	if (!cmd_fd)
-		return (-1);
+		return (MEM_ERROR);
 	while (parsed)
 	{
-		exec_s_command(&parsed, cmd_fd, env, &nb);
+		if(exec_s_command(&parsed, cmd_fd, env, &nb) != 0)
+			return (exit_exec_error(cmd_fd));
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;
@@ -96,7 +100,35 @@ int	execute_command(t_list *parsed)
 	waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 	while (--i)
 		waitpid(-1, NULL, 0);
+	return (exit_exec_no_error(cmd_fd, &parsed));
+}
+int	exit_exec_no_error(t_cmd_fd *cmd_fd, t_list **parsed)
+{
+	free(cmd_fd);
+	cmd_fd = NULL;	
+	while (*parsed)
+	{
+		ft_lstclear(&((t_cmd *)(*parsed)->content)->arg, free);
+		ft_lstclear(&((t_cmd *)(*parsed)->content)->rd, free);
+		free((*parsed)->content);
+		*parsed = (*parsed)->next;
+	}
+	parsed = NULL;
 	return (0);
+}
+int	exit_exec_error(t_cmd_fd *cmd_fd)
+{
+	int	ret;
+
+	ret = cmd_fd->ret;
+	if (ret != PIPE_ERROR)
+	{
+		close(cmd_fd->fd[0]);
+		close(cmd_fd->fd[1]);
+	}
+	close(cmd_fd->tmp);
+	free(cmd_fd);
+	return (ret);
 }
 
 char	**get_args(t_list *list)
