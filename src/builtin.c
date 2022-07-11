@@ -6,13 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/04 17:10:53 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:43:52 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(char **str)
+void	builtin_echo(char **str)
 {
 	int	i;
 
@@ -31,12 +31,17 @@ void	echo(char **str)
 		printf("\n");
 }
 
-void	pwd(t_list *env)
+void	builtin_pwd(t_list *env)
 {
-	printf("%s\n", find_env_var(env, "PWD"));
+	char	*ret;
+	
+	ret = find_env_var(env, "PWD");
+	if (ret)
+		printf("%s\n", find_env_var(env, "PWD"));
+	return ;
 }
 
-void	env(t_list *env)
+void	builtin_env(t_list *env)
 {
 	while(env)
 	{
@@ -45,7 +50,17 @@ void	env(t_list *env)
 	}
 }
 
-t_list	*unset(t_list *env, char *str)
+t_list	*builtin_unset(t_list *env, char *str)
 {
 	return (del_var(env, str));
+}
+
+t_list	*builtin_export(t_list *env, char *str)
+{
+	if (!ft_strchr(str, '='))
+		return (env);
+	if (find_env_var(env, str))
+		env = builtin_unset(env, str);
+	env = add_var(env, str);
+	return (env);
 }

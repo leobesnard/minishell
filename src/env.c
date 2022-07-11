@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/01 16:18:03 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:11:21 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*find_env_var(t_list *env, char *var)
 			return (get_var(env->content));
 		env = env->next;
 	}
-	return ("variable inexistante\n");
+	return (NULL);
 }
 
 t_list	*del_var(t_list *env, char	*var)

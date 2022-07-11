@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 19:56:16 by lbesnard          #+#    #+#             */
-/*   Updated: 2021/12/10 17:49:57 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:33:11 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	ft_putchar(int c);
 void	ft_putnbr(int nb);
 void	ft_putunbr(int nb);
-int		ft_strlen(char *str);
+int		ft_strlen_prtf(char *str);
 void	ft_putstr(char *str);
 int		write_buff(int c, int marker);
 void	ft_putadrss(unsigned long ptr);

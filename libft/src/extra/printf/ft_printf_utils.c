@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:54:26 by lbesnard          #+#    #+#             */
-/*   Updated: 2021/12/10 17:50:08 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:32:33 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_putstr(char *str)
 	}
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen_prtf(char *str)
 {
 	int	i;
 
