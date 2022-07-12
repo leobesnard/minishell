@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 16:57:51 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/12 12:44:22 by rmorel           ###   ########.fr       */
+/*   Created: 2022/07/11 12:33:34 by rmorel            #+#    #+#             */
+/*   Updated: 2022/07/11 12:38:38 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
-#include "libft.h"
-
-/* free */
-t_list	*free_token_list(t_list **list);
-char	**free_ptr(char **ptr);
-void	free_env(char **env);
-void	free_array(char ***args);
-void	free_parsed(t_list **parsed);
+int		signal_management(void);
+void	handler(int signo, siginfo_t *info, void *context);
 
 #endif

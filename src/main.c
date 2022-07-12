@@ -6,11 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/07 18:19:23 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:29:13 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_minishell	*g_minishell;
 
 int	main(int ac, char **av)
 {
@@ -18,43 +20,52 @@ int	main(int ac, char **av)
 	t_list	*parsed;
 	char	*command_buf;
 	int		ret;
+	struct termios	termios_new;
 
 	/*if (ac != 1)
+	  {
+	  execute_command(create_cmd_list(lexer(group_av(ac, av))));
+	  return (0);
+	  }*/
+	if (tcgetattr(0, &termios_new))
 	{
-		execute_command(create_cmd_list(lexer(group_av(ac, av))));
-		return (0);
-	}*/
+		perror("tcgetattr");
+		exit(1);
+	}
+	termios_new.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, 0, &termios_new))
+	{
+		perror("tcsetattr");
+		exit(1);
+	}
+	signal_management();
 	parsed = NULL;
+	g_minishell = malloc(sizeof(t_minishell));
+	if (!g_minishell)
+		return (MEM_ERROR);
+	ft_bzero(g_minishell, sizeof(t_minishell));
 	while (1)
 	{
 		command_buf = readline("minishell> ");
+		if (!ft_strncmp(command_buf, "quit", 5))
+		{
+			free(g_minishell);
+			return (0);
+		}
 		test = lexer(command_buf);
-		//printf("env = %s\n", getenv("PATH"));
-		print_token_list(test, "token");
 		ret = create_cmd_list(test, &parsed);
 		if (ret != 0)
 			print_error(ret);
 		else
-		{
-			print_cmd(parsed);
+		{	
 			execute_command(parsed);
+			free_parsed(&parsed);
 		}
+		free(command_buf);
 	}
 	(void)ac;
 	(void)av;
 	return (0);
-}
-
-void	print_error(int ret)
-{
-	if (ret == MEM_ERROR)
-		printf("Memory error, get yourself another computer now.\n");
-	else if (ret == SYNTAX_ERROR)
-		printf("Syntax error, go back to SHELL00.\n");
-	else if (ret == PIPE_ERROR)
-		printf("Can't create a pipe correctly, call a plumber.\n");
-	else if (ret == FD_ERROR)
-		printf("Can't access to the file given in parameter.\n");
 }
 
 char	*group_av(int ac, char **av)

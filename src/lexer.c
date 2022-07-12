@@ -6,11 +6,10 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/04 19:09:41 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/12 12:44:19 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "minishell.h"
 
 int	is_separator(char *str)
@@ -101,7 +100,7 @@ t_list	*lexer(char *str)
 			if (start != str)
 			{
 				if (!new_node(&token_list, start, str - start))
-					return (free_list(&token_list));
+					return (free_token_list(&token_list));
 			}
 			if (*str == ' ')
 				skip_spaces(&str);
@@ -109,7 +108,7 @@ t_list	*lexer(char *str)
 			if (is_separator(str) && (*str != ' ' && *start != '\0'))
 			{
 				if (!new_node(&token_list, start, is_separator(str)))
-					return (free_list(&token_list));
+					return (free_token_list(&token_list));
 				str += is_separator(str);
 			}
 			if (*str == ' ')

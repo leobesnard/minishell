@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/07 15:23:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/11 17:21:16 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,15 @@ void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)
 			STDIN_FILENO, STDOUT_FILENO, cmd_fd->fd[0], cmd_fd->fd[1],
 			cmd_fd->tmp);
 }	
+
+void	print_error(int ret)
+{
+	if (ret == MEM_ERROR)
+		printf("Memory error, get yourself another computer now.\n");
+	else if (ret == SYNTAX_ERROR)
+		printf("Syntax error, go back to SHELL00.\n");
+	else if (ret == PIPE_ERROR)
+		printf("Can't create a pipe correctly, call a plumber.\n");
+	else if (ret == FD_ERROR)
+		printf("Can't access to the file given in parameter.\n");
+}

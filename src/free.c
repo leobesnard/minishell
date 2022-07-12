@@ -6,13 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/04 15:41:12 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/12 12:44:21 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list *free_list(t_list **list)
+t_list *free_token_list(t_list **list)
 {
 	t_list *tmp;
 
@@ -56,4 +56,36 @@ void	add_trash(t_list *trash, void *ptr)
 	if (!new_node)
 		return ;
 	ft_lstadd_back(&trash, new_node);
+}
+
+void	free_array(char ***args)
+{
+	int	i;
+
+	i = 0;
+	if (!(*args))
+		return ;
+	while ((*args)[i])
+	{
+		free((*args)[i]);
+		i++;
+	}
+	free(*args);
+	*args = NULL;
+	return ;
+}
+
+void	free_parsed(t_list **parsed)
+{
+	t_list	*tmp;
+
+	tmp = *parsed;
+	while (tmp)
+	{
+		ft_lstclear(&((t_cmd *)tmp->content)->arg, free);
+		ft_lstclear(&((t_cmd *)tmp->content)->rd, free);
+		tmp = tmp->next;
+	}
+	ft_lstclear(parsed, free);
+	*parsed = NULL;
 }

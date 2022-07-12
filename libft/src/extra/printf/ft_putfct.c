@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:34:13 by lbesnard          #+#    #+#             */
-/*   Updated: 2021/12/10 17:49:26 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:59:38 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	ft_putnbr_base(int nb, char *base)
 	unsigned int	n;
 
 	n = nb;
-	if (n > (ft_strlen(base) - 1))
+	if (n > (ft_strlen_prtf(base) - 1))
 	{
-		ft_putnbr_base(n / ft_strlen(base), base);
-		ft_putnbr_base(n % ft_strlen(base), base);
+		ft_putnbr_base(n / ft_strlen_prtf(base), base);
+		ft_putnbr_base(n % ft_strlen_prtf(base), base);
 	}
 	else
 		ft_putchar(base[n]);
@@ -64,10 +64,10 @@ void	ft_putnbr_hex_base(unsigned long nb, char *base)
 	unsigned long	n;
 
 	n = nb;
-	if (n > (ft_strlen(base) - 1))
+	if (n > (ft_strlen_prtf(base) - 1))
 	{
-		ft_putnbr_hex_base(n / ft_strlen(base), base);
-		ft_putnbr_hex_base(n % ft_strlen(base), base);
+		ft_putnbr_hex_base(n / ft_strlen_prtf(base), base);
+		ft_putnbr_hex_base(n % ft_strlen_prtf(base), base);
 	}
 	else
 		ft_putchar(base[n]);
