@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/07 18:19:29 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/12 15:44:25 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@ int	size_list(t_list *list)
 		list = list->next;
 	}
 	return (i);
-}
-
-void	free_array(char **args)
-{
-	int	i;
-
-	i = 0;
-	if (!args)
-		return ;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-	return ;
 }
 
 char	*concat_path(char *dest, char *src)
@@ -58,30 +42,37 @@ char	*concat_path(char *dest, char *src)
 	return (concat);
 }
 
-char	*get_path(char *arg)
+int	get_path(char *arg, char **str)
 {
 	char	**path_array;
-	char	*str;
 	int		i;
+	char	*tmp;
 
+	tmp = ft_strdup(arg);
+	free(arg);
 	path_array = ft_split(getenv("PATH"), ':');
 	if (!path_array)
-		return (NULL);
+		return (MEM_ERROR);
 	i = 0;
-	str = NULL;
+	*str = NULL;
 	while (path_array[i])
 	{
-		str = concat_path(path_array[i], arg);
-		if (!str)
-			return (NULL);
-		if (access(str, X_OK) == 0)
+		*str = concat_path(path_array[i], tmp);
+		if (!(*str))
+			return (MEM_ERROR);
+		if (access(*str, X_OK) == 0)
 		{
-			free_array(path_array);
-			return (str);
+			free_array(&path_array);
+			free(tmp);
+			return (0);
 		}
+		else
+			free(*str);
 		i++;
 	}
-	return (NULL);
+	free_array(&path_array);
+	free(tmp);
+	return (SYNTAX_ERROR);
 }
 
 void	free_all_except_one_str(char **array, int x)

@@ -6,12 +6,12 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:52 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 20:47:01 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 20:50:05 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER2_H
-# define PARSER2_H
+#ifndef PARSER_H
+# define PARSER_H
 
 typedef enum e_cmd_type
 {

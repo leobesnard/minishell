@@ -19,7 +19,7 @@ BOLDMAGENTA="\033[1m\033[35m"
 BOLDCYAN="\033[1m\033[36m"
 BOLDWHITE="\033[1m\033[37m"
 
-make ../ > /dev/null
+make -C ../ > /dev/null
 cp ../minishell .
 chmod 755 minishell
 

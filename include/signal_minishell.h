@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 13:49:17 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/11 13:55:53 by rmorel           ###   ########.fr       */
+/*   Created: 2022/07/11 12:33:34 by rmorel            #+#    #+#             */
+/*   Updated: 2022/07/11 12:38:38 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str)
-{
-	int		i;
-	char	*p;
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
-	i = 0;
-	p = (char *)str;
-	while (str[i])
-	{
-		i++;
-	}
-	return (i);
-}
+int		signal_management(void);
+void	handler(int signo, siginfo_t *info, void *context);
+
+#endif
