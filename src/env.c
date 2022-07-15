@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/15 22:06:37 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/15 22:15:31 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,16 @@ char	*find_env_var(t_list *env, char *var)
 	return (NULL);
 }
 
-int	del_var(t_list *env, char	*var)
+t_list	*del_var(t_list *env, char	*var)
 {
 	t_list	*tmp;
 	t_list	*node;
 
 	node = env;
-	builtin_env(env);
 	if (!strcmp(var, node->content))
 	{
 		env = env->next;
-		return (0);
+		return (env);
 	}
 	tmp = node;
 	node = node->next;
@@ -80,10 +79,10 @@ int	del_var(t_list *env, char	*var)
 			tmp->next = node->next;
 			free(node->content);
 			free(node);
-			return (0);
+			return (env);
 		}
 		tmp = node;
 		node = node->next;
 	}
-	return (1);
+	return (env);
 }

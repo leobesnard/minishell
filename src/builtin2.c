@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/15 22:10:00 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/15 22:19:13 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	tab_size(char **tab)
 char	*get_cd_path(t_list *env, char **args)
 {
 	char	*path;
-	if (tab_size(args) == 0)
+	if (tab_size(args) == 1)
 	{
 		path = find_env_var(env, "HOME");
 		if (!path)
@@ -34,7 +34,7 @@ char	*get_cd_path(t_list *env, char **args)
 			return (NULL);
 		}
 	}
-	else if (ft_strncmp(args[0], "-", 2) == 0)
+	else if (ft_strncmp(args[1], "-", 2) == 0)
 	{
 		path = find_env_var(env, "OLDPWD");
 		if (!path)
@@ -44,30 +44,35 @@ char	*get_cd_path(t_list *env, char **args)
 		}
 	}
 	else
-		path = args[0];
+		path = args[1];
 	return (path);
 }
 
 int	change_pwd(t_list *env, char *path, char *oldpath)
 {
-	char	*tmp;
 	char	*var;
 	
 	var = ft_strjoin("OLDPWD=", oldpath);
 	if (!var)
 		return (1);
-	if (find_env_var(env, "OLDPATH"))
-		builtin_export(env, )
+	if (find_env_var(env, "OLDPWD"))
+		builtin_export(env, "OLDPWD");
+	free(var);
+	var = ft_strjoin("PWD=", path);
+	if (!var)
+		return (1);
+	if (find_env_var(env, "PWD"))
+		builtin_export(env, "PWD");
+	free(var);
 	return (0);
 }
 
 int	builtin_cd(t_list *env, char **args)
 {
-	char	*str;
 	char	*path;
 	char	*oldpath;
 	
-	if (tab_size(args) >= 2)
+	if (tab_size(args) >= 3)
 		return (write(2, "cd : too many arguments\n", 24));
 	path = get_cd_path(env, args);
 	if (!path)
@@ -80,5 +85,6 @@ int	builtin_cd(t_list *env, char **args)
 	chdir(path);
 	change_pwd(env, path, oldpath);
 	free(oldpath);
+	return (0);
 	
 }
