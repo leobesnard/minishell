@@ -7,7 +7,7 @@ LIBFT = $(FTPATH)libft.a
 
 SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	free.c lexer_utils.c env.c env_utils.c builtin.c redirection.c command.c \
-	command_utils.c
+	command_utils.c builtin2.c
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

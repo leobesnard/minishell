@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/04 15:41:12 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:39:15 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,20 @@ char	**free_ptr(char **ptr)
 	return (NULL);
 }
 
-void	free_env(char **env)
+void	free_env(t_list	*env)
 {
-	int	i;
+	t_list	*tmp;
 
-	i = 0;
-	while (env[i])
+	while (env)
 	{
-		free(env[i]);
-		i++;
+		tmp = env;
+		env = env->next;
+		free(tmp->content);
+		free(tmp);
 	}
-	free(env);
 }
 
-void	add_trash(t_list *trash, void *ptr)
+void	free_node(t_list *node)
 {
-	t_list	*new_node;
-
-	new_node = ft_lstnew(ptr);
-	if (!new_node)
-		return ;
-	ft_lstadd_back(&trash, new_node);
+	free(node);
 }

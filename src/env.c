@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/11 15:11:21 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/07/15 22:06:37 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ extern t_global_var global;
 t_list	*dup_env(char **envp)
 {
 	int		i;
+	char	*content;
 	t_list	*env_dup;
 	t_list	*new_node;
 
@@ -24,25 +25,27 @@ t_list	*dup_env(char **envp)
 	env_dup = NULL;
 	while (envp[i])
 	{
-		new_node = ft_lstnew(envp[i]);
+		content = ft_strdup(envp[i]);
+		new_node = ft_lstnew(content);
 		if (!new_node)
 			return (NULL);
-		//add_trash(&new_node); create add_trash !!!!
 		ft_lstadd_back(&env_dup, new_node);
 		i++;
 	}
 	return (env_dup);
 }
 
-t_list	*add_var(t_list *env, char *var)
+int	add_var(t_list *env, char *var)
 {
+	char	*content;
 	t_list	*new_node;
 
-	new_node = ft_lstnew(var);
+	content = ft_strdup(var);
+	new_node = ft_lstnew(content);
 	if (!new_node)
-		return (NULL);
+		return (1);
 	ft_lstadd_back(&env, new_node);
-	return (env);
+	return (0);
 }
 
 char	*find_env_var(t_list *env, char *var)
@@ -56,16 +59,17 @@ char	*find_env_var(t_list *env, char *var)
 	return (NULL);
 }
 
-t_list	*del_var(t_list *env, char	*var)
+int	del_var(t_list *env, char	*var)
 {
 	t_list	*tmp;
 	t_list	*node;
 
 	node = env;
+	builtin_env(env);
 	if (!strcmp(var, node->content))
 	{
 		env = env->next;
-		return (env);
+		return (0);
 	}
 	tmp = node;
 	node = node->next;
@@ -74,10 +78,12 @@ t_list	*del_var(t_list *env, char	*var)
 		if (!strcmp(var, node->content))
 		{
 			tmp->next = node->next;
-			return (env);
+			free(node->content);
+			free(node);
+			return (0);
 		}
 		tmp = node;
 		node = node->next;
 	}
-	return (env);
+	return (1);
 }
