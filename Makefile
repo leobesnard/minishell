@@ -8,10 +8,14 @@ LIBFT = $(FTPATH)libft.a
 SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	free.c lexer_utils.c env.c env_utils.c builtin.c redirection.c command.c \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	command_utils.c builtin2.c
 =======
 	command_utils.c signal.c global.c
 >>>>>>> Post vacances : Signaux et here doc a finir pour rmorel
+=======
+	command_utils.c signal.c global.c
+>>>>>>> 095dfecf715f171790e8ed71f2b219053c9da822
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

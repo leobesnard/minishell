@@ -1,59 +1,59 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+
+#define _SVID_SOURCE 1
+#include <termios.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <signal.h>
 
-int	main(int ac, char **av)
+struct termios termios_save;
+
+void reset_the_terminal(void)
 {
-	int fd[2];
-	if (pipe(fd) == -1)
-	{
-		return 1;
+	tcsetattr(0, 0, &termios_save );
+}
+
+sig_atomic_t the_flag = 0;
+
+void handle_the_stuff(int num)
+{
+	char buff[4];
+	buff[0] = '[';
+	buff[2] = '0' + num%10;
+	num /= 10;
+	buff[1] = '0' + num%10;
+	buff[3] = ']';
+	write(0, buff, sizeof buff);
+	the_flag = 1;
+}
+
+int main (void)
+{
+	int rc;
+	int ch;
+	struct termios termios_new;
+
+	rc = tcgetattr(0, &termios_save );
+	if (rc) {perror("tcgetattr"); exit(1); }
+
+	rc = atexit(reset_the_terminal);
+	if (rc) {perror("atexit"); exit(1); }
+
+	termios_new = termios_save;
+	termios_new.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, 0, &termios_new );
+	if (rc) {perror("tcsetattr"); exit(1); }
+
+	signal(SIGINT, handle_the_stuff);
+
+	printf("(pseudoshell)Start typing:\n" );
+	while(1) {
+		ch = getc(stdin);
+		if (the_flag) {
+			printf("Saw the signal, last character was %02x\n", (unsigned) ch);
+			break;
+		}
 	}
 
-	int	pid1 = fork();
-	if (pid1 < 0)
-	{
-		return 2;
-	}
-	if (pid1 == 0)
-	{
-		dup2(fd[1], 1);
-		close(fd[0]);
-		close(fd[1]);
-		execlp("ping", "ping", "-c", "5", "google.com", NULL);
-	}
-	// No need to check else because child process replace by ping because of exec
-	int	pid2 = fork();
-	if (pid2 < 0)
-	{
-		return 2;
-	}
-	if (pid2 == 0)
-	{
-		dup2(fd[0], 0);
-		close(fd[0]);
-		close(fd[1]);
-		execlp("grep", "grep", "rtt", NULL);
-	}
-
-	close(fd[0]);
-	close(fd[1]);
-
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
-	
-	char *newargv[] = { "echo", "hello", "world", NULL };
-    char *newenviron[] = { NULL };
-
-    assert(argc == 2);  /* argv[1] identifie le
-                           programme à exécuter */
-    newargv[0] = argv[1];
-
-    execve("/bin/echo", newargv, newenviron);
-    perror("execve");   /* execve() ne retourne qu'en cas d'erreur */
-    exit(EXIT_FAILURE);
-
-	return (0);
+	exit (0);
 }
