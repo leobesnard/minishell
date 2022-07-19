@@ -6,60 +6,49 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 20:48:14 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 20:51:27 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_minishell	*g_minishell;
+t_minishell	g_minishell;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*test;
+	t_list	*lexed;
 	t_list	*parsed;
 	t_list	*env;
 	char	*command_buf;
 	int		ret;
-	struct termios	termios_new;
 
-	/*if (ac != 1)
-	  {
-	  execute_command(create_cmd_list(lexer(group_av(ac, av))));
-	  return (0);
-	  }*/
-	if (tcgetattr(0, &termios_new))
+	if (ac != 1)
 	{
-		perror("tcgetattr");
-		exit(1);
-	}
-	termios_new.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(0, 0, &termios_new))
-	{
-		perror("tcsetattr");
-		exit(1);
+		ret = first_command(ac, av);
+		return (ret);
 	}
 	signal_management();
 	parsed = NULL;
-	g_minishell = malloc(sizeof(t_minishell));
-	if (!g_minishell)
-		return (MEM_ERROR);
-	ft_bzero(g_minishell, sizeof(t_minishell));
 	while (1)
 	{
 		command_buf = readline("minishell> ");
-		if (!ft_strncmp(command_buf, "quit", 5))
+		if (!command_buf)
 		{
-			free(g_minishell);
+			printf("exit\n");
 			return (0);
 		}
-		test = lexer(command_buf);
-		ret = create_cmd_list(test, &parsed);
+		lexed = lexer(command_buf);
+		ret = create_cmd_list(lexed, &parsed);
 		if (ret != 0)
+		{
 			print_error(ret);
+			return (ret);
+		}
 		else
 		{	
-			execute_command(parsed);
+			ret = execute_command(parsed);
+			if (ret != 0)
+				print_error(ret);
 			free_parsed(&parsed);
 		}
 		free(command_buf);
@@ -69,6 +58,29 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	return (0);
+}
+
+int	first_command(int ac, char **av)
+{
+	char 	*grouped;
+	t_list	*lexed;
+	t_list	*parsed;
+	int		ret;
+
+	parsed = NULL;
+	grouped = group_av(ac, av);
+	lexed = lexer(grouped);
+	ret = create_cmd_list(lexed, &parsed);
+	if (ret != 0)
+	{
+		print_error(ret);
+		return (ret);
+	}
+	ret = execute_command(parsed);
+	if (ret != 0)
+		print_error(ret);
+	free_parsed(&parsed);
+	return (ret);
 }
 
 char	*group_av(int ac, char **av)

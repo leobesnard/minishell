@@ -6,13 +6,13 @@
 /*   By: rmorel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:34:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/12 14:36:49 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 18:00:03 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_minishell	*g_minishell;
+extern t_minishell	g_minishell;
 
 int	add_process_to_global(void)
 {
@@ -27,19 +27,19 @@ int	add_process_to_global(void)
 	proc = ft_lstnew(proc_id);
 	if (!proc)
 		return (MEM_ERROR);
-	ft_lstadd_back(&g_minishell->process, proc);
+	ft_lstadd_back(&g_minishell.process, proc);
 	return (0);
 }
 
 void	finish_job_status()
 {
-	while (g_minishell->process)
+	while (g_minishell.process)
 	{
-		if (kill(((t_process *)g_minishell->process->content)->pid, 0) <= 0)
+		if (kill(((t_process *)g_minishell.process->content)->pid, 0) <= 0)
 		{
-			((t_process *)g_minishell->process->content)->pid = 0;
+			((t_process *)g_minishell.process->content)->pid = 0;
 		}
-		g_minishell->process = g_minishell->process->next;
+		g_minishell.process = g_minishell.process->next;
 	}
 	return ;
 }

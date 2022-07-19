@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/12 15:44:25 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 17:51:47 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	get_path(char *arg, char **str)
 	}
 	free_array(&path_array);
 	free(tmp);
+	*str = NULL;
 	return (SYNTAX_ERROR);
 }
 
