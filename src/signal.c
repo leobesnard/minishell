@@ -6,13 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:54:18 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/12 16:36:20 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 18:00:04 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_minishell	*g_minishell;
+extern t_minishell	g_minishell;
 
 int	signal_management(void)
 {
@@ -36,16 +36,17 @@ void	handler(int signo, siginfo_t *info, void *context)
 	(void)info;
 	if (signo == SIGINT)
 	{
-		while (g_minishell->process)
+		while (g_minishell.process)
 		{
-			proc = (t_process *)g_minishell->process->content;
+			proc = (t_process *)g_minishell.process->content;
 			if (kill(proc->pid, 0) > 0)
 				kill(proc->pid, SIGINT);
-			g_minishell->process = g_minishell->process->next;
+			g_minishell.process = g_minishell.process->next;
 		}
 		printf("\n"); // Move to a new line
 		rl_on_new_line(); // Regenerate the prompt on a newline
 		rl_replace_line("", 0); // Clear the previous text
-		rl_redisplay();
+		if (g_minishell.status != EXEC_STATUS)
+			rl_redisplay();
 	}
 }

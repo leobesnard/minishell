@@ -6,11 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/12 16:12:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 18:17:04 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 int	execute_command(t_list *parsed)
 {
@@ -20,6 +22,7 @@ int	execute_command(t_list *parsed)
 	int			i;
 
 	i = 0;
+	g_minishell.status = EXEC_STATUS;
 	cmd_fd = initiate_cmd_fd();
 	if (!cmd_fd)
 		return (MEM_ERROR);
@@ -38,6 +41,7 @@ int	execute_command(t_list *parsed)
 	while (--i)
 		waitpid(-1, NULL, 0);
 	free(cmd_fd);
+	g_minishell.status = WAIT_STATUS;
 	return (0);
 }
 
@@ -60,16 +64,15 @@ int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)
 	t_cmd		*cmd;
 	char		**argv;
 	t_list		*parsed;
-	int			ret;
 
 	parsed = *aparsed;
 	cmd = (t_cmd *)parsed->content;
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, cmd, parsed);
 	if (cmd_fd->ret != 0)
 		return (cmd_fd->ret);
-	ret = get_args(cmd->arg, &argv);
-	if (ret != 0)
-		return (ret);
+	cmd_fd->ret = get_args(cmd->arg, &argv);
+	if (cmd_fd->ret != 0)
+		return (cmd_fd->ret);
 	cmd_fd->pid = fork();
 	if (cmd_fd->pid > 0)
 		(*nb)++;
@@ -114,10 +117,16 @@ int	exit_exec_error(t_cmd_fd *cmd_fd)
 	ret = cmd_fd->ret;
 	if (ret != PIPE_ERROR)
 	{
-		close(cmd_fd->fd[0]);
-		close(cmd_fd->fd[1]);
+		if (cmd_fd->fd[0] > 2)
+			close(cmd_fd->fd[0]);
+		if (cmd_fd->fd[1] > 2)
+			close(cmd_fd->fd[1]);
 	}
-	close(cmd_fd->tmp);
+	if (cmd_fd->tmp > 2)
+	{
+		printf("check\n");
+		close(cmd_fd->tmp);
+	}
 	free(cmd_fd);
 	return (ret);
 }
@@ -135,18 +144,17 @@ int	get_args(t_list *list, char ***argv)
 	i = 0;
 	while (list)
 	{
-		(*argv)[i] = ft_strdup(((t_token *)list->content)->word);
+		(*argv)[i] = ((t_token *)list->content)->word;
 		list = list->next;
 		i++;
 	}
 	(*argv)[i] = NULL;
 	ret = get_path((*argv)[0], &command_path);
+	(*argv)[0] = command_path;
 	if (ret != 0)
 	{
 		if ((*argv)[0])
 			free_array(argv);
-		return (ret);
 	}
-	(*argv)[0] = command_path;
 	return (ret);
 }
