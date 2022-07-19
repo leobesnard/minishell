@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 20:59:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:23:36 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	main(int argc, char **argv, char **envp)
 	char	*command_buf;
 	int		ret;
 
-	if (ac != 1)
+	if (argc != 1)
 	{
-		ret = first_command(ac, av);
+		ret = first_command(argc, argv);
 		return (ret);
 	}
 	signal_management();
