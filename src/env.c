@@ -6,13 +6,11 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/15 22:15:31 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/12 17:47:40 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern t_global_var global;
 
 t_list	*dup_env(char **envp)
 {

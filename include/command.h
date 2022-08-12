@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 16:20:34 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/12 17:44:00 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_minishell
 {
 	t_list	*process;
 	int		status;
+	int		last_exec_code;
 }	t_minishell;
 
 typedef struct s_process

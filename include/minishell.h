@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 19:09:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/12 18:57:12 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@
 # include "free.h"
 # include "print_tools.h"
 # include "signal_minishell.h"
-
-typedef struct s_global_var
-{
-	t_list	*trash;
-}	t_global_var;
 
 //		main.c
 

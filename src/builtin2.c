@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/15 22:19:13 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:07:05 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	tab_size(char **tab)
 char	*get_cd_path(t_list *env, char **args)
 {
 	char	*path;
+
 	if (tab_size(args) == 1)
 	{
 		path = find_env_var(env, "HOME");
@@ -86,5 +87,4 @@ int	builtin_cd(t_list *env, char **args)
 	change_pwd(env, path, oldpath);
 	free(oldpath);
 	return (0);
-	
 }

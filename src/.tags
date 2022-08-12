@@ -1,0 +1,69 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+add_process_to_global	global.c	/^int	add_process_to_global(void)$/;"	f	typeref:typename:int
+add_var	env.c	/^int	add_var(t_list *env, char *var)$/;"	f	typeref:typename:int
+builtin_echo	builtin.c	/^void	builtin_echo(char **str)$/;"	f	typeref:typename:void
+builtin_env	builtin.c	/^void	builtin_env(t_list *env)$/;"	f	typeref:typename:void
+builtin_export	builtin.c	/^t_list	*builtin_export(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
+builtin_pwd	builtin.c	/^void	builtin_pwd(t_list *env)$/;"	f	typeref:typename:void
+builtin_unset	builtin.c	/^t_list	*builtin_unset(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
+check_all_quotes	parser_utils.c	/^int	check_all_quotes(t_list *list)$/;"	f	typeref:typename:int
+check_quotes	parser_utils.c	/^int	check_quotes(t_token *token)$/;"	f	typeref:typename:int
+concat_path	command_utils.c	/^char	*concat_path(char *dest, char *src)$/;"	f	typeref:typename:char *
+create_cmd_list	parser.c	/^int	create_cmd_list(t_list *list, t_list **parsed)$/;"	f	typeref:typename:int
+del_var	env.c	/^t_list	*del_var(t_list *env, char	*var)$/;"	f	typeref:typename:t_list *
+dup_env	env.c	/^t_list	*dup_env(char **envp)$/;"	f	typeref:typename:t_list *
+empty_cmd	parser_utils.c	/^int	empty_cmd(t_cmd **cmd)$/;"	f	typeref:typename:int
+exec_s_command	command.c	/^int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)$/;"	f	typeref:typename:int
+execute_command	command.c	/^int	execute_command(t_list *parsed)$/;"	f	typeref:typename:int
+exit_cmd	parser_utils.c	/^int	exit_cmd(t_list **parsed, int err_type, int flag, t_cmd *cmd)$/;"	f	typeref:typename:int
+exit_exec_error	command.c	/^int	exit_exec_error(t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
+fill_cmd	parser.c	/^int fill_cmd(t_list **alist, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_cmd_pipe	parser.c	/^int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
+fill_cmd_rd	parser.c	/^int	fill_cmd_rd(t_list **alst, t_list *tmp, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_fd_pipe	command.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed)$/;"	f	typeref:typename:int
+fill_fd_rd	redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_normal_cmd	parser.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
+find_env_var	env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
+finish_job_status	global.c	/^void	finish_job_status()$/;"	f	typeref:typename:void
+first_command	main.c	/^int	first_command(int ac, char **av)$/;"	f	typeref:typename:int
+free_all_except_one_str	command_utils.c	/^void	free_all_except_one_str(char **array, int x)$/;"	f	typeref:typename:void
+free_array	free.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
+free_env	free.c	/^void	free_env(t_list	*env)$/;"	f	typeref:typename:void
+free_node	free.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
+free_parsed	free.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
+free_ptr	free.c	/^char	**free_ptr(char **ptr)$/;"	f	typeref:typename:char **
+free_token_list	free.c	/^t_list *free_token_list(t_list **list)$/;"	f	typeref:typename:t_list *
+g_minishell	main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
+get_args	command.c	/^int	get_args(t_list *list, char ***argv)$/;"	f	typeref:typename:int
+get_cd_path	builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
+get_path	command_utils.c	/^int	get_path(char *arg, char **str)$/;"	f	typeref:typename:int
+get_var	env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char *
+group_av	main.c	/^char	*group_av(int ac, char **av)$/;"	f	typeref:typename:char *
+handler	signal.c	/^void	handler(int signo, siginfo_t *info, void *context)$/;"	f	typeref:typename:void
+initiate_cmd_fd	command.c	/^t_cmd_fd	*initiate_cmd_fd(void)$/;"	f	typeref:typename:t_cmd_fd *
+is_alpha_spe	lexer_utils.c	/^int	is_alpha_spe(int c)$/;"	f	typeref:typename:int
+is_separator	lexer.c	/^int	is_separator(char *str)$/;"	f	typeref:typename:int
+lexer	lexer.c	/^t_list	*lexer(char *str)$/;"	f	typeref:typename:t_list *
+main	main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f	typeref:typename:int
+new_node	lexer.c	/^int	new_node(t_list **token_list, char *start, int size)$/;"	f	typeref:typename:int
+print_cmd	print_tools.c	/^void	print_cmd(t_list *list)$/;"	f	typeref:typename:void
+print_cmd_fd	print_tools.c	/^void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)$/;"	f	typeref:typename:void
+print_error	print_tools.c	/^void	print_error(int ret)$/;"	f	typeref:typename:void
+print_tab	print_tools.c	/^void	print_tab(char **tab, char *str)$/;"	f	typeref:typename:void
+print_token_list	print_tools.c	/^void	print_token_list(t_list *list, char *str)$/;"	f	typeref:typename:void
+rd_d_great	redirection.c	/^int	rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int
+rd_great	redirection.c	/^int	rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int
+rd_less	redirection.c	/^int	rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int
+signal_management	signal.c	/^int	signal_management(void)$/;"	f	typeref:typename:int
+size_list	command_utils.c	/^int	size_list(t_list *list)$/;"	f	typeref:typename:int
+skip_quotes	lexer_utils.c	/^void	skip_quotes(char **str)$/;"	f	typeref:typename:void
+skip_spaces	lexer_utils.c	/^void	skip_spaces(char **str)$/;"	f	typeref:typename:void
+strcmp	env_utils.c	/^int	strcmp(const char *s1, const char *s2)$/;"	f	typeref:typename:int
+tab_size	builtin2.c	/^int	tab_size(char **tab)$/;"	f	typeref:typename:int
+token_type	lexer.c	/^t_token_type token_type(char *str)$/;"	f	typeref:typename:t_token_type
