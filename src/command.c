@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 18:17:04 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/16 15:22:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@ extern t_minishell	g_minishell;
 int	execute_command(t_list *parsed)
 {
 	t_cmd_fd	*cmd_fd;
-	char		*env[] = { NULL };
 	static int	nb;
 	int			i;
 
 	i = 0;
-	g_minishell.status = EXEC_STATUS;
 	cmd_fd = initiate_cmd_fd();
 	if (!cmd_fd)
 		return (MEM_ERROR);
 	while (parsed)
 	{
-		if(exec_s_command(&parsed, cmd_fd, env, &nb) != 0)
+		if (exec_s_command(&parsed, cmd_fd, NULL, &nb) != 0)
 			return (exit_exec_error(cmd_fd));
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
@@ -41,7 +39,7 @@ int	execute_command(t_list *parsed)
 	while (--i)
 		waitpid(-1, NULL, 0);
 	free(cmd_fd);
-	g_minishell.status = WAIT_STATUS;
+	signal_management(NORMAL);
 	return (0);
 }
 
@@ -49,6 +47,7 @@ t_cmd_fd	*initiate_cmd_fd(void)
 {
 	t_cmd_fd	*cmd_fd;
 
+	signal_management(CHILD);
 	cmd_fd = malloc(sizeof(t_cmd_fd));
 	if (!cmd_fd)
 		return (NULL);
@@ -61,16 +60,14 @@ t_cmd_fd	*initiate_cmd_fd(void)
 
 int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)
 {
-	t_cmd		*cmd;
 	char		**argv;
 	t_list		*parsed;
 
 	parsed = *aparsed;
-	cmd = (t_cmd *)parsed->content;
-	cmd_fd->ret = fill_fd_pipe(cmd_fd, cmd, parsed);
+	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed);
 	if (cmd_fd->ret != 0)
 		return (cmd_fd->ret);
-	cmd_fd->ret = get_args(cmd->arg, &argv);
+	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret != 0)
 		return (cmd_fd->ret);
 	cmd_fd->pid = fork();
@@ -123,10 +120,7 @@ int	exit_exec_error(t_cmd_fd *cmd_fd)
 			close(cmd_fd->fd[1]);
 	}
 	if (cmd_fd->tmp > 2)
-	{
-		printf("check\n");
 		close(cmd_fd->tmp);
-	}
 	free(cmd_fd);
 	return (ret);
 }

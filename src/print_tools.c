@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/11 17:21:16 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/15 16:08:50 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	print_tab(char **tab, char *str)
 void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)
 {
 	printf("%s: STDIN[%d]-STDOU[%d]-fd[0][%d]-fd[1][%d]-tmp[%d]\n", str,
-			STDIN_FILENO, STDOUT_FILENO, cmd_fd->fd[0], cmd_fd->fd[1],
-			cmd_fd->tmp);
+		STDIN_FILENO, STDOUT_FILENO, cmd_fd->fd[0], cmd_fd->fd[1],
+		cmd_fd->tmp);
 }	
 
 void	print_error(int ret)

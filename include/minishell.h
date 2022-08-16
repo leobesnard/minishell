@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/12 18:57:12 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/16 15:46:55 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 # define SYNTAX_ERROR -10
 # define PIPE_ERROR -20
 # define FD_ERROR -30
-# define LEX_STATUS 11
-# define PARS_STATUS 12
-# define EXEC_STATUS 13
-# define WAIT_STATUS 10
+# define CHILD 1
+# define HEREDOC 2
+# define NORMAL 0
 
 # include <assert.h>
 # include <fcntl.h>

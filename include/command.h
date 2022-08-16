@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
+/*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/12 17:44:00 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/16 15:48:02 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,10 @@ int			rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			exit_exec_error(t_cmd_fd *cmd_fd);
+
+//		heredoc.c
+
+int			heredoc(char *delimiter, t_cmd_fd *cmd_fd);
+char		*heredoc_join(char *s1, char *s2);
 
 #endif

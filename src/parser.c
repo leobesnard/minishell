@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/07 18:19:26 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/15 16:55:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ int	create_cmd_list(t_list *list, t_list **parsed)
 
 	tmp = NULL;
 	cmd = NULL;
-	if (!list || (list && ((t_token *)list->content)->type == PIPE)
-			|| check_all_quotes(list))
+	if (((t_token *)list->content)->type == PIPE || check_all_quotes(list))
 		return (SYNTAX_ERROR);
 	while (list)
 	{
-		if(empty_cmd(&cmd) == MEM_ERROR)
+		if (empty_cmd(&cmd) == MEM_ERROR)
 			return (exit_cmd(parsed, MEM_ERROR, 0, cmd));
 		if (fill_cmd(&list, cmd) == SYNTAX_ERROR)
 			return (exit_cmd(parsed, SYNTAX_ERROR, 1, cmd));
@@ -36,9 +35,9 @@ int	create_cmd_list(t_list *list, t_list **parsed)
 	return (0);
 }
 
-int fill_cmd(t_list **alist, t_cmd *cmd)
+int	fill_cmd(t_list **alist, t_cmd *cmd)
 {
-	t_list *list;
+	t_list	*list;
 
 	list = *alist;
 	if (((t_token *)list->content)->type == PIPE)
@@ -82,7 +81,7 @@ int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)
 	while (list && ((t_token *)list->content)->type != PIPE)
 	{
 		if (list && (((t_token *)list->content)->type >= 1
-					&& ((t_token *)list->content)->type <= 4))
+				&& ((t_token *)list->content)->type <= 4))
 		{
 			if (fill_cmd_rd(&list, tmp, cmd) == SYNTAX_ERROR)
 				return (SYNTAX_ERROR);
