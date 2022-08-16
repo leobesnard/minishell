@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 16:20:34 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/16 13:34:13 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_cmd_fd
 
 typedef struct s_minishell
 {
-	t_list	*process;
-	int		status;
+	t_list			*process;
+	int				status;
 }	t_minishell;
 
 typedef struct s_process
@@ -62,5 +62,10 @@ int			rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			exit_exec_error(t_cmd_fd *cmd_fd);
+
+//		heredoc.c
+
+int			heredoc(char *delimiter, t_cmd_fd *cmd_fd);
+char		*heredoc_join(char *s1, char *s2);
 
 #endif

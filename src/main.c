@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 22:23:36 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/15 20:34:30 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		ret = first_command(argc, argv);
 		return (ret);
 	}
-	signal_management();
+	signal_management(NORMAL);
 	parsed = NULL;
 	while (1)
 	{
@@ -38,10 +38,13 @@ int	main(int argc, char **argv, char **envp)
 			return (0);
 		}
 		lexed = lexer(command_buf);
+		if (lexed)
+		{
 		ret = create_cmd_list(lexed, &parsed);
 		if (ret != 0)
 		{
 			print_error(ret);
+			printf("error parsed\n");
 			return (ret);
 		}
 		else
@@ -50,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 			if (ret != 0)
 				print_error(ret);
 			free_parsed(&parsed);
+		}
 		}
 		free(command_buf);
 	}

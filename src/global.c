@@ -6,7 +6,7 @@
 /*   By: rmorel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:34:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 18:00:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/15 16:08:23 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	add_process_to_global(void)
 	return (0);
 }
 
-void	finish_job_status()
+void	finish_job_status(void)
 {
 	while (g_minishell.process)
 	{
@@ -43,4 +43,3 @@ void	finish_job_status()
 	}
 	return ;
 }
-

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:49:17 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/11 13:55:53 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/16 12:24:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_strlen(const char *str)
 	char	*p;
 
 	i = 0;
+	if (!str)
+		return (0);
 	p = (char *)str;
 	while (str[i])
 	{
