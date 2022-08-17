@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/16 15:22:58 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/17 14:34:16 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_minishell	g_minishell;
 
-int	execute_command(t_list *parsed)
+int	execute_command(t_list *parsed, t_env *env)
 {
 	t_cmd_fd	*cmd_fd;
 	static int	nb;
@@ -26,7 +26,7 @@ int	execute_command(t_list *parsed)
 		return (MEM_ERROR);
 	while (parsed)
 	{
-		if (exec_s_command(&parsed, cmd_fd, NULL, &nb) != 0)
+		if (exec_s_command(&parsed, cmd_fd, env, &nb) != 0)
 			return (exit_exec_error(cmd_fd));
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
@@ -58,7 +58,7 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	return (cmd_fd);
 }
 
-int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)
+int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb)
 {
 	char		**argv;
 	t_list		*parsed;
@@ -81,8 +81,7 @@ int	exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, int *nb)
 			close(cmd_fd->fd[0]);
 		if (add_process_to_global() == MEM_ERROR)
 			return (MEM_ERROR);
-		execve(argv[0], argv, env);
-		perror("execute_command");
+		exec_command(argv, env, aparsed);
 	}
 	free_array(&argv);
 	return (0);
@@ -131,10 +130,9 @@ int	get_args(t_list *list, char ***argv)
 	int		i;
 	int		ret;
 
-	*argv = malloc(sizeof(**argv) * (size_list(list) + 1));
+	*argv = create_args(list);
 	if (!(*argv))
 		return (MEM_ERROR);
-	ft_bzero(*argv, size_list(list) + 1);
 	i = 0;
 	while (list)
 	{
@@ -143,6 +141,8 @@ int	get_args(t_list *list, char ***argv)
 		i++;
 	}
 	(*argv)[i] = NULL;
+	if (check_for_builtin(*argv) == 1)
+		return (0);
 	ret = get_path((*argv)[0], &command_path);
 	(*argv)[0] = command_path;
 	if (ret != 0)
@@ -152,3 +152,4 @@ int	get_args(t_list *list, char ***argv)
 	}
 	return (ret);
 }
+

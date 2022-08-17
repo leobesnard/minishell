@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/27 15:22:26 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/16 18:14:05 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ char	*get_var(char *env_i)
 
 	equal = ft_strchr(env_i, '=') + 1;
 	return (equal);
+}
+
+t_env	*create_struct_env(char **envp)
+{
+	t_env	*env;
+
+	env = malloc(sizeof(env));
+	if (!env)
+		return (NULL);
+	env->envp = envp;
+	env->envdup = dup_env(envp);
+	return (env);
 }

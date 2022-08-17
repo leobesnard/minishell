@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/19 22:24:23 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/16 18:00:14 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ char	**free_ptr(char **ptr)
 	return (NULL);
 }
 
-void	free_env(t_list	*env)
+void	free_env(t_env	*env)
 {
 	t_list	*tmp;
 
-	while (env)
+	while (env->envdup)
 	{
-		tmp = env;
-		env = env->next;
+		tmp = env->envdup;
+		env->envdup = env->envdup->next;
 		free(tmp->content);
 		free(tmp);
 	}
+	free(env);
 }
 
 void	free_node(t_list *node)

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/16 15:48:02 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/17 14:22:09 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ typedef struct s_process
 	int		status;
 }	t_process;
 
+typedef struct s_env
+{
+	t_list	*envdup;
+	char	**envp;
+}	t_env;
+
 //		command.c
 
 t_cmd_fd	*initiate_cmd_fd(void);
 int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed);
-int			exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, char **env, 
+int			exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, 
 		int *nb);
-int			execute_command(t_list *parsed);
+int			execute_command(t_list *parsed, t_env *env);
 int			get_args(t_list *list, char ***args);
 
 //		command_utils.c
@@ -50,6 +56,7 @@ int			size_list(t_list *list);
 char		*concat_path(char *dest, char *src);
 int			get_path(char *arg, char **str);
 void		free_all_except_one_str(char **array, int x);
+char		**create_args(t_list *list);
 
 //		global.c
 
@@ -68,5 +75,10 @@ int			exit_exec_error(t_cmd_fd *cmd_fd);
 
 int			heredoc(char *delimiter, t_cmd_fd *cmd_fd);
 char		*heredoc_join(char *s1, char *s2);
+
+//		command_exec.c
+
+void		exec_command(char **argv, t_env *env, t_list **aparsed);
+int			check_for_builtin(char **argv);
 
 #endif

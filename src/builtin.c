@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/07/19 21:54:35 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/17 14:30:31 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	builtin_echo(char **str)
 {
+	printf("buildtin_echo :");
 	int	i;
 
 	if (ft_strncmp(str[0], "-n", 3))
@@ -29,6 +30,7 @@ void	builtin_echo(char **str)
 	}
 	if (ft_strncmp(str[0], "-n", 3))
 		printf("\n");
+	return ;
 }
 
 void	builtin_pwd(t_list *env)
@@ -54,11 +56,13 @@ void	builtin_env(t_list *env)
 
 t_list	*builtin_unset(t_list *env, char *str)
 {
+	printf("buildtin_unset :");
 	return (del_var(env, str));
 }
 
 t_list	*builtin_export(t_list *env, char *str)
 {
+	printf("buildtin_export :");
 	if (!ft_strchr(str, '='))
 		return (env);
 	if (find_env_var(env, str))

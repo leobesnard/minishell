@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/12 18:07:05 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/17 14:22:09 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	change_pwd(t_list *env, char *path, char *oldpath)
 {
 	char	*var;
 	
+	printf("buildtin_pwd :");
 	var = ft_strjoin("OLDPWD=", oldpath);
 	if (!var)
 		return (1);
@@ -72,7 +73,8 @@ int	builtin_cd(t_list *env, char **args)
 {
 	char	*path;
 	char	*oldpath;
-	
+
+	printf("buildtincd :");
 	if (tab_size(args) >= 3)
 		return (write(2, "cd : too many arguments\n", 24));
 	path = get_cd_path(env, args);

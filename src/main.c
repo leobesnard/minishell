@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/16 15:48:11 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/17 17:41:45 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ t_minishell	g_minishell;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*lexed;
-	t_list	*parsed;
-	t_list	*env;
+	/*t_list	*lexed;
+	t_list	*parsed;*/
+	t_env	*env;
 	char	*command_buf;
 	int		ret;
 
+	env = create_struct_env(envp);
 	if (argc != 1)
 	{
 		ret = first_command(argc, argv);
 		return (ret);
 	}
 	signal_management(NORMAL);
-	parsed = NULL;
+	//parsed = NULL;
 	while (1)
 	{
 		command_buf = readline("minishell> ");
@@ -37,24 +38,32 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			return (0);
 		}
-		lexed = lexer(command_buf);
-		if (lexed)
+		if (test_check_quotes(command_buf))
 		{
-		ret = create_cmd_list(lexed, &parsed);
-		if (ret != 0)
-		{
-			print_error(ret);
-			printf("error parsed\n");
-			return (ret);
+			printf("Error quote\n");
 		}
 		else
-		{	
-			ret = execute_command(parsed);
-			if (ret != 0)
-				print_error(ret);
-			free_parsed(&parsed);
-		}
-		}
+			printf("size = %d\n", test_size_expand(command_buf, env->envdup));
+		/*{
+			lexed = lexer(command_buf);
+			if (lexed)
+			{
+				ret = create_cmd_list(lexed, &parsed);
+				if (ret != 0)
+				{
+					print_error(ret);
+					printf("error parsed\n");
+					return (ret);
+				}
+				else
+				{	
+					ret = execute_command(parsed, env);
+					if (ret != 0)
+						print_error(ret);
+					free_parsed(&parsed);
+				}
+			}
+		}*/
 		free(command_buf);
 	}
 	free_env(env);
@@ -80,7 +89,7 @@ int	first_command(int ac, char **av)
 		print_error(ret);
 		return (ret);
 	}
-	ret = execute_command(parsed);
+	ret = execute_command(parsed, NULL);
 	if (ret != 0)
 		print_error(ret);
 	free_parsed(&parsed);

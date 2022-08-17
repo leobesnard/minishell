@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/19 17:51:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/17 14:22:40 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,15 @@ void	free_all_except_one_str(char **array, int x)
 	}
 	free(array);
 	return ;
+}
+
+char	**create_args(t_list *list)
+{
+	char	**args;
+
+	args = malloc(sizeof(char *) * (size_list(list) + 1));
+	if (!args)
+		return (NULL);
+	ft_bzero(args, size_list(list) + 1);
+	return (args);
 }
