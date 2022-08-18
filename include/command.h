@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 14:22:09 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/18 18:36:23 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_env
 
 t_cmd_fd	*initiate_cmd_fd(void);
 int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed);
-int			exec_s_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, 
+int			exec_simple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, 
 		int *nb);
 int			execute_command(t_list *parsed, t_env *env);
 int			get_args(t_list *list, char ***args);
@@ -80,5 +80,13 @@ char		*heredoc_join(char *s1, char *s2);
 
 void		exec_command(char **argv, t_env *env, t_list **aparsed);
 int			check_for_builtin(char **argv);
+
+//		command_bis.c
+
+int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb);
+int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb);
+int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd);
+int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, int *nb);
+int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb);
 
 #endif

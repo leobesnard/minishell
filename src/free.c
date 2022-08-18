@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/16 18:00:14 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/18 18:20:03 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_array(char ***args)
 	while ((*args)[i])
 	{
 		free((*args)[i]);
+		(*args)[i] = NULL;
 		i++;
 	}
 	free(*args);

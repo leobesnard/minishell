@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 14:38:14 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/18 18:34:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed)
 		execve(argv[0], argv, NULL);
 		printf("Execve\n");
 	}
-	kill(getppid(), SIGKILL);
-	perror("execute_command");	
 }
 
 int	check_for_builtin(char **argv)

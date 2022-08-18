@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 15:13:08 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/18 20:58:24 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # include "signal_minishell.h"
 # include "expand.h"
 
-//		main.c
+//	main.c
 
 int		first_command(int ac, char **av);
 char	*group_av(int ac, char **av);
