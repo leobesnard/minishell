@@ -6,7 +6,7 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 16:38:54 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/12 18:53:49 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:47:34 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ int	builtin_exit(t_list *parsed)
 	if (word)
 	{
 		if (!is_arg_numeric(word))
-			return (ft_putstr_fd("exit: numeric argument required", 2),
+			return (ft_putstr_fd("exit: numeric argument required\n", 2),
 			exit(2), 2);
-		word = ((t_token *)args->next->content)->word;
 	}
-	if (word)
-		return (ft_putstr_fd("exit: too many arguments", 2), 1);
-	exit(g_minishell.last_exec_code);
+	if (args && args->next)
+		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
+	if (!args)
+		exit(g_minishell.last_exec_code);
+	else
+		exit((unsigned int)ft_atol(word));
 }

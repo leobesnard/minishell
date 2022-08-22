@@ -6,19 +6,17 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:49:17 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/16 12:24:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/22 16:37:33 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_strlen(const char *str)
 {
 	int		i;
-	char	*p;
 
 	i = 0;
 	if (!str)
 		return (0);
-	p = (char *)str;
 	while (str[i])
 	{
 		i++;
