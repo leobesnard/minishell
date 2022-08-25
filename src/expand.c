@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 18:11:06 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/25 18:16:04 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	test_check_quotes(char *str)
 	return (0);
 }
 
-int test_size_expand(char *str, t_list *env)
+int size_expand(char *str, t_list *env)
 {
 	t_var	var;
 
@@ -53,12 +53,12 @@ int test_size_expand(char *str, t_list *env)
 	{
 		if (str[var.i] == '\'')
 		{
-			var_incr(&var);
-			while (str[var.i] != '\'')
+			var.i++;
+			while (str[var.i] && str[var.i] != '\'')
 				var_incr(&var);
-			var.sz -= 2;
+			var.i++;
 		}
-		if (str[var.i] == '$')
+		else if (str[var.i] == '$')
 		{
 			var.i++;
 			var.str = var_str(&str[var.i]);
@@ -68,63 +68,99 @@ int test_size_expand(char *str, t_list *env)
 			free(var.str);
 			var.str = NULL;
 		}
-		if (str[var.i] == '\"')
+		else if (str[var.i] == '\"')
 		{
 			var.i++;
 			while (str[var.i] != '\"')
-				var_incr(&var);
+			{
+				if (str[var.i] == '$')
+				{
+					var.i++;
+					var.str = var_str(&str[var.i]);
+					while (str[var.i] && ft_is_var_char(str[var.i]))
+						var.i++;
+					var.sz += get_var_size(var.str, env);
+					free(var.str);
+					var.str = NULL;
+				}
+				else
+					var_incr(&var);
+			}
 			var.i++;
 		}
-		if (str[var.i])
+		else
 			var_incr(&var);
-		printf("i = %d\n", var.i);
 	}
 	return (var.sz);
 }
 
-void	var_incr(t_var *var)
+char	*expand(t_list *env, char *str)
 {
-	var->sz++;
-	var->i++;
-}
+	t_vars	var;
 
-char    *var_str(char *str)
-{
-    int        i;
-    char    *ret;
-
-    i = 0;
-    while (str[i] && ft_is_var_char(str[i]))
-        i++;
-    ret = malloc(sizeof(char) * (i + 1));
-    if (!ret)
-        return (NULL);
-    ft_strlcpy(ret, str, i + 1);
-    return (ret);
-}
-
-int	get_var_size(char *str, t_list *env)
-{
-	if (!str)
-		return (1);
-	if (!find_env_var(env, str))
-		return (0);
-	else
+	if (test_check_quotes(str))
+		return (NULL);
+	var.ret = malloc(sizeof(char) * size_expand(str, env) + 1);
+	if (!var.ret)
+		return (NULL);
+	var.i = 0;
+	var.u = 0;
+	while (str[var.i])
 	{
-		printf("%ld", ft_strlen(find_env_var(env, str)));
-		return (ft_strlen(find_env_var(env, str)));
-	}
-}
-
-int	ft_is_var_char(int c)
-{
-	if (!(ft_isalpha(c)))
-	{
-		if (!(ft_isdigit(c)))
+		if (str[var.i] == '\'')
 		{
-			if (c != '_')
-				return (0);
+			var.i++;
+			while (str[var.i] && str[var.i] != '\'')
+			{
+				var.ret[var.u] = str[var.i];
+				var.i++;
+				var.u++;
+			}
+			var.i++;
+		}
+		else if (str[var.i] == '\"')
+		{
+			var.i++;
+			while (str[var.i] && str[var.i] != '\"')
+			{
+				if (str[var.i] == '$')
+				{
+					var.i++;
+					var.var = find_env_var(env, var_str(&str[var.i]));
+					if (var.var)
+						ft_strlcpy(&var.ret[var.u], var.var, ft_strlen(var.var) + 1);
+					while (ft_is_var_char(str[var.i]))
+						var.i++;
+					if (var.var)
+						var.u += ft_strlen(var.var);
+				}
+				else
+				{
+					var.ret[var.u] = str[var.i];
+					var.u++;
+					var.i++;
+				}
+			}
+			var.i++;
+		}
+		else if (str[var.i] == '$')
+		{
+			var.i++;
+			var.var = find_env_var(env, var_str(&str[var.i]));
+			if (var.var)
+				ft_strlcpy(&var.ret[var.u], var.var, ft_strlen(var.var) + 1);
+			while (ft_is_var_char(str[var.i]))
+				var.i++;
+			if (var.var)
+				var.u += ft_strlen(var.var);
+		}
+		else
+		{	
+			var.ret[var.u] = str[var.i];
+			var.u++;
+			var.i++;
 		}
 	}
-	return (1);
+	var.ret[var.u] = '\0';
+	return (var.ret);
 }

@@ -8,7 +8,8 @@ LIBFT = $(FTPATH)libft.a
 SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	free.c lexer_utils.c env.c env_utils.c builtin.c redirection.c command.c \
 	builtin2.c command_utils.c signal.c global.c builtin_exit.c heredoc.c \
-	command_exec.c expand.c command_bis.c builtin_utils.c 
+	command_exec.c expand.c command_bis.c builtin_utils.c expand_utils.c \
+
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

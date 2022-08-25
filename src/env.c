@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/12 17:47:40 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:08:22 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*find_env_var(t_list *env, char *var)
 {
 	while (env)
 	{
-		if (!strcmp(var, env->content))
+		if (!ft_strcmp(var, env->content))
 			return (get_var(env->content));
 		env = env->next;
 	}
@@ -63,7 +63,7 @@ t_list	*del_var(t_list *env, char	*var)
 	t_list	*node;
 
 	node = env;
-	if (!strcmp(var, node->content))
+	if (!ft_strcmp(var, node->content))
 	{
 		env = env->next;
 		return (env);
@@ -72,7 +72,7 @@ t_list	*del_var(t_list *env, char	*var)
 	node = node->next;
 	while (node)
 	{
-		if (!strcmp(var, node->content))
+		if (!ft_strcmp(var, node->content))
 		{
 			tmp->next = node->next;
 			free(node->content);

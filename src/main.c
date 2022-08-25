@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/22 19:07:10 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:27:24 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_minishell	g_minishell;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*lexed;
-	t_list	*parsed;
+//	t_list	*lexed;
+//	t_list	*parsed;
 	t_env	*env;
 	char	*command_buf;
 	int		ret;
@@ -28,12 +28,16 @@ int	main(int argc, char **argv, char **envp)
 		ret = first_command(argc, argv);
 		return (ret);
 	}
-	signal_management(NORMAL);
-	parsed = NULL;
+//	signal_management(NORMAL);
+//	parsed = NULL;
 	while (1)
 	{
 		command_buf = readline("minishell> ");
-		if (!command_buf)
+		command_buf = expand(env->envdup, command_buf);
+		if (command_buf == NULL)
+			return (printf("quote problem\n"));
+		printf("%s\n", command_buf);
+		/*if (!command_buf)
 		{
 			printf("exit\n");
 			return (0);
@@ -64,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 				}
 			}
 		}
-		free(command_buf);
+		free(command_buf);*/
 	}
 	free_env(env);
 	(void)argc;
