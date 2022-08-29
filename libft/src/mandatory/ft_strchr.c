@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:04:29 by lbesnard          #+#    #+#             */
-/*   Updated: 2021/11/30 12:32:58 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:45:21 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ char	*ft_strchr(const char *str, int c)
 			return ((char *)&str[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
