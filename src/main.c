@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 14:05:43 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:07:18 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static char	*get_input_from_prompt(void);
 
 int	main(int argc, char **argv, char **envp)
 {
-//	t_list	*lexed;
-//	t_list	*parsed;
+	t_list	*lexed;
+	t_list	*parsed;
 	t_env	*env;
 	char	*command_buf;
 	int		ret;
