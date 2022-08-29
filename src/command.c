@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 16:10:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 18:59:33 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	t_cmd_fd	*cmd_fd;
 
 	cmd_fd = malloc(sizeof(t_cmd_fd));
-	//signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, sigint_child);
-	termios_management(true);
 	if (!cmd_fd)
 		return (NULL);
 	cmd_fd->pid = -1;

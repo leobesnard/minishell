@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 16:13:05 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 19:28:22 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		*heredoc_join(char *s1, char *s2);
 
 //		command_exec.c
 
-void		exec_command(char **argv, t_env *env, t_list **aparsed);
+void		exec_command(char **argv, t_env *env, t_list **aparsed, int *nb);
 int			check_for_builtin(char **argv);
 
 //		command_bis.c

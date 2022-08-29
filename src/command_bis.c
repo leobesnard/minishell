@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 16:09:33 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 19:28:00 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd)
 	else if (!ft_strncmp(argv[0], "exit", 4))
 		builtin_exit(*apsd);
 	return (0);
-	
 }
 
 int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, int *nb)
@@ -77,6 +76,7 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, int *nb)
 		(*nb)++;
 	if (cmd_fd->pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		dup2(cmd_fd->tmp, STDIN_FILENO);
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
@@ -84,8 +84,7 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, int *nb)
 		execve(argv[0], argv, NULL);
 		printf("Execve\n");
 	}
-	return (0);
-	
+	return (0);	
 }
 
 int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb)
@@ -98,15 +97,14 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb)
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	cmd_fd->pid = fork();
-	if (cmd_fd->pid > 0)
-		(*nb)++;
 	if (cmd_fd->pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		dup2(cmd_fd->tmp, STDIN_FILENO);
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		exec_command(argv, env, aparsed);
+		exec_command(argv, env, aparsed, nb);
 	}
 	free_array(&argv);
 	return (0);

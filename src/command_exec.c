@@ -6,14 +6,14 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/18 18:34:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 19:29:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void	exec_command(char **argv, t_env *env, t_list **aparsed)
+void	exec_command(char **argv, t_env *env, t_list **aparsed, int *nb)
 {
 	printf("arg[0] = %s\n", argv[0]);
 	if (!ft_strncmp(argv[0], "echo", 4))
@@ -32,6 +32,8 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed)
 		builtin_exit(*aparsed);
 	else
 	{
+		(*nb)++;
+		printf("Execve\n");
 		execve(argv[0], argv, NULL);
 		printf("Execve\n");
 	}
