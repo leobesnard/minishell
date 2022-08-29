@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/18 20:48:09 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/19 20:25:02 by bek              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	execute_command(t_list *parsed, t_env *env)
 			waitpid(-1, NULL, 0);
 	}
 	free(cmd_fd);
-	signal_management(NORMAL);
 	return (0);
 }
 
@@ -50,8 +49,10 @@ t_cmd_fd	*initiate_cmd_fd(void)
 {
 	t_cmd_fd	*cmd_fd;
 
-	signal_management(CHILD);
 	cmd_fd = malloc(sizeof(t_cmd_fd));
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, sigint_child);
+	termios_management(true);
 	if (!cmd_fd)
 		return (NULL);
 	cmd_fd->pid = -1;

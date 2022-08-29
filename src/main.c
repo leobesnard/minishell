@@ -6,13 +6,15 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/18 17:35:10 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/19 20:21:50 by bek              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_minishell	g_minishell;
+
+static char	*get_input_from_prompt(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -28,11 +30,11 @@ int	main(int argc, char **argv, char **envp)
 		ret = first_command(argc, argv);
 		return (ret);
 	}
-	signal_management(NORMAL);
 	parsed = NULL;
 	while (1)
 	{
-		command_buf = readline("minishell> ");
+		signal_management(NORMAL);
+		command_buf = get_input_from_prompt();
 		if (!command_buf)
 		{
 			printf("exit\n");
@@ -71,6 +73,21 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	return (0);
+}
+
+static char	*get_input_from_prompt(void)
+{
+	char	*command_buf;
+
+	if (isatty(STDIN_FILENO))
+		command_buf = readline("minicheh> ");
+	else
+		command_buf = get_next_line(STDIN_FILENO);
+	if (!command_buf)
+		return (NULL);
+	else if (isatty(STDIN_FILENO) && command_buf && command_buf[0])
+		add_history(command_buf);
+	return (command_buf);
 }
 
 int	first_command(int ac, char **av)

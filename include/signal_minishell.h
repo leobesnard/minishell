@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 12:33:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/18 20:58:24 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/19 20:12:35 by bek              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SIGNAL_H
 
 int		signal_management(int status);
+int		termios_management(bool echo_ctl);
 void	sigint_normal(int signum);
 void	sigint_child(int signum);
 
