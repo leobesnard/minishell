@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 15:31:33 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 16:13:05 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ typedef struct s_env
 //		command.c
 
 t_cmd_fd	*initiate_cmd_fd(void);
-int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed);
-int			exec_simple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, 
-		int *nb);
+int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, 
+		t_env *env);
 int			execute_command(t_list *parsed, t_env *env);
 int			get_args(t_list *list, char ***args);
 
@@ -65,7 +64,7 @@ void		finish_job_status();
 
 //		redirection.c
 
-int			fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd	*cmd);
+int			fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd	*cmd, t_env *env);
 int			rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
 int			rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd);
@@ -73,7 +72,7 @@ int			exit_exec_error(t_cmd_fd *cmd_fd);
 
 //		heredoc.c
 
-int			heredoc(char *delimiter, t_cmd_fd *cmd_fd);
+int			heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env);
 char		*heredoc_join(char *s1, char *s2);
 
 //		command_exec.c

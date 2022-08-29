@@ -6,13 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 15:58:25 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 16:05:36 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(char *delimiter, t_cmd_fd *cmd_fd)
+int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 {
 	char	*entry;
 	char	*str;

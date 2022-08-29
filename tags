@@ -116,8 +116,8 @@ fd	include/command.h	/^	int	fd[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
 fill_cmd	src/parser.c	/^int	fill_cmd(t_list **alist, t_cmd *cmd)$/;"	f	typeref:typename:int
 fill_cmd_pipe	src/parser.c	/^int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
 fill_cmd_rd	src/parser.c	/^int	fill_cmd_rd(t_list **alst, t_list *tmp, t_cmd *cmd)$/;"	f	typeref:typename:int
-fill_fd_pipe	src/command.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed)$/;"	f	typeref:typename:int
-fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_fd_pipe	src/command.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
+fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)$/;"	f	typeref:typename:int
 fill_normal_cmd	src/parser.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
 find_env_var	src/env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
 finish_job_status	src/global.c	/^void	finish_job_status(void)$/;"	f	typeref:typename:void
@@ -207,7 +207,7 @@ get_var	src/env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char
 get_var_size	src/expand_utils.c	/^int	get_var_size(char *str, t_list *env)$/;"	f	typeref:typename:int
 group_av	src/main.c	/^char	*group_av(int ac, char **av)$/;"	f	typeref:typename:char *
 handle_the_stuff	sandbox/test.c	/^void handle_the_stuff(int num)$/;"	f	typeref:typename:void
-heredoc	src/heredoc.c	/^int	heredoc(char *delimiter, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
+heredoc	src/heredoc.c	/^int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 heredoc_join	src/heredoc.c	/^char	*heredoc_join(char *s1, char *s2)$/;"	f	typeref:typename:char *
 i	include/expand.h	/^	int		i;$/;"	m	struct:s_var	typeref:typename:int
 i	include/expand.h	/^	int		i;$/;"	m	struct:s_vars	typeref:typename:int

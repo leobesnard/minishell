@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 15:58:25 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 16:10:47 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	return (cmd_fd);
 }
 
-int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed)
+int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)
 {
 	if (cmd_fd->fd[1] > 1)
 		close(cmd_fd->fd[1]);
@@ -76,7 +76,7 @@ int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed)
 	}
 	else
 		cmd_fd->fd[1] = 1;
-	if (fill_fd_rd(cmd_fd, cmd) == FD_ERROR)
+	if (fill_fd_rd(cmd_fd, cmd, env) == FD_ERROR)
 		return (FD_ERROR);
 	if (parsed->next)
 		return (2);
