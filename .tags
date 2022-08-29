@@ -201,7 +201,6 @@ ft_wrdcnt	libft/src/mandatory/ft_split.c	/^static int	ft_wrdcnt(char const*str, 
 g_minishell	src/main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
 get_args	src/command.c	/^int	get_args(t_list *list, char ***argv)$/;"	f	typeref:typename:int
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
-get_input_from_prompt	src/main.c	/^static char	*get_input_from_prompt(void)$/;"	f	typeref:typename:char *	file:
 get_next_line	libft/src/extra/get_next_line_bonus.c	/^char	*get_next_line(int fd)$/;"	f	typeref:typename:char *
 get_path	src/command_utils.c	/^int	get_path(char *arg, char **str)$/;"	f	typeref:typename:int
 get_var	src/env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char *
@@ -280,7 +279,6 @@ t_token_type	include/lexer.h	/^}	t_token_type;$/;"	t	typeref:enum:e_token_type
 t_var	include/expand.h	/^}	t_var;$/;"	t	typeref:struct:s_var
 t_vars	include/expand.h	/^}	t_vars;$/;"	t	typeref:struct:s_vars
 tab_size	src/builtin2.c	/^int	tab_size(char **tab)$/;"	f	typeref:typename:int
-termios_management	src/signal.c	/^int	termios_management(bool echo_ctl)$/;"	f	typeref:typename:int
 termios_save	sandbox/test.c	/^struct termios termios_save;$/;"	v	typeref:struct:termios
 test	tester/test.sh	/^function test()$/;"	f
 test_check_quotes	src/expand.c	/^int	test_check_quotes(char *str)$/;"	f	typeref:typename:int
