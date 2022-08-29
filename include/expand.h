@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:12:43 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 17:39:55 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 15:57:28 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct	s_var
 	char	*str;
 }	t_var;
 
+char	*expand(char *str);
 int		test_check_quotes(char *str);
 int 	test_size_expand(char *str, t_list *env);
 void	var_incr(t_var *var);

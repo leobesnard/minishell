@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/19 20:25:48 by bek              ###   ########.fr       */
+/*   Updated: 2022/08/29 14:43:08 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, int *nb)
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		if (add_process_to_global() == MEM_ERROR)
-			return (MEM_ERROR);
 		execve(argv[0], argv, NULL);
 		printf("Execve\n");
 	}
@@ -108,8 +106,6 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env, int *nb)
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		if (add_process_to_global() == MEM_ERROR)
-			return (MEM_ERROR);
 		exec_command(argv, env, aparsed);
 	}
 	free_array(&argv);

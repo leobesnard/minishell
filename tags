@@ -180,6 +180,7 @@ ft_putunbr	libft/src/extra/printf/ft_putfct.c	/^void	ft_putunbr(int nb)$/;"	f	ty
 ft_read_file	libft/src/extra/get_next_line_bonus.c	/^static int	ft_read_file(int fd, char **stat, char *buffer)$/;"	f	typeref:typename:int	file:
 ft_split	libft/src/mandatory/ft_split.c	/^char	**ft_split(char const *str, char c)$/;"	f	typeref:typename:char **
 ft_strchr	libft/src/mandatory/ft_strchr.c	/^char	*ft_strchr(const char *str, int c)$/;"	f	typeref:typename:char *
+ft_strcmp	src/env_utils.c	/^int	ft_strcmp(const char *s1, const char *s2)$/;"	f	typeref:typename:int
 ft_strdup	libft/src/mandatory/ft_strdup.c	/^char	*ft_strdup(const char *str)$/;"	f	typeref:typename:char *
 ft_striteri	libft/src/mandatory/ft_striteri.c	/^void	ft_striteri(char *s, void (*f)(unsigned int, char*))$/;"	f	typeref:typename:void
 ft_strjoin	libft/src/mandatory/ft_strjoin.c	/^char	*ft_strjoin(char const *s1, char const *s2)$/;"	f	typeref:typename:char *
@@ -199,6 +200,7 @@ ft_wrdcnt	libft/src/mandatory/ft_split.c	/^static int	ft_wrdcnt(char const*str, 
 g_minishell	src/main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
 get_args	src/command.c	/^int	get_args(t_list *list, char ***argv)$/;"	f	typeref:typename:int
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
+get_input_from_prompt	src/main.c	/^static char	*get_input_from_prompt(void)$/;"	f	typeref:typename:char *	file:
 get_next_line	libft/src/extra/get_next_line_bonus.c	/^char	*get_next_line(int fd)$/;"	f	typeref:typename:char *
 get_path	src/command_utils.c	/^int	get_path(char *arg, char **str)$/;"	f	typeref:typename:int
 get_var	src/env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char *
@@ -260,7 +262,6 @@ status	include/command.h	/^	int		status;$/;"	m	struct:s_minishell	typeref:typena
 status	include/command.h	/^	int		status;$/;"	m	struct:s_process	typeref:typename:int
 status	include/command.h	/^	int	status;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 str	include/expand.h	/^	char	*str;$/;"	m	struct:s_var	typeref:typename:char *
-strcmp	src/env_utils.c	/^int	strcmp(const char *s1, const char *s2)$/;"	f	typeref:typename:int
 sz	include/expand.h	/^	int		sz;$/;"	m	struct:s_var	typeref:typename:int
 t_cmd	include/parser.h	/^}	t_cmd;$/;"	t	typeref:struct:s_cmd
 t_cmd_fd	include/command.h	/^}	t_cmd_fd;$/;"	t	typeref:struct:s_cmd_fd
@@ -274,6 +275,7 @@ t_token	include/lexer.h	/^}	t_token;$/;"	t	typeref:struct:s_token
 t_token_type	include/lexer.h	/^}	t_token_type;$/;"	t	typeref:enum:e_token_type
 t_var	include/expand.h	/^}	t_var;$/;"	t	typeref:struct:s_var
 tab_size	src/builtin2.c	/^int	tab_size(char **tab)$/;"	f	typeref:typename:int
+termios_management	src/signal.c	/^int	termios_management(bool echo_ctl)$/;"	f	typeref:typename:int
 termios_save	sandbox/test.c	/^struct termios termios_save;$/;"	v	typeref:struct:termios
 test	tester/test.sh	/^function test()$/;"	f
 test_check_quotes	src/test_expand.c	/^int	test_check_quotes(char *str)$/;"	f	typeref:typename:int

@@ -6,13 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/16 18:14:05 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 15:34:00 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int		i;
 	int		n;
@@ -38,7 +38,7 @@ t_env	*create_struct_env(char **envp)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(env));
+	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->envp = envp;
