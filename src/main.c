@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 15:07:18 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:41:04 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		signal_management(NORMAL);
 		command_buf = get_input_from_prompt();
+		command_buf = expand(env->envdup, command_buf);
 		if (!command_buf)
 		{
 			printf("exit\n");
