@@ -6,13 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/16 15:22:58 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 16:12:45 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd)
+int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 {
 	while (cmd->rd)
 	{
@@ -34,7 +34,7 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd)
 		else if (((t_token *)cmd->rd->content)->type == D_LESS)
 		{
 			cmd->rd = cmd->rd->next;
-			if (heredoc(((t_token *)cmd->rd->content)->word, cmd_fd))
+			if (heredoc(((t_token *)cmd->rd->content)->word, cmd_fd, env))
 				return (FD_ERROR);
 		}
 		cmd->rd = cmd->rd->next;

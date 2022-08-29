@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/25 17:39:20 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:01:01 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*create_struct_env(char **envp)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(env));
+	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->envp = envp;

@@ -1,0 +1,19 @@
+29/08/2022 :
+Suppression dans la globale des pids et de leur status, car inutile.
+
+Lignes suivantes retirees dans exec_solo_command et multiple_command : 
+		if (add_process_to_global() == MEM_ERROR)
+			return (MEM_ERROR);
+
+Et celles-ci dans la fonction sigint_normal et sigint_child
+	//t_process	*proc;
+	/*
+	while (g_minishell.process)
+	{
+		printf("handle_sigint loop\n");
+		proc = (t_process *)g_minishell.process->content;
+		if (kill(proc->pid, 0) > 0)
+			kill(proc->pid, SIGINT);
+		printf("process %d was killed\n", proc->pid);
+		g_minishell.process = g_minishell.process->next;
+	}*/

@@ -6,13 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/16 15:27:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 16:05:36 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(char *delimiter, t_cmd_fd *cmd_fd)
+int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 {
 	char	*entry;
 	char	*str;
@@ -35,6 +35,7 @@ int	heredoc(char *delimiter, t_cmd_fd *cmd_fd)
 	cmd_fd->tmp = open("./tmp/heredoc", O_TRUNC | O_WRONLY, 0777);
 	if (cmd_fd->tmp == -1)
 		return (FD_ERROR);
+	str = expand(env->envdup, str);
 	write(cmd_fd->tmp, str, ft_strlen(str));
 	close(cmd_fd->tmp);
 	cmd_fd->tmp = open("./tmp/heredoc", O_RDONLY, 0777);

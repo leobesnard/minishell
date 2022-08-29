@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:54:18 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/19 20:12:43 by bek              ###   ########.fr       */
+/*   Updated: 2022/08/29 15:05:31 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	signal_management(int status)
 {
 	if (status == NORMAL)
 	{
-		termios_management(false);
-		signal(SIGQUIT, SIG_IGN);
+		termios_management(true);
+		//signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_normal);
 	}
 	return (0);
@@ -45,17 +45,7 @@ int	termios_management(bool echo_ctl)
 
 void	sigint_normal(int signum)
 {
-	t_process	*proc;
-
 	(void)signum;
-	while (g_minishell.process)
-	{
-		printf("handle_sigint loop\n");
-		proc = (t_process *)g_minishell.process->content;
-		if (kill(proc->pid, 0) > 0)
-			kill(proc->pid, SIGINT);
-		g_minishell.process = g_minishell.process->next;
-	}
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -64,17 +54,7 @@ void	sigint_normal(int signum)
 
 void	sigint_child(int signum)
 {
-	t_process	*proc;
-
 	(void)signum;
-	while (g_minishell.process)
-	{
-		printf("handle_sigint loop\n");
-		proc = (t_process *)g_minishell.process->content;
-		if (kill(proc->pid, 0) > 0)
-			kill(proc->pid, SIGINT);
-		g_minishell.process = g_minishell.process->next;
-	}
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
