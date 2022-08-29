@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:54:18 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 15:05:31 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 18:51:01 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ int	signal_management(int status)
 	if (status == NORMAL)
 	{
 		termios_management(true);
-		//signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_normal);
+	}
+	if (status == CHILD)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, sigint_child);
 	}
 	return (0);
 }
