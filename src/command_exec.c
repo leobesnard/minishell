@@ -6,16 +6,17 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 19:29:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/30 19:20:00 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void	exec_command(char **argv, t_env *env, t_list **aparsed, int *nb)
+extern t_minishell	g_minishell;
+
+void	exec_command(char **argv, t_env *env, t_list **aparsed)
 {
-	printf("arg[0] = %s\n", argv[0]);
 	if (!ft_strncmp(argv[0], "echo", 4))
 		builtin_echo(argv);
 	else if (!ft_strncmp(argv[0], "pwd", 3))
@@ -32,11 +33,10 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed, int *nb)
 		builtin_exit(*aparsed);
 	else
 	{
-		(*nb)++;
-		printf("Execve\n");
-		execve(argv[0], argv, NULL);
+		execve(argv[0], argv, env->envp);
 		printf("Execve\n");
 	}
+	return ;
 }
 
 int	check_for_builtin(char **argv)

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 18:59:33 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/30 21:39:47 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ extern t_minishell	g_minishell;
 int	execute_command(t_list *parsed, t_env *env)
 {
 	t_cmd_fd	*cmd_fd;
-	static int	nb;
 	int			i;
 
 	i = 0;
@@ -26,8 +25,11 @@ int	execute_command(t_list *parsed, t_env *env)
 		return (MEM_ERROR);
 	while (parsed)
 	{
-		if (exec_simple_cmd(&parsed, cmd_fd, env, &nb) != 0)
+		if (exec_simple_cmd(&parsed, cmd_fd, env) != 0)
+		{
+			printf("ret exec_simple_cmd = %d\n", cmd_fd->ret);
 			return (exit_exec_error(cmd_fd));
+		}
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;
@@ -36,7 +38,7 @@ int	execute_command(t_list *parsed, t_env *env)
 		close(cmd_fd->tmp);
 	if (cmd_fd->pid >= 0)
 	{
-		i = nb;
+		i = g_minishell.nb_exec;
 		waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 		while (--i)
 			waitpid(-1, NULL, 0);
@@ -57,6 +59,8 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	cmd_fd->fd[0] = 0;
 	cmd_fd->fd[1] = 1;
 	cmd_fd->tmp = 0;
+	if (!g_minishell.nb_exec)
+		g_minishell.nb_exec = 0;
 	return (cmd_fd);
 }
 
@@ -119,10 +123,13 @@ int	get_args(t_list *list, char ***argv)
 	(*argv)[i] = NULL;
 	if (check_for_builtin(*argv) == 1)
 		return (1);
+	if (!(*argv)[0])
+		return (0);
 	ret = get_path((*argv)[0], &command_path);
 	(*argv)[0] = command_path;
 	if (ret != 0)
 	{
+		printf("ret get_path = %d\n", ret);
 		if ((*argv)[0])
 			free_array(argv);
 	}

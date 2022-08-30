@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 18:54:34 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/30 21:32:15 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 			if (lexed)
 			{
 				ret = create_cmd_list(lexed, &parsed);
+				printf("ret parsed = %d\n", ret);
 				if (ret != 0)
 				{
 					print_error(ret);
