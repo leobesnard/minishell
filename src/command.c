@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/30 21:39:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/31 17:09:33 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	execute_command(t_list *parsed, t_env *env)
 	while (parsed)
 	{
 		if (exec_simple_cmd(&parsed, cmd_fd, env) != 0)
-		{
-			printf("ret exec_simple_cmd = %d\n", cmd_fd->ret);
 			return (exit_exec_error(cmd_fd));
-		}
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;
@@ -129,7 +126,6 @@ int	get_args(t_list *list, char ***argv)
 	(*argv)[0] = command_path;
 	if (ret != 0)
 	{
-		printf("ret get_path = %d\n", ret);
 		if ((*argv)[0])
 			free_array(argv);
 	}

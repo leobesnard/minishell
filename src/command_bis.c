@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/30 21:38:57 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/31 17:08:04 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 
 	parsed = *aparsed;
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed, env);
-	printf("ret fill_fd_pipe = %d\n", cmd_fd->ret);
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	if (cmd_fd->ret == 1)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
 		{
-			printf("ret one_command = %d\n", cmd_fd->ret);
 			return (cmd_fd->ret);
 		}
 	}
@@ -48,13 +46,12 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret < 0 || !argv[0])
 	{
-		printf("ret get_args = %d\n", cmd_fd->ret);
 		return (cmd_fd->ret);
 	}
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed);
 	else
-		exec_solo_command(argv, cmd_fd);
+		exec_solo_command(argv, cmd_fd, env);
 	free_array(&argv);
 	return (0);
 }
@@ -78,7 +75,7 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd)
 	return (0);
 }
 
-int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd)
+int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 {
 	cmd_fd->pid = fork();
 	g_minishell.nb_exec++;
@@ -89,8 +86,8 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd)
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		execve(argv[0], argv, NULL);
-		printf("Execve\n");
+		execve(argv[0], argv, env->envp);
+		printf("Error execve\n");
 	}
 	return (0);	
 }
