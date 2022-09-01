@@ -6,7 +6,7 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:39:49 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/22 18:45:46 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:29:25 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,23 @@ int	ft_atol(const char *nptr)
 		i++;
 	}
 	return (sign * res);
+}
+
+int	check_tiret_n(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] == '-')
+	{
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				return(0);
+			i++;
+		}
+		return (1);
+	}
+	else
+		return (0);
 }

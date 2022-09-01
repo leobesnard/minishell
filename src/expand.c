@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 17:25:10 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 19:37:03 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,12 @@ char	*expand(t_list *env, char *str)
 					{
 						var.i++;
 						var.str = var_str(&str[var.i]);
-						var.var = find_env_var(env, var_str(&str[var.i]));
+						var.var = find_env_var(env, var.str);
 						if (var.var)
 							ft_strlcpy(&var.ret[var.u], var.var, ft_strlen(var.var) + 1);
 						while (ft_is_var_char(str[var.i]))
 							var.i++;
+						free(var.str);
 						if (var.var)
 							var.u += ft_strlen(var.var);
 					}
@@ -170,11 +171,13 @@ char	*expand(t_list *env, char *str)
 			if (str[var.i + 1] && ft_is_var_char(str[var.i + 1]))
 			{
 				var.i++;
-				var.var = find_env_var(env, var_str(&str[var.i]));
+				var.str = var_str(&str[var.i]);
+				var.var = find_env_var(env, var.str);
 				if (var.var)
 					ft_strlcpy(&var.ret[var.u], var.var, ft_strlen(var.var) + 1);
 				while (ft_is_var_char(str[var.i]))
 					var.i++;
+				free(var.str);
 				if (var.var)
 					var.u += ft_strlen(var.var);
 			}

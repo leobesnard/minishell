@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/18 20:34:17 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/29 19:34:04 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	builtin_echo(char **str)
 {
 	int	i;
+	int	tiret_n;
 
-	if (ft_strncmp(str[0], "-n", 3))
-		i = 0;
-	else
+	tiret_n = check_tiret_n(str[1]);
+	if (!tiret_n)
 		i = 1;
+	else
+		i = 2;
 	while (str[i])
 	{
 		printf("%s", str[i]);
@@ -27,7 +29,7 @@ void	builtin_echo(char **str)
 			printf(" ");
 		i++;
 	}
-	if (ft_strncmp(str[0], "-n", 3))
+	if (!tiret_n)
 		printf("\n");
 	return ;
 }
