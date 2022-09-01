@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/31 14:38:19 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/01 13:09:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				ret = create_cmd_list(lexed, &parsed);
 				if (ret != 0)
-				{
 					print_error(ret);
-					printf("error parsed\n");
-					return (ret);
-				}
 				else
 				{	
 					ret = execute_command(parsed, env);

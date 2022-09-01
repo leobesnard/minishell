@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/31 17:08:32 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/01 13:02:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			check_for_builtin(char **argv);
 
 int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
-int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd);
+int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd);
 int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env);
 int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 

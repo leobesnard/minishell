@@ -102,7 +102,7 @@ envdup	include/command.h	/^	t_list	*envdup;$/;"	m	struct:s_env	typeref:typename:
 envp	include/command.h	/^	char	**envp;$/;"	m	struct:s_env	typeref:typename:char **
 exec_command	src/command_exec.c	/^void	exec_command(char **argv, t_env *env, t_list **aparsed)$/;"	f	typeref:typename:void
 exec_simple_cmd	src/command_bis.c	/^int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
-exec_solo_builtin	src/command_bis.c	/^int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd)$/;"	f	typeref:typename:int
+exec_solo_builtin	src/command_bis.c	/^int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
 exec_solo_command	src/command_bis.c	/^int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 execute_command	src/command.c	/^int	execute_command(t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
 exit_cmd	src/parser_utils.c	/^int	exit_cmd(t_list **parsed, int err_type, int flag, t_cmd *cmd)$/;"	f	typeref:typename:int
