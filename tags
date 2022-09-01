@@ -275,7 +275,6 @@ t_var	include/expand.h	/^}	t_var;$/;"	t	typeref:struct:s_var
 t_vars	include/expand.h	/^}	t_vars;$/;"	t	typeref:struct:s_vars
 tab_size	src/builtin2.c	/^int	tab_size(char **tab)$/;"	f	typeref:typename:int
 termios_management	src/signal.c	/^int	termios_management(bool echo_ctl)$/;"	f	typeref:typename:int
-test	tester/test.sh	/^function test()$/;"	f
 test_check_quotes	src/expand.c	/^int	test_check_quotes(char *str)$/;"	f	typeref:typename:int
 tmp	include/command.h	/^	int	tmp;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 token_type	src/lexer.c	/^t_token_type token_type(char *str)$/;"	f	typeref:typename:t_token_type
