@@ -86,6 +86,7 @@ change_pwd	src/builtin2.c	/^int	change_pwd(t_list *env, char *path, char *oldpat
 check_all_quotes	src/parser_utils.c	/^int	check_all_quotes(t_list *list)$/;"	f	typeref:typename:int
 check_for_builtin	src/command_exec.c	/^int	check_for_builtin(char **argv)$/;"	f	typeref:typename:int
 check_quotes	src/parser_utils.c	/^int	check_quotes(t_token *token)$/;"	f	typeref:typename:int
+check_tiret_n	src/builtin_utils.c	/^int	check_tiret_n(char *str)$/;"	f	typeref:typename:int
 clean	Makefile	/^clean:$/;"	t
 clean	libft/Makefile	/^clean:$/;"	t
 concat_path	src/command_utils.c	/^char	*concat_path(char *dest, char *src)$/;"	f	typeref:typename:char *
