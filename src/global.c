@@ -6,14 +6,14 @@
 /*   By: rmorel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:34:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/15 16:08:23 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/30 18:15:42 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_minishell	g_minishell;
-
+/*
 int	add_process_to_global(void)
 {
 	t_list		*proc;
@@ -42,4 +42,4 @@ void	finish_job_status(void)
 		g_minishell.process = g_minishell.process->next;
 	}
 	return ;
-}
+}*/

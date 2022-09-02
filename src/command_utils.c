@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/17 14:22:40 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/08/31 17:09:06 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int	get_path(char *arg, char **str)
 	int		i;
 	char	*tmp;
 
+	if (access(arg, X_OK) == 0)
+	{
+		*str = arg;
+		return (0);
+	}
 	tmp = ft_strdup(arg);
 	free(arg);
 	path_array = ft_split(getenv("PATH"), ':');
