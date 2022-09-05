@@ -6,10 +6,9 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/30 19:20:00 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/02 18:44:54 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -41,10 +40,10 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed)
 
 int	check_for_builtin(char **argv)
 {
-	if (!ft_strncmp(argv[0], "echo", 4) || !ft_strncmp(argv[0], "pwd", 3) ||
-		!ft_strncmp(argv[0], "unset", 5) || !ft_strncmp(argv[0], "export", 6)
-		|| !ft_strncmp(argv[0], "cd", 2) || !ft_strncmp(argv[0], "env", 3) ||
-		!ft_strncmp(argv[0], "exit", 4))
+	if (!ft_strncmp(argv[0], "echo", 4) || !ft_strncmp(argv[0], "pwd", 3)
+		|| !ft_strncmp(argv[0], "unset", 5) || !ft_strncmp(argv[0], "export", 6)
+		|| !ft_strncmp(argv[0], "cd", 2) || !ft_strncmp(argv[0], "env", 3)
+		|| !ft_strncmp(argv[0], "exit", 4))
 		return (1);
 	return (0);
 }

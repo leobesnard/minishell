@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:54:18 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/29 18:51:01 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/02 18:35:50 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int	signal_management(int status)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, sigint_child);
+	}
+	if (status == HEREDOC)
+	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sigint_heredoc);
 	}
 	return (0);
 }
@@ -63,4 +68,13 @@ void	sigint_child(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
+}
+
+void	sigint_heredoc(int signum)
+{
+	(void)signum;
+	g_minishell.heredoc = 1;
+	write(1, "\33[2K\r", 6);
+	printf("^C\n");
+	close(0);
 }
