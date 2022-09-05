@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:42:05 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/06/28 19:18:06 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/05 18:44:39 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	skip_quotes(char **str)
 	(*str)++;
 	while (**str && **str != quote_type)
 		(*str)++;
-	(*str)++;
+	//(*str)++;
 }
 
 void	skip_spaces(char **str)

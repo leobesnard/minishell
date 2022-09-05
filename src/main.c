@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/01 13:09:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/05 18:46:29 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 			//printf("size = %d\n", test_size_expand(command_buf, env->envdup));
 		{
 			lexed = lexer(command_buf);
+			//printf("in main : %s\n", lexed->content->word);
 			if (lexed)
 			{
 				ret = create_cmd_list(lexed, &parsed);
