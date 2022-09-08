@@ -6,11 +6,33 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/18 18:20:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/08 22:06:20 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_token(void *token)
+{
+	t_token *tok;
+
+	tok = token;
+	free(tok->word);
+	free(tok);
+}
+
+int	free_lexer(t_list *lst)
+{
+	ft_lstclear(&lst, &free_token);
+	return (0);
+}
+
+void	free_before_quit(t_env *env)
+{
+	free_parsed(&env->parsed);
+	free(env->command_buf);
+	free_env(env);
+}
 
 t_list *free_token_list(t_list **list)
 {
@@ -79,7 +101,7 @@ void	free_parsed(t_list **parsed)
 	tmp = *parsed;
 	while (tmp)
 	{
-		ft_lstclear(&((t_cmd *)tmp->content)->arg, free);
+		ft_lstclear(&((t_cmd *)tmp->content)->arg, &free_token);
 		ft_lstclear(&((t_cmd *)tmp->content)->rd, free);
 		tmp = tmp->next;
 	}

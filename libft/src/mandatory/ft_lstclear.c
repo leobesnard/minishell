@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:06:35 by lbesnard          #+#    #+#             */
-/*   Updated: 2021/11/29 15:59:38 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:04:50 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	void	*temp;
+	t_list	*tmp;
 
-	temp = 0;
 	while (*lst)
 	{
-		temp = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = temp;
+		tmp = *lst;
+		del(tmp->content);
+		*lst = tmp->next;
+		free(tmp);
 	}
 }

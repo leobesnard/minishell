@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:17:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:25:53 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/08 22:53:16 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_path(char *arg, char **str)
 	if (check_arg_path(arg, str) == 0)
 		return (0);
 	tmp = ft_strdup(arg);
-	free(arg);
+//	free(arg);
 	path_array = ft_split(getenv("PATH"), ':');
 	if (!path_array)
 		return (MEM_ERROR);

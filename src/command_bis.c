@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/01 13:26:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/08 23:19:06 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret < 0 || !argv[0])
 	{
+		free(argv);
 		return (cmd_fd->ret);
 	}
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
 		exec_solo_command(argv, cmd_fd, env);
-	free_array(&argv);
+	free(argv);
 	return (0);
 }
 
@@ -83,6 +84,9 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 				builtin_env(env->envdup);
 			else if (!ft_strncmp(argv[0], "exit", 4))
 				builtin_exit(*apsd);
+			free_before_quit(env);
+			free(argv);
+			free(cmd_fd);
 			exit(0);
 		}
 	}
@@ -133,9 +137,12 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
 			exec_command(argv, env, aparsed);
+			free_before_quit(env);
+			free(argv);
+			free(cmd_fd);
 			exit(0);
 		}
 	}
-	free_array(&argv);
+	free(argv);
 	return (0);
 }

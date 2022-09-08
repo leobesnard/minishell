@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/05 18:49:04 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:46:26 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	builtin_echo(char **str)
 	int	i;
 	int	tiret_n;
 
+	if (!str[1])
+		return (ft_printf("\n"), 1);
 	tiret_n = check_tiret_n(str[1]);
 	if (!tiret_n)
 		i = 1;
