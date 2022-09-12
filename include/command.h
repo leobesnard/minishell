@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 14:46:55 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:02:58 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_env
 	char	**envp;
 	t_list	*parsed;
 	char	*command_buf;
+	int		flag;
 }	t_env;
 
 typedef struct s_hdocjoin
@@ -77,12 +78,12 @@ int			builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv);
 t_cmd_fd	*initiate_cmd_fd(void);
 int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed,
 				t_env *env);
-int			get_args(t_list *list, char ***args);
+int			get_args(t_list *list, char ***args, t_env *env);
 
 //		command_path.c
 
-int			get_path(char *arg, char **str);
 int			exit_command(t_cmd_fd *cmd_fd, t_list *parsed);
+int			get_path(char *arg, char **str, t_env *env);
 
 //		command_utils.c
 

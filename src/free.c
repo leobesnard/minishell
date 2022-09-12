@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 16:14:43 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:10:10 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	free_before_quit(t_env *env)
 {
 	free_parsed(&env->parsed);
 	free(env->command_buf);
-	free_env(env);
+	free_env(env);//pas le temps mais il faut encore free argv et cmd_fd 
 	return (0);
 }
 

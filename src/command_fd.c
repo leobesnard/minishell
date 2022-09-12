@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 14:16:59 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 18:08:37 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_minishell	g_minishell;
 
-static int	ret_get_args(char ***argv);
+static int	ret_get_args(char ***argv, t_env *env);
 
 t_cmd_fd	*initiate_cmd_fd(void)
 {
@@ -61,7 +61,7 @@ int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)
 		return (1);
 }
 
-int	get_args(t_list *list, char ***argv)
+int	get_args(t_list *list, char ***argv, t_env *env)
 {
 	int		i;
 
@@ -76,10 +76,10 @@ int	get_args(t_list *list, char ***argv)
 		i++;
 	}
 	(*argv)[i] = NULL;
-	return (ret_get_args(argv));
+	return (ret_get_args(argv, env));
 }
 
-static int	ret_get_args(char ***argv)
+static int	ret_get_args(char ***argv, t_env *env)
 {
 	char	*command_path;
 	int		ret;
@@ -88,7 +88,7 @@ static int	ret_get_args(char ***argv)
 		return (1);
 	if (!(*argv)[0])
 		return (0);
-	ret = get_path((*argv)[0], &command_path);
+	ret = get_path((*argv)[0], &command_path, env);
 	if (ret != 0 && ret != CMD_NOT_FOUND && ret != 2)
 	{
 		if ((*argv)[0])
