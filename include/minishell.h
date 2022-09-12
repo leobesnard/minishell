@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/06 14:57:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:13:02 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"
-# include "builtin.h"
 # include "command.h"
+# include "builtin.h"
 # include "env.h"
 # include "free.h"
 # include "print_tools.h"

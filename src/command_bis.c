@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 14:57:45 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:24:33 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	if (cmd_fd->ret == 1)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
+		{
 			return (exit_command(cmd_fd, *aparsed));
+		}
 	}
 	else
 	{
@@ -66,7 +68,10 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
+	{
 		exec_solo_command(argv, cmd_fd, env);
+	}
+	printf("in command_bis : %s\n", argv[0]);
 	free(argv[0]);
 	argv[0] = NULL;
 	free(argv);
@@ -132,7 +137,7 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
-	ret = builtin_no_fork_m(cmd_fd, env, argv);
+	ret = builtin_no_fork(cmd_fd, env, argv, aparsed);
 	if (ret < 1)
 		return (ret);
 	else

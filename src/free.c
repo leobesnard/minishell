@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 14:58:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:14:43 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ void	free_token(void *token)
 	t_token *tok;
 
 	tok = token;
-	if (tok->word)
-		free(tok->word);
+	free(tok->word);
 	tok->word = NULL;
-	if (tok)
-		free(tok);
+	free(tok);
 	tok = NULL;
 }
 
@@ -31,11 +29,12 @@ int	free_lexer(t_list *lst)
 	return (0);
 }
 
-void	free_before_quit(t_env *env)
+int	free_before_quit(t_env *env)
 {
 	free_parsed(&env->parsed);
 	free(env->command_buf);
 	free_env(env);
+	return (0);
 }
 
 t_list *free_token_list(t_list **list)
