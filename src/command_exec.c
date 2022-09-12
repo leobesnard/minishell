@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:44:54 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 17:53:00 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed)
 	else if (!ft_strncmp(argv[0], "env", 3))
 		builtin_env(env->envdup);
 	else if (!ft_strncmp(argv[0], "exit", 4))
-		builtin_exit(*aparsed);
+		builtin_exit(*aparsed, env);
 	else
 	{
 		execve(argv[0], argv, env->envp);
@@ -47,3 +47,25 @@ int	check_for_builtin(char **argv)
 		return (1);
 	return (0);
 }
+
+int	builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)
+{
+	if (cmd_fd->ret < 0)
+		return (cmd_fd->ret);
+	if (!ft_strncmp(argv[0], "unset", 5))
+	{
+		env->envdup = builtin_unset(env->envdup, argv[1]);
+		return (0);
+	}
+	else if (!ft_strncmp(argv[0], "export", 6))
+	{
+		env->envdup = builtin_export(env->envdup, argv[1]);
+		return (0);
+	}
+	else if (!ft_strncmp(argv[0], "cd", 2))
+		return (builtin_cd(env->envdup, argv));
+	else if (!ft_strncmp(argv[0], "exit", 5))
+		builtin_exit(*apsd, env);
+	return (1);
+}
+

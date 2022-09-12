@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/09 17:33:12 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:00:44 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_before_quit(t_env *env)
 {
 	free_parsed(&env->parsed);
 	free(env->command_buf);
-	free_env(env);
+	free_env(env);//pas le temps mais il faut encore free argv et cmd_fd 
 }
 
 t_list *free_token_list(t_list **list)

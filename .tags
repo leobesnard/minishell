@@ -1,10 +1,14 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/lbesnard/Documents/minishell/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
+!_TAG_PROGRAM_VERSION	5.9.0	//
 $(LIBFT)	Makefile	/^$(LIBFT): $/;"	t
 $(NAME)	Makefile	/^$(NAME): $(OBJDIR) $(LIBFT) $(OBJS)$/;"	t
 $(OBJDIR)	Makefile	/^$(OBJDIR):$/;"	t
@@ -129,6 +133,7 @@ fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_en
 fill_normal_cmd	src/parser.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
 find_env_var	src/env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
 first_command	src/main.c	/^int	first_command(int ac, char **av)$/;"	f	typeref:typename:int
+flag	include/command.h	/^	int		flag;$/;"	m	struct:s_env	typeref:typename:int
 free_all_except_one_str	src/command_utils.c	/^void	free_all_except_one_str(char **array, int x)$/;"	f	typeref:typename:void
 free_array	src/free.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
 free_before_quit	src/free.c	/^void	free_before_quit(t_env *env)$/;"	f	typeref:typename:void
@@ -209,11 +214,11 @@ ft_tolower	libft/src/mandatory/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f	typere
 ft_toupper	libft/src/mandatory/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f	typeref:typename:int
 ft_wrdcnt	libft/src/mandatory/ft_split.c	/^static int	ft_wrdcnt(char const*str, char c)$/;"	f	typeref:typename:int	file:
 g_minishell	src/main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
-get_args	src/command_fd.c	/^int	get_args(t_list *list, char ***argv)$/;"	f	typeref:typename:int
+get_args	src/command_fd.c	/^int	get_args(t_list *list, char ***argv, t_env *env)$/;"	f	typeref:typename:int
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
 get_input_from_prompt	src/main.c	/^static char	*get_input_from_prompt(void)$/;"	f	typeref:typename:char *	file:
 get_next_line	libft/src/extra/get_next_line_bonus.c	/^char	*get_next_line(int fd)$/;"	f	typeref:typename:char *
-get_path	src/command_path.c	/^int	get_path(char *arg, char **str)$/;"	f	typeref:typename:int
+get_path	src/command_path.c	/^int	get_path(char *arg, char **str, t_env *env)$/;"	f	typeref:typename:int
 get_var	src/env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char *
 get_var_size	src/expand_utils.c	/^int	get_var_size(char *str, t_list *env)$/;"	f	typeref:typename:int
 group_av	src/main.c	/^char	*group_av(int ac, char **av)$/;"	f	typeref:typename:char *
@@ -229,7 +234,6 @@ is_alpha_spe	src/lexer_utils.c	/^int	is_alpha_spe(int c)$/;"	f	typeref:typename:
 is_arg_numeric	src/builtin_exit.c	/^int	is_arg_numeric(char *word)$/;"	f	typeref:typename:int
 is_separator	src/lexer.c	/^int	is_separator(char *str)$/;"	f	typeref:typename:int
 last_exec_code	include/command.h	/^	int		last_exec_code;$/;"	m	struct:s_minishell	typeref:typename:int
-lexer	include/command.h	/^	t_list	*lexer;$/;"	m	struct:s_env	typeref:typename:t_list *
 lexer	src/lexer.c	/^t_list	*lexer(char *str)$/;"	f	typeref:typename:t_list *
 libclean	Makefile	/^libclean:$/;"	t
 main	sandbox/multiple_pipe_test.c	/^int main()$/;"	f	typeref:typename:int
@@ -244,6 +248,7 @@ next	libft/include/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:s
 one_command	src/command_bis.c	/^int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 p	include/command.h	/^	char	*p;$/;"	m	struct:s_hdocjoin	typeref:typename:char *
 parse_path_array	src/command_path.c	/^static int	parse_path_array( char **path_array, char *tmp, char **str)$/;"	f	typeref:typename:int	file:
+parsed	include/command.h	/^	t_list	*parsed;$/;"	m	struct:s_env	typeref:typename:t_list *
 pid	include/command.h	/^	int	pid;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 pid	include/command.h	/^	pid_t	pid;$/;"	m	struct:s_process	typeref:typename:pid_t
 print_cmd	src/print_tools.c	/^void	print_cmd(t_list *list)$/;"	f	typeref:typename:void
@@ -259,7 +264,7 @@ re	Makefile	/^re: fclean all$/;"	t
 re	libft/Makefile	/^re: fclean all$/;"	t
 ret	include/command.h	/^	int	ret;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 ret	include/expand.h	/^	char	*ret;$/;"	m	struct:s_vars	typeref:typename:char *
-ret_get_args	src/command_fd.c	/^static int	ret_get_args(char ***argv)$/;"	f	typeref:typename:int	file:
+ret_get_args	src/command_fd.c	/^static int	ret_get_args(char ***argv, t_env *env)$/;"	f	typeref:typename:int	file:
 s_cmd	include/parser.h	/^typedef struct s_cmd$/;"	s
 s_cmd_fd	include/command.h	/^typedef struct s_cmd_fd$/;"	s
 s_cmd_line	include/lexer.h	/^typedef struct s_cmd_line$/;"	s

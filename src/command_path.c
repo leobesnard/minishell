@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:17:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/09 15:37:21 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:56:16 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_arg_path(char *arg, char **str);
 static int	parse_path_array( char **path_array, char *tmp, char **str);
 static char	*concat_path(char *dest, char *src);
 
-int	get_path(char *arg, char **str)
+int	get_path(char *arg, char **str, t_env *env)
 {
 	char	**path_array;
 	int		ret;
@@ -30,6 +30,7 @@ int	get_path(char *arg, char **str)
 	if (!path_array)
 		return (MEM_ERROR);
 	*str = NULL;
+	env->flag = 1;
 	ret = parse_path_array(path_array, tmp, str);
 	if (ret != 0 && ret != MEM_ERROR)
 	{
