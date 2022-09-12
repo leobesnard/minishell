@@ -6,11 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2022/09/12 12:41:17 by lbesnard         ###   ########.fr       */
-=======
-/*   Updated: 2022/09/12 09:58:53 by rmorel           ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2022/09/12 14:46:55 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +61,7 @@ int			execute_command(t_list *parsed, t_env *env);
 
 int			exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 int			one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
-int			exec_solo_builtin(char **argv, t_env *env, t_list **apsd,
-				t_cmd_fd *cmd_fd);
+int			exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd);
 int			exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env);
 int			multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 

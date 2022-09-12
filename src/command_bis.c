@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 12:54:33 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:57:45 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	if (cmd_fd->ret == 1)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
-		{
 			return (exit_command(cmd_fd, *aparsed));
-		}
 	}
 	else
 	{
@@ -64,16 +62,14 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	{
 		free(argv);
 		return (cmd_fd->ret);
+	}
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
 		exec_solo_command(argv, cmd_fd, env);
-<<<<<<< Updated upstream
 	free(argv[0]);
+	argv[0] = NULL;
 	free(argv);
-=======
-	free_array(&argv);
->>>>>>> Stashed changes
 	return (0);
 }
 
@@ -98,15 +94,11 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 				builtin_pwd(env->envdup);
 			else if (!ft_strncmp(argv[0], "env", 4))
 				builtin_env(env->envdup);
-<<<<<<< Updated upstream
 			else if (!ft_strncmp(argv[0], "exit", 4))
 				builtin_exit(*apsd);
 			free_before_quit(env);
 			free(argv);
 			free(cmd_fd);
-=======
-			printf("exit(0)\n");
->>>>>>> Stashed changes
 			exit(0);
 		}
 	}

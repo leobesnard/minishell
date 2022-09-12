@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 12:44:39 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:58:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ void	free_token(void *token)
 	t_token *tok;
 
 	tok = token;
-	free(tok->word);
-	free(tok);
+	if (tok->word)
+		free(tok->word);
+	tok->word = NULL;
+	if (tok)
+		free(tok);
+	tok = NULL;
 }
 
 int	free_lexer(t_list *lst)

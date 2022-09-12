@@ -6,11 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/06 21:48:32 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:37:02 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 int	tab_size(char **tab)
 {
@@ -74,14 +76,23 @@ int	builtin_cd(t_list *env, char **args)
 	char	*oldpath;
 
 	if (tab_size(args) >= 3)
+	{
+		g_minishell.last_exec_code = 1;
 		return (write(2, "cd : too many arguments\n", 24));
+	}
 	path = get_cd_path(env, args);
 	if (!path)
 		return (1);
 	if (access(path, F_OK))
+	{
+		g_minishell.last_exec_code = 1;
 		return (ft_printf("cd: no such file or directory\n"));
+	}
 	if (access(path, X_OK))
-		return (ft_printf("cd: permission denied: %s", path));
+	{
+		g_minishell.last_exec_code = 1;
+		return (ft_printf("cd: permission denied: %s\n", path));
+	}
 	oldpath = getcwd(0, 0);
 	chdir(path);
 	change_pwd(env, path, oldpath);

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 12:54:20 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:16:59 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,6 @@ static int	ret_get_args(char ***argv)
 			free_array(argv);
 	}
 	else if (ret == 0)
-	{
-		free((*argv)[0]);
 		(*argv)[0] = command_path;
-	}
 	return (ret);
 }
