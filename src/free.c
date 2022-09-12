@@ -6,15 +6,15 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/18 18:20:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:04:28 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list *free_token_list(t_list **list)
+t_list	*free_token_list(t_list **list)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *list;
 	while (list)
@@ -70,19 +70,4 @@ void	free_array(char ***args)
 	free(*args);
 	*args = NULL;
 	return ;
-}
-
-void	free_parsed(t_list **parsed)
-{
-	t_list	*tmp;
-
-	tmp = *parsed;
-	while (tmp)
-	{
-		ft_lstclear(&((t_cmd *)tmp->content)->arg, free);
-		ft_lstclear(&((t_cmd *)tmp->content)->rd, free);
-		tmp = tmp->next;
-	}
-	ft_lstclear(parsed, free);
-	*parsed = NULL;
 }

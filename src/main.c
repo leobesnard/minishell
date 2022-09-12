@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/01 13:09:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 22:06:07 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error quote\n");
 		}
 		else
-			//printf("size = %d\n", test_size_expand(command_buf, env->envdup));
 		{
 			lexed = lexer(command_buf);
 			if (lexed)

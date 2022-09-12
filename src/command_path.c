@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:17:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:25:53 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 18:23:30 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@ int	get_path(char *arg, char **str)
 	if (check_arg_path(arg, str) == 0)
 		return (0);
 	tmp = ft_strdup(arg);
-	free(arg);
 	path_array = ft_split(getenv("PATH"), ':');
 	if (!path_array)
 		return (MEM_ERROR);
 	*str = NULL;
 	ret = parse_path_array(path_array, tmp, str);
-	if (ret != 0 && ret != MEM_ERROR)
+	if (ret == CMD_NOT_FOUND)
 	{
+		printf("ret = %d\n", ret);
 		free_array(&path_array);
-		free(tmp);
-		*str = NULL;
-		return (SYNTAX_ERROR);
+		*str = tmp;
+		return (CMD_NOT_FOUND);
 	}
 	else
 		return (ret);
@@ -72,7 +71,7 @@ static int	parse_path_array( char **path_array, char *tmp, char **str)
 			free(*str);
 		i++;
 	}
-	return (1);
+	return (CMD_NOT_FOUND);
 }
 
 static char	*concat_path(char *dest, char *src)

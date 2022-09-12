@@ -1,0 +1,5 @@
+A faire : 
+- Sortie des builtin egalement, erreur au niveau de cd notamment
+- Modifier env->dup via les fonctions necessaire, et donner env->dup au format char ** (nouvelles fct Leo) pour l'execution
+- Modifier builtin_no_fork // creer une copie pour le multiple_cmd sans le exit
+

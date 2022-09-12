@@ -6,17 +6,18 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/01 17:27:59 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 14:57:51 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define MEM_ERROR -42
 # define SYNTAX_ERROR -10
 # define PIPE_ERROR -20
 # define FD_ERROR -30
+# define MEM_ERROR -42
 # define SIGINT_HEREDOC -50
+# define CMD_NOT_FOUND -60
 # define CHILD 1
 # define HEREDOC 2
 # define NORMAL 0

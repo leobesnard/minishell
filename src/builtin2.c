@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/18 20:34:35 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 21:48:32 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	builtin_cd(t_list *env, char **args)
 	if (!path)
 		return (1);
 	if (access(path, F_OK))
-		return (ft_printf("cd: no such file or directory"));
+		return (ft_printf("cd: no such file or directory\n"));
 	if (access(path, X_OK))
 		return (ft_printf("cd: permission denied: %s", path));
 	oldpath = getcwd(0, 0);

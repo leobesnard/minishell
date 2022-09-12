@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:03:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:19:18 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:36:43 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,12 @@ char	**create_args(t_list *list)
 		return (NULL);
 	ft_bzero(args, size_list(list) + 1);
 	return (args);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
 }

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/01 13:26:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 22:16:54 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,31 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
 		{
-			return (cmd_fd->ret);
+			return (exit_command(cmd_fd, *aparsed));
 		}
 	}
 	else
 	{
 		if (multiple_command(aparsed, cmd_fd, env) != 0)
-			return (cmd_fd->ret);
+			return (exit_command(cmd_fd, *aparsed));
 	}
 	return (0);
+}
+
+int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed)
+{
+	char	*str;
+	t_list	*arg;
+
+	arg = ((t_cmd *)parsed->content)->arg;
+	str = ((t_token *)arg->content)->word;
+	if (cmd_fd->ret != 0)
+	{
+		printf("%s: command not found\n", str);
+		g_minishell.last_exec_code = 127;
+		return (0);
+	}
+	return (cmd_fd->ret);
 }
 
 int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
@@ -45,25 +61,21 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	parsed = *aparsed;
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret < 0 || !argv[0])
-	{
 		return (cmd_fd->ret);
-	}
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
+	{
 		exec_solo_command(argv, cmd_fd, env);
+	}
 	free_array(&argv);
 	return (0);
 }
 
 int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 {
-	if (!ft_strncmp(argv[0], "unset", 5))
-		builtin_unset(env->envdup, argv[1]);
-	else if (!ft_strncmp(argv[0], "export", 6))
-		builtin_export(env->envdup, argv[1]);
-	else if (!ft_strncmp(argv[0], "cd", 2))
-		builtin_cd(env->envdup, argv);
+	if (builtin_no_fork(cmd_fd, env, argv, apsd) != 1)
+		return (ft_min(cmd_fd->ret, 0));
 	else
 	{
 		cmd_fd->pid = fork();
@@ -75,14 +87,12 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 			dup2(cmd_fd->fd[1], STDOUT_FILENO);
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
-			if (!ft_strncmp(argv[0], "echo", 4))
+			if (!ft_strncmp(argv[0], "echo", 5))
 				builtin_echo(argv);
-			else if (!ft_strncmp(argv[0], "pwd", 3))
+			else if (!ft_strncmp(argv[0], "pwd", 4))
 				builtin_pwd(env->envdup);
-			else if (!ft_strncmp(argv[0], "env", 3))
+			else if (!ft_strncmp(argv[0], "env", 4))
 				builtin_env(env->envdup);
-			else if (!ft_strncmp(argv[0], "exit", 4))
-				builtin_exit(*apsd);
 			exit(0);
 		}
 	}
@@ -103,24 +113,22 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 		execve(argv[0], argv, env->envp);
 		printf("Error execve\n");
 	}
-	return (0);	
+	return (0);
 }
 
 int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 {
 	char	**argv;
 	t_list	*parsed;
+	int		ret;
 
 	parsed = *aparsed;
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv);
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
-	if (!ft_strncmp(argv[0], "unset", 5))
-		builtin_unset(env->envdup, argv[1]);
-	else if (!ft_strncmp(argv[0], "export", 6))
-		builtin_export(env->envdup, argv[1]);
-	else if (!ft_strncmp(argv[0], "cd", 2))
-		builtin_cd(env->envdup, argv);
+	ret = builtin_no_fork(cmd_fd, env, argv, aparsed);
+	if (ret < 1)
+		return (ret);
 	else
 	{
 		g_minishell.nb_exec++;

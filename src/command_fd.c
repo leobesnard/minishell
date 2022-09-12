@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:20:54 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 17:49:06 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_cmd_fd	*initiate_cmd_fd(void)
 	cmd_fd->fd_hdoc[0] = 0;
 	cmd_fd->fd_hdoc[1] = 1;
 	cmd_fd->tmp = 0;
+	cmd_fd->status = 42;
 	if (!g_minishell.nb_exec)
 		g_minishell.nb_exec = 0;
 	return (cmd_fd);
@@ -88,11 +89,15 @@ static int	ret_get_args(char ***argv)
 	if (!(*argv)[0])
 		return (0);
 	ret = get_path((*argv)[0], &command_path);
-	(*argv)[0] = command_path;
-	if (ret != 0)
+	if (ret != 0 && ret != CMD_NOT_FOUND)
 	{
 		if ((*argv)[0])
 			free_array(argv);
+	}
+	else if (ret == 0)
+	{
+		free((*argv)[0]);
+		(*argv)[0] = command_path;
 	}
 	return (ret);
 }

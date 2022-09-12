@@ -21,6 +21,7 @@ CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror -g$/;"	m
 CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra -Werror$/;"	m
 CHILD	include/minishell.h	/^# define CHILD /;"	d
 CMD	include/parser.h	/^	CMD,$/;"	e	enum:e_cmd_type
+CMD_NOT_FOUND	include/minishell.h	/^# define CMD_NOT_FOUND /;"	d
 COMMAND_H	include/command.h	/^# define COMMAND_H$/;"	d
 D_GREAT	include/lexer.h	/^	D_GREAT = 3,$/;"	e	enum:e_token_type
 D_LESS	include/lexer.h	/^	D_LESS = 4,$/;"	e	enum:e_token_type
@@ -82,6 +83,7 @@ builtin_echo	src/builtin.c	/^void	builtin_echo(char **str)$/;"	f	typeref:typenam
 builtin_env	src/builtin.c	/^void	builtin_env(t_list *env)$/;"	f	typeref:typename:void
 builtin_exit	src/builtin_exit.c	/^int	builtin_exit(t_list *parsed)$/;"	f	typeref:typename:int
 builtin_export	src/builtin.c	/^t_list	*builtin_export(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
+builtin_no_fork	src/command_exec.c	/^int	builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)$/;"	f	typeref:typename:int
 builtin_pwd	src/builtin.c	/^void	builtin_pwd(t_list *env)$/;"	f	typeref:typename:void
 builtin_unset	src/builtin.c	/^t_list	*builtin_unset(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
 change_pwd	src/builtin2.c	/^int	change_pwd(t_list *env, char *path, char *oldpath)$/;"	f	typeref:typename:int
@@ -95,6 +97,7 @@ clean	libft/Makefile	/^clean:$/;"	t
 concat_path	src/command_path.c	/^static char	*concat_path(char *dest, char *src)$/;"	f	typeref:typename:char *	file:
 content	libft/include/libft.h	/^	void			*content;$/;"	m	struct:s_list	typeref:typename:void *
 count_line	src/heredoc.c	/^static int	count_line(char *str)$/;"	f	typeref:typename:int	file:
+cpy_incr	src/expand_utils2.c	/^void	cpy_incr(t_vars *var, char *str)$/;"	f	typeref:typename:void
 create_args	src/command_utils.c	/^char	**create_args(t_list *list)$/;"	f	typeref:typename:char **
 create_cmd_list	src/parser.c	/^int	create_cmd_list(t_list *list, t_list **parsed)$/;"	f	typeref:typename:int
 create_struct_env	src/env_utils.c	/^t_env	*create_struct_env(char **envp)$/;"	f	typeref:typename:t_env *
@@ -111,8 +114,12 @@ exec_solo_builtin	src/command_bis.c	/^int	exec_solo_builtin(char **argv, t_env *
 exec_solo_command	src/command_bis.c	/^int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 execute_command	src/command.c	/^int	execute_command(t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
 exit_cmd	src/parser_utils.c	/^int	exit_cmd(t_list **parsed, int err_type, int flag, t_cmd *cmd)$/;"	f	typeref:typename:int
+exit_command	src/command_bis.c	/^int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed)$/;"	f	typeref:typename:int
 exit_exec_error	src/command.c	/^static int	exit_exec_error(t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int	file:
+exit_status	src/command.c	/^static void	exit_status(int status)$/;"	f	typeref:typename:void	file:
 expand	src/expand.c	/^char	*expand(t_list *env, char *str)$/;"	f	typeref:typename:char *
+expand_dollar	src/expand_utils2.c	/^void	expand_dollar(t_vars *var, t_list *env, char *str)$/;"	f	typeref:typename:void
+expand_single_quote	src/expand_utils2.c	/^void	expand_single_quote(t_vars *var, char *str)$/;"	f	typeref:typename:void
 fclean	Makefile	/^fclean: clean$/;"	t
 fclean	libft/Makefile	/^fclean: clean$/;"	t
 fd	include/command.h	/^	int	fd[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
@@ -129,10 +136,10 @@ free_all_except_one_str	src/command_utils.c	/^void	free_all_except_one_str(char 
 free_array	src/free.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
 free_env	src/free.c	/^void	free_env(t_env	*env)$/;"	f	typeref:typename:void
 free_node	src/free.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
-free_parsed	src/free.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
+free_parsed	src/free2.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
 free_ptr	libft/src/extra/get_next_line_bonus.c	/^static char	*free_ptr(char **ptr)$/;"	f	typeref:typename:char *	file:
 free_ptr	src/free.c	/^char	**free_ptr(char **ptr)$/;"	f	typeref:typename:char **
-free_token_list	src/free.c	/^t_list *free_token_list(t_list **list)$/;"	f	typeref:typename:t_list *
+free_token_list	src/free.c	/^t_list	*free_token_list(t_list **list)$/;"	f	typeref:typename:t_list *
 ft_atoi	libft/src/mandatory/ft_atoi.c	/^int	ft_atoi(const char *nptr)$/;"	f	typeref:typename:int
 ft_atol	src/builtin_utils.c	/^int	ft_atol(const char *nptr)$/;"	f	typeref:typename:int
 ft_bzero	libft/src/mandatory/ft_bzero.c	/^void	*ft_bzero(void *s, size_t n)$/;"	f	typeref:typename:void *
@@ -165,6 +172,7 @@ ft_memcmp	libft/src/mandatory/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const 
 ft_memcpy	libft/src/mandatory/ft_memcpy.c	/^void	*ft_memcpy(void *dest, const void *src, size_t n)$/;"	f	typeref:typename:void *
 ft_memmove	libft/src/mandatory/ft_memmove.c	/^void	*ft_memmove(void *dest, const void *src, size_t n)$/;"	f	typeref:typename:void *
 ft_memset	libft/src/mandatory/ft_memset.c	/^void	*ft_memset(void *s, int c, size_t n)$/;"	f	typeref:typename:void *
+ft_min	src/command_utils.c	/^int	ft_min(int a, int b)$/;"	f	typeref:typename:int
 ft_new_back	libft/src/mandatory/ft_lstmap.c	/^static int	ft_new_back(t_list *lst, void *content)$/;"	f	typeref:typename:int	file:
 ft_parser	libft/src/extra/get_next_line_bonus.c	/^static char	*ft_parser(char **stat)$/;"	f	typeref:typename:char *	file:
 ft_parser	libft/src/extra/printf/ft_printf.c	/^static int	ft_parser(va_list args, char type)$/;"	f	typeref:typename:int	file:

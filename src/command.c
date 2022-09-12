@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 18:37:32 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/06 21:55:08 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern t_minishell	g_minishell;
 
 static void	wait_exec(t_cmd_fd *cmd_fd);
 static int	exit_exec_error(t_cmd_fd *cmd_fd);
+static void	exit_status(int status);
 
 int	execute_command(t_list *parsed, t_env *env)
 {
@@ -35,6 +36,7 @@ int	execute_command(t_list *parsed, t_env *env)
 	if (cmd_fd->tmp > 1)
 		close(cmd_fd->tmp);
 	wait_exec(cmd_fd);
+	printf("Exit status = %d\n", g_minishell.last_exec_code);
 	free(cmd_fd);
 	return (0);
 }
@@ -50,6 +52,7 @@ static void	wait_exec(t_cmd_fd *cmd_fd)
 		waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 		while (--i)
 			waitpid(-1, NULL, 0);
+		exit_status(cmd_fd->status);
 	}
 }
 
@@ -68,5 +71,24 @@ static int	exit_exec_error(t_cmd_fd *cmd_fd)
 	if (cmd_fd->tmp > 2)
 		close(cmd_fd->tmp);
 	free(cmd_fd);
+	if (ret == FD_ERROR)
+		g_minishell.last_exec_code = 1;
+	else if (ret == SYNTAX_ERROR)
+		g_minishell.last_exec_code = 127;
+	printf("exit error = %d\n", g_minishell.last_exec_code);
 	return (ret);
+}
+
+static void	exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_minishell.last_exec_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		g_minishell.last_exec_code = WTERMSIG(status);
+		if (g_minishell.last_exec_code != 131)
+			g_minishell.last_exec_code += 128;
+	}
+	else
+		g_minishell.last_exec_code = WEXITSTATUS(status);
 }
