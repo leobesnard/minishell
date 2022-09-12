@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 09:33:23 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:44:54 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int	main(int argc, char **argv, char **envp)
 		signal_management(NORMAL);
 		command_buf = get_input_from_prompt();
 		command_buf = expand(env->envdup, command_buf);
+		env->command_buf = command_buf;
 		if (!command_buf)
 		{
+			env->parsed = NULL;
 			printf("exit\n");
+			free_before_quit(env);
 			return (0);
 		}
 		if (test_check_quotes(command_buf))
@@ -52,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 			if (lexed)
 			{
 				ret = create_cmd_list(lexed, &parsed);
+				env->parsed = parsed;
 				if (ret != 0)
 					print_error(ret);
 				else
@@ -65,7 +69,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(command_buf);
 	}
-	free_env(env);
 	(void)argc;
 	(void)argv;
 	(void)envp;

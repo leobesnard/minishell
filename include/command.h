@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/06 22:15:26 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:41:17 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_env
 {
 	t_list	*envdup;
 	char	**envp;
+	t_list	*parsed;
+	char	*command_buf;
 }	t_env;
 
 typedef struct s_hdocjoin
