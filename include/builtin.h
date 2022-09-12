@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:36:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/29 18:36:53 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/05 18:49:36 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 t_list	*builtin_unset(t_list *env, char *str);
 t_list	*builtin_export(t_list *env, char *str);
 int		builtin_cd(t_list *env, char **args);
-void	builtin_echo(char **str);
+int		builtin_echo(char **str);
 void	builtin_pwd(t_list *env);
 void	builtin_env(t_list *env);
 int		builtin_exit(t_list *parsed);

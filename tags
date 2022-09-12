@@ -1,10 +1,14 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/nfs/homes/rmorel/minishell/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
+!_TAG_PROGRAM_VERSION	5.9.0	//
 $(LIBFT)	Makefile	/^$(LIBFT): $/;"	t
 $(NAME)	Makefile	/^$(NAME): $(OBJDIR) $(LIBFT) $(OBJS)$/;"	t
 $(OBJDIR)	Makefile	/^$(OBJDIR):$/;"	t
@@ -17,7 +21,7 @@ BUFFER_SIZE	libft/include/get_next_line_bonus.h	/^#  define BUFFER_SIZE /;"	d
 BUILTIN_H	include/builtin.h	/^# define BUILTIN_H$/;"	d
 CC	Makefile	/^CC = gcc -g$/;"	m
 CC	libft/Makefile	/^CC = gcc -g$/;"	m
-CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror -g$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror $/;"	m
 CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra -Werror$/;"	m
 CHILD	include/minishell.h	/^# define CHILD /;"	d
 CMD	include/parser.h	/^	CMD,$/;"	e	enum:e_cmd_type
@@ -79,7 +83,7 @@ all	Makefile	/^all: $(NAME)$/;"	t
 all	libft/Makefile	/^all: ${NAME}$/;"	t
 arg	include/parser.h	/^	t_list		*arg;$/;"	m	struct:s_cmd	typeref:typename:t_list *
 builtin_cd	src/builtin2.c	/^int	builtin_cd(t_list *env, char **args)$/;"	f	typeref:typename:int
-builtin_echo	src/builtin.c	/^void	builtin_echo(char **str)$/;"	f	typeref:typename:void
+builtin_echo	src/builtin.c	/^int	builtin_echo(char **str)$/;"	f	typeref:typename:int
 builtin_env	src/builtin.c	/^void	builtin_env(t_list *env)$/;"	f	typeref:typename:void
 builtin_exit	src/builtin_exit.c	/^int	builtin_exit(t_list *parsed)$/;"	f	typeref:typename:int
 builtin_export	src/builtin.c	/^t_list	*builtin_export(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
@@ -209,7 +213,6 @@ ft_substr	libft/src/mandatory/ft_substr.c	/^char	*ft_substr(char const *str, uns
 ft_tolower	libft/src/mandatory/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f	typeref:typename:int
 ft_toupper	libft/src/mandatory/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f	typeref:typename:int
 ft_wrdcnt	libft/src/mandatory/ft_split.c	/^static int	ft_wrdcnt(char const*str, char c)$/;"	f	typeref:typename:int	file:
-g_minishell	src/main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
 get_args	src/command_fd.c	/^int	get_args(t_list *list, char ***argv)$/;"	f	typeref:typename:int
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
 get_input_from_prompt	src/main.c	/^static char	*get_input_from_prompt(void)$/;"	f	typeref:typename:char *	file:

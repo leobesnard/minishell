@@ -6,13 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/05 17:48:50 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 09:32:57 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(char **str)
+int	builtin_echo(char **str)
 {
 	int	i;
 	int	tiret_n;
@@ -24,14 +24,14 @@ void	builtin_echo(char **str)
 		i = 2;
 	while (str[i])
 	{
-		printf("%s", str[i]);
+		printf("%s", str[i]	);
 		if (str[i + 1])
 			printf(" ");
 		i++;
 	}
 	if (!tiret_n)
 		printf("\n");
-	return ;
+	return (0);
 }
 
 void	builtin_pwd(t_list *env)
