@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/06 22:17:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 09:57:53 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,24 @@ int	builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)
 		return (builtin_cd(env->envdup, argv));
 	else if (!ft_strncmp(argv[0], "exit", 5))
 		builtin_exit(*apsd);
+	return (1);
+}
+
+int	builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv)
+{
+	if (cmd_fd->ret < 0)
+		return (cmd_fd->ret);
+	if (!ft_strncmp(argv[0], "unset", 5))
+	{
+		env->envdup = builtin_unset(env->envdup, argv[1]);
+		return (0);
+	}
+	else if (!ft_strncmp(argv[0], "export", 6))
+	{
+		env->envdup = builtin_export(env->envdup, argv[1]);
+		return (0);
+	}
+	else if (!ft_strncmp(argv[0], "cd", 2))
+		return (builtin_cd(env->envdup, argv));
 	return (1);
 }

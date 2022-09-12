@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/06 21:55:08 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:26:12 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,4 @@ static void	exit_status(int status)
 		if (g_minishell.last_exec_code != 131)
 			g_minishell.last_exec_code += 128;
 	}
-	else
-		g_minishell.last_exec_code = WEXITSTATUS(status);
 }

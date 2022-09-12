@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 12:43:15 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:54:20 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	ret_get_args(char ***argv)
 	if (!(*argv)[0])
 		return (0);
 	ret = get_path((*argv)[0], &command_path);
-	if (ret != 0 && ret != CMD_NOT_FOUND)
+	if (ret != 0 && ret != CMD_NOT_FOUND && ret != 2)
 	{
 		if ((*argv)[0])
 			free_array(argv);

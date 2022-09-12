@@ -6,7 +6,11 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2022/09/12 12:41:17 by lbesnard         ###   ########.fr       */
+=======
+/*   Updated: 2022/09/12 09:58:53 by rmorel           ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +75,7 @@ int			multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 void		exec_command(char **argv, t_env *env, t_list **aparsed);
 int			check_for_builtin(char **argv);
 int			builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd);
+int			builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv);
 
 //		command_fd.c
 
