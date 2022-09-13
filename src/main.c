@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 16:31:48 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/13 22:59:49 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 			//printf("in main : %s\n", lexed->content->word);
 			if (lexed)
 			{
-				ret = create_cmd_list(lexed, &parsed);
+				ret = create_cmd_list(lexed, &parsed);//lst_size(lexer) = 4 avant et = 2 apres donc tu perd des maillonts dedans
 				env->parsed = parsed;
 				if (ret != 0)
 					print_error(ret);
