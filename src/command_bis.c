@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 18:12:24 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:57:37 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	{
 		exec_solo_command(argv, cmd_fd, env);
 	}
+//	printf("in command_bis : %s\n", argv[0]);
 	if (env->flag)
 		free(argv[0]);
 	free(argv);
@@ -100,10 +101,8 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 			else if (!ft_strncmp(argv[0], "env", 4))
 				builtin_env(env->envdup);
 			else if (!ft_strncmp(argv[0], "exit", 4))
-				builtin_exit(*apsd, env);
-			free_before_quit(env);
-			free(argv);
-			free(cmd_fd);
+				builtin_exit(*apsd, env, argv, cmd_fd);
+			free_before_exit(env, argv, cmd_fd);
 			exit(0);
 		}
 	}
@@ -134,6 +133,7 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	int		ret;
 
 	parsed = *aparsed;
+	env->flag = 0;
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv, env);
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
@@ -151,13 +151,13 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 			dup2(cmd_fd->fd[1], STDOUT_FILENO);
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
-			exec_command(argv, env, aparsed);
-			free_before_quit(env);
-			free(argv);
-			free(cmd_fd);
+			exec_command(argv, env, aparsed, cmd_fd);
+			free_before_exit(env, argv, cmd_fd);
 			exit(0);
 		}
 	}
+	if (env->flag)
+		free(argv[0]);
 	free(argv);
 	return (0);
 }

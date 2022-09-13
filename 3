@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 16:31:48 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:31:26 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	main(int argc, char **argv, char **envp)
 		env->command_buf = command_buf;
 		if (!command_buf)
 		{
-			env->parsed = NULL;
+			if (!env->parsed)
+				env->parsed = NULL;
 			builtin_exit(parsed, env, NULL, NULL);
 		}	
 		if (test_check_quotes(command_buf))

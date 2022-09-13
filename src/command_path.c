@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:17:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 18:09:03 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:55:31 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	get_path(char *arg, char **str, t_env *env)
 	ret = parse_path_array(path_array, tmp, str);
 	if (ret == CMD_NOT_FOUND)
 	{
-		printf("ret = %d\n", ret);
+		//printf("ret = %d\n", ret);
 		free_array(&path_array);
 		*str = tmp;
+		free(tmp);
 		return (CMD_NOT_FOUND);
 	}
 	else

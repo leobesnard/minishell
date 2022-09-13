@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/12 18:03:16 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:09:11 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # include "print_tools.h"
 # include "signal_minishell.h"
 # include "expand.h"
+
+//t_minishell	g_minishell;
 
 //	main.c
 

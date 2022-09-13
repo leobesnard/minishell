@@ -6,11 +6,13 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 12:54:54 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/13 16:11:14 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 int	builtin_echo(char **str)
 {
@@ -24,22 +26,21 @@ int	builtin_echo(char **str)
 		tiret_n = 1;
 		i++;
 	}
-	/*if (!str[1])
-		return (ft_printf("\n"), 1);
-	tiret_n = check_tiret_n(str[1]);
-	if (!tiret_n)
-		i = 1;
-	else
-		i = 2;*/
 	while (str[i])
 	{
-		printf("%s", str[i]	);
-		if (str[i + 1])
-			printf(" ");
+		if (!ft_strncmp(str[i], "$?", 3))
+			ft_printf("%d", g_minishell.last_exec_code);
+		else
+		{
+			ft_printf("%s", str[i]	);
+			if (str[i + 1])
+				ft_printf(" ");
+		}
 		i++;
+		
 	}
 	if (!tiret_n)
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }
 
