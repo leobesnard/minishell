@@ -25,7 +25,9 @@ CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror $/;"	m
 CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra -Werror$/;"	m
 CHILD	include/minishell.h	/^# define CHILD /;"	d
 CMD	include/parser.h	/^	CMD,$/;"	e	enum:e_cmd_type
+CMD_BUILTIN	include/minishell.h	/^# define CMD_BUILTIN /;"	d
 CMD_NOT_FOUND	include/minishell.h	/^# define CMD_NOT_FOUND /;"	d
+CMD_PATH_BINARY	include/minishell.h	/^# define CMD_PATH_BINARY /;"	d
 COMMAND_H	include/command.h	/^# define COMMAND_H$/;"	d
 D_GREAT	include/lexer.h	/^	D_GREAT = 3,$/;"	e	enum:e_token_type
 D_LESS	include/lexer.h	/^	D_LESS = 4,$/;"	e	enum:e_token_type
@@ -93,7 +95,7 @@ builtin_pwd	src/builtin.c	/^void	builtin_pwd(t_list *env)$/;"	f	typeref:typename
 builtin_unset	src/builtin.c	/^t_list	*builtin_unset(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
 change_pwd	src/builtin2.c	/^int	change_pwd(t_list *env, char *path, char *oldpath)$/;"	f	typeref:typename:int
 check_all_quotes	src/parser_utils.c	/^int	check_all_quotes(t_list *list)$/;"	f	typeref:typename:int
-check_arg_path	src/command_path.c	/^static int	check_arg_path(char *arg, char **str)$/;"	f	typeref:typename:int	file:
+check_arg_path	src/command_fd.c	/^static int	check_arg_path(char *arg, char **command_path)$/;"	f	typeref:typename:int	file:
 check_for_builtin	src/command_exec.c	/^int	check_for_builtin(char **argv)$/;"	f	typeref:typename:int
 check_quotes	src/parser_utils.c	/^int	check_quotes(t_token *token)$/;"	f	typeref:typename:int
 check_syntax	src/parser.c	/^int	check_syntax(t_list *list)$/;"	f	typeref:typename:int
@@ -226,7 +228,7 @@ get_args	src/command_fd.c	/^int	get_args(t_list *list, char ***argv, t_env *env)
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
 get_input_from_prompt	src/main.c	/^static char	*get_input_from_prompt(void)$/;"	f	typeref:typename:char *	file:
 get_next_line	libft/src/extra/get_next_line_bonus.c	/^char	*get_next_line(int fd)$/;"	f	typeref:typename:char *
-get_path	src/command_path.c	/^int	get_path(char *arg, char **str, t_env *env)$/;"	f	typeref:typename:int
+get_path	src/command_path.c	/^int	get_path(char *arg, char **command_path, t_env *env)$/;"	f	typeref:typename:int
 get_var	src/env_utils.c	/^char	*get_var(char *env_i)$/;"	f	typeref:typename:char *
 get_var_size	src/expand_utils.c	/^int	get_var_size(char *str, t_list *env)$/;"	f	typeref:typename:int
 group_av	src/main.c	/^char	*group_av(int ac, char **av)$/;"	f	typeref:typename:char *
@@ -256,7 +258,7 @@ next	include/lexer.h	/^	struct		cmd_line	*next;$/;"	m	struct:s_cmd_line	typeref:
 next	libft/include/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list *
 one_command	src/command_bis.c	/^int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 p	include/command.h	/^	char	*p;$/;"	m	struct:s_hdocjoin	typeref:typename:char *
-parse_path_array	src/command_path.c	/^static int	parse_path_array( char **path_array, char *tmp, char **str)$/;"	f	typeref:typename:int	file:
+parse_path_array	src/command_path.c	/^static int	parse_path_array( char **path_array, char *dup_arg, char **cmd_pth)$/;"	f	typeref:typename:int	file:
 parsed	include/command.h	/^	t_list	*parsed;$/;"	m	struct:s_env	typeref:typename:t_list *
 parser	src/parser.c	/^int	parser(t_list *list, t_list **parsed)$/;"	f	typeref:typename:int
 pid	include/command.h	/^	int	pid;$/;"	m	struct:s_cmd_fd	typeref:typename:int

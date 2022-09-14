@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 16:09:11 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:12:01 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define CHILD 1
 # define HEREDOC 2
 # define NORMAL 0
+# define CMD_BUILTIN 1
+# define CMD_PATH_BINARY 2
 
 # include <assert.h>
 # include <fcntl.h>

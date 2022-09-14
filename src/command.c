@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 16:56:35 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:45:53 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static int	exit_exec_error(t_cmd_fd *cmd_fd)
 		g_minishell.last_exec_code = 1;
 	else if (ret == SYNTAX_ERROR)
 		g_minishell.last_exec_code = 127;
-	printf("exit error = %d\n", g_minishell.last_exec_code);
 	return (ret);
 }
 

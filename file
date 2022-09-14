@@ -2,6 +2,7 @@ bin
 file
 include
 libft
+lol
 Makefile
 minishell
 readline_leaks.txt
