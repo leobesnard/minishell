@@ -6,7 +6,7 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:39:49 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/29 18:29:25 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:42:41 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	check_tiret_n(char *str)
 	int	i;
 
 	i = 1;
+	if (!str)
+		return (0);
 	if (str[0] == '-')
 	{
 		while (str[i])
