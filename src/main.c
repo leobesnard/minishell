@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 20:46:24 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 21:07:06 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		free(command_buf);
-		//free_parsed(&parsed);
+		free_parsed(&parsed); //TODO faire ce free quand adviens un command not found
 	}
 	(void)argc;
 	(void)argv;

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 19:15:50 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 20:57:30 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)
 
 int	builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv)
 {
-	/*if (cmd_fd->ret < 0)
-		return (cmd_fd->ret);*/
+	if (cmd_fd->ret < 0)
+		return (cmd_fd->ret);
 	if (!ft_strncmp(argv[0], "unset", 5))
 	{
 		env->envdup = builtin_unset(env->envdup, argv[1]);

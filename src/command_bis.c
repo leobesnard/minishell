@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 20:53:29 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 21:03:21 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	t_list	*parsed;
 
 	parsed = *aparsed;
-	print_cmd(*aparsed);
 	env->flag = 0;
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv, env);
 	if (cmd_fd->ret < 0 || !argv[0])
