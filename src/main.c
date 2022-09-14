@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 13:53:59 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 20:46:24 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,15 @@ int	main(int argc, char **argv, char **envp)
 			{
 				if (parser(lexed, &parsed) == MEM_ERROR)
 					print_error(MEM_ERROR);
-				ft_lstclear(&lexed, &free_token);
 				env->parsed = parsed;
-				
+				ft_lstclear(&lexed, &free_token);	
 				ret = execute_command(parsed, env);
 				if (ret != 0)
 					print_error(ret);
-				free_parsed(&parsed);
-				print_cmd(parsed);
 			}
 		}
 		free(command_buf);
+		//free_parsed(&parsed);
 	}
 	(void)argc;
 	(void)argv;
