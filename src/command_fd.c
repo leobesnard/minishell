@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 14:45:00 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 18:50:44 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 extern t_minishell	g_minishell;
 
 static int	ret_get_args(char ***argv, t_env *env);
+static int	check_arg_path(char *arg, char **command_path);
 
 t_cmd_fd	*initiate_cmd_fd(void)
 {
@@ -85,16 +86,23 @@ static int	ret_get_args(char ***argv, t_env *env)
 	int		ret;
 
 	if (check_for_builtin(*argv) == 1)
-		return (1);
+		return (CMD_BUILTIN);
+	else if (check_arg_path((*argv)[0], &command_path) == 0)
+		return (CMD_PATH_BINARY);
 	if (!(*argv)[0])
 		return (0);
 	ret = get_path((*argv)[0], &command_path, env);
-	if (ret != 0 && ret != CMD_NOT_FOUND && ret != 2)
-	{
-		if ((*argv)[0])
-			free_array(argv);
-	}
-	else if (ret == 0)
+	if (ret == 0)
 		(*argv)[0] = command_path;
 	return (ret);
+}
+
+static int	check_arg_path(char *arg, char **command_path)
+{
+	if (access(arg, X_OK) == 0)
+	{
+		*command_path = arg;
+		return (0);
+	}
+	return (1);
 }

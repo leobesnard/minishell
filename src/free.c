@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/14 14:44:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:45:50 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	free_lexer(t_list *lst)
 int	free_env(t_env *env)
 {
 	free(env->command_buf);
-	free_envdup(env);//TODO LE LOUP : pas le temps mais il faut encore free argv et cmd_fd 
+	free_envdup(env); 
 	return (0);
 }
 

@@ -1,1 +1,13 @@
-a
+bin
+file
+include
+libft
+Makefile
+minishell
+readline_leaks.txt
+sandbox
+src
+tags
+test.sh
+test.txt
+valgrind_ignore_readline.supp
