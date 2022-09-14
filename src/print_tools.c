@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/30 14:19:15 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:56:49 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	print_error(int ret)
 {
 	if (ret == MEM_ERROR)
 		printf("Memory error, get yourself another computer now.\n");
-	else if (ret == SYNTAX_ERROR)
-		printf("Syntax error, go back to SHELL00.\n");
+	//else if (ret == SYNTAX_ERROR)
+		//printf("Syntax error, go back to SHELL00.\n");
 	else if (ret == PIPE_ERROR)
 		printf("Can't create a pipe correctly, call a plumber.\n");
 	else if (ret == FD_ERROR)

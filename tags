@@ -96,6 +96,7 @@ check_all_quotes	src/parser_utils.c	/^int	check_all_quotes(t_list *list)$/;"	f	t
 check_arg_path	src/command_path.c	/^static int	check_arg_path(char *arg, char **str)$/;"	f	typeref:typename:int	file:
 check_for_builtin	src/command_exec.c	/^int	check_for_builtin(char **argv)$/;"	f	typeref:typename:int
 check_quotes	src/parser_utils.c	/^int	check_quotes(t_token *token)$/;"	f	typeref:typename:int
+check_syntax	src/parser.c	/^int	check_syntax(t_list *list)$/;"	f	typeref:typename:int
 check_tiret_n	src/builtin_utils.c	/^int	check_tiret_n(char *str)$/;"	f	typeref:typename:int
 clean	Makefile	/^clean:$/;"	t
 clean	libft/Makefile	/^clean:$/;"	t
@@ -105,10 +106,10 @@ content	libft/include/libft.h	/^	void			*content;$/;"	m	struct:s_list	typeref:ty
 count_line	src/heredoc.c	/^static int	count_line(char *str)$/;"	f	typeref:typename:int	file:
 cpy_incr	src/expand_utils2.c	/^void	cpy_incr(t_vars *var, char *str)$/;"	f	typeref:typename:void
 create_args	src/command_utils.c	/^char	**create_args(t_list *list)$/;"	f	typeref:typename:char **
-create_cmd_list	src/parser.c	/^int	create_cmd_list(t_list *list, t_list **parsed)$/;"	f	typeref:typename:int
 create_struct_env	src/env_utils.c	/^t_env	*create_struct_env(char **envp)$/;"	f	typeref:typename:t_env *
 del_var	src/env.c	/^t_list	*del_var(t_list *env, char	*var)$/;"	f	typeref:typename:t_list *
 dup_env	src/env.c	/^t_list	*dup_env(char **envp)$/;"	f	typeref:typename:t_list *
+dup_token	src/parser.c	/^t_token	*dup_token(t_token *tok)$/;"	f	typeref:typename:t_token *
 e_cmd_type	include/parser.h	/^typedef enum e_cmd_type$/;"	g
 e_token_type	include/lexer.h	/^typedef enum e_token_type$/;"	g
 empty_cmd	src/parser_utils.c	/^int	empty_cmd(t_cmd **cmd)$/;"	f	typeref:typename:int
@@ -132,18 +133,18 @@ fd	include/command.h	/^	int	fd[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
 fd_hdoc	include/command.h	/^	int	fd_hdoc[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
 fill_cmd	src/parser.c	/^int	fill_cmd(t_list **alist, t_cmd *cmd)$/;"	f	typeref:typename:int
 fill_cmd_pipe	src/parser.c	/^int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
-fill_cmd_rd	src/parser.c	/^int	fill_cmd_rd(t_list **alst, t_list *tmp, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_cmd_rd	src/parser.c	/^int	fill_cmd_rd(t_list **alst, t_cmd *cmd)$/;"	f	typeref:typename:int
 fill_fd_pipe	src/command_fd.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
 fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)$/;"	f	typeref:typename:int
 fill_normal_cmd	src/parser.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
 find_env_var	src/env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
-first_command	src/main.c	/^int	first_command(int ac, char **av)$/;"	f	typeref:typename:int
 flag	include/command.h	/^	int		flag;$/;"	m	struct:s_env	typeref:typename:int
 free_all_except_one_str	src/command_utils.c	/^void	free_all_except_one_str(char **array, int x)$/;"	f	typeref:typename:void
 free_array	src/free.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
-free_before_exit	src/free.c	/^int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
-free_before_quit	src/free.c	/^int	free_before_quit(t_env *env)$/;"	f	typeref:typename:int
-free_env	src/free.c	/^void	free_env(t_env	*env)$/;"	f	typeref:typename:void
+free_before_exit	src/free.c	/^int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)$/;"	f	typeref:typename:int
+free_child	src/free.c	/^int	free_child(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)$/;"	f	typeref:typename:int
+free_env	src/free.c	/^int	free_env(t_env *env)$/;"	f	typeref:typename:int
+free_envdup	src/free.c	/^void	free_envdup(t_env *env)$/;"	f	typeref:typename:void
 free_lexer	src/free.c	/^int	free_lexer(t_list *lst)$/;"	f	typeref:typename:int
 free_node	src/free.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
 free_parsed	src/free.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
@@ -239,6 +240,7 @@ i	include/expand.h	/^	int		i;$/;"	m	struct:s_vars	typeref:typename:int
 initiate_cmd_fd	src/command_fd.c	/^t_cmd_fd	*initiate_cmd_fd(void)$/;"	f	typeref:typename:t_cmd_fd *
 is_alpha_spe	src/lexer_utils.c	/^int	is_alpha_spe(int c)$/;"	f	typeref:typename:int
 is_arg_numeric	src/builtin_exit.c	/^int	is_arg_numeric(char *word)$/;"	f	typeref:typename:int
+is_redirector	src/parser.c	/^static int	is_redirector(char *s)$/;"	f	typeref:typename:int	file:
 is_separator	src/lexer.c	/^int	is_separator(char *str)$/;"	f	typeref:typename:int
 last_exec_code	include/command.h	/^	int		last_exec_code;$/;"	m	struct:s_minishell	typeref:typename:int
 lexer	src/lexer.c	/^t_list	*lexer(char *str)$/;"	f	typeref:typename:t_list *
@@ -256,6 +258,7 @@ one_command	src/command_bis.c	/^int	one_command(t_list **aparsed, t_cmd_fd *cmd_
 p	include/command.h	/^	char	*p;$/;"	m	struct:s_hdocjoin	typeref:typename:char *
 parse_path_array	src/command_path.c	/^static int	parse_path_array( char **path_array, char *tmp, char **str)$/;"	f	typeref:typename:int	file:
 parsed	include/command.h	/^	t_list	*parsed;$/;"	m	struct:s_env	typeref:typename:t_list *
+parser	src/parser.c	/^int	parser(t_list *list, t_list **parsed)$/;"	f	typeref:typename:int
 pid	include/command.h	/^	int	pid;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 pid	include/command.h	/^	pid_t	pid;$/;"	m	struct:s_process	typeref:typename:pid_t
 print_cmd	src/print_tools.c	/^void	print_cmd(t_list *list)$/;"	f	typeref:typename:void
@@ -313,6 +316,7 @@ tab_size	src/builtin2.c	/^int	tab_size(char **tab)$/;"	f	typeref:typename:int
 termios_management	src/signal.c	/^int	termios_management(bool echo_ctl)$/;"	f	typeref:typename:int
 test_check_quotes	src/expand.c	/^int	test_check_quotes(char *str)$/;"	f	typeref:typename:int
 tmp	include/command.h	/^	int	tmp;$/;"	m	struct:s_cmd_fd	typeref:typename:int
+tok_error	src/parser.c	/^static int	tok_error(char *str)$/;"	f	typeref:typename:int	file:
 token_type	src/lexer.c	/^t_token_type token_type(char *str)$/;"	f	typeref:typename:t_token_type
 type	include/lexer.h	/^	t_token_type	type;$/;"	m	struct:s_token	typeref:typename:t_token_type
 type	include/parser.h	/^	t_cmd_type	type;$/;"	m	struct:s_cmd	typeref:typename:t_cmd_type

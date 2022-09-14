@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/13 16:11:14 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:33:41 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ int	builtin_echo(char **str)
 
 	i = 1;
 	tiret_n = 0;
+	if (!str[1])
+		return (ft_printf("\n"));
 	while (check_tiret_n(str[i]))
 	{
 		tiret_n = 1;
 		i++;
 	}
+	if (!str[i])
+		return (ft_printf("\n"));
 	while (str[i])
 	{
 		if (!ft_strncmp(str[i], "$?", 3))

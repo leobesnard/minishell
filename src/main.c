@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 22:59:49 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 13:53:59 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	main(int argc, char **argv, char **envp)
 	env = create_struct_env(envp);
 	if (argc != 1)
 	{
-		ret = first_command(argc, argv);
-		return (ret);
+		printf("No arguments\n");
+		return (-1);
 	}
 	parsed = NULL;
 	while (1)
@@ -49,20 +49,18 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			lexed = lexer(command_buf);
-			//printf("in main : %s\n", lexed->content->word);
 			if (lexed)
 			{
-				ret = create_cmd_list(lexed, &parsed);//lst_size(lexer) = 4 avant et = 2 apres donc tu perd des maillonts dedans
+				if (parser(lexed, &parsed) == MEM_ERROR)
+					print_error(MEM_ERROR);
+				ft_lstclear(&lexed, &free_token);
 				env->parsed = parsed;
+				
+				ret = execute_command(parsed, env);
 				if (ret != 0)
 					print_error(ret);
-				else
-				{	
-					ret = execute_command(parsed, env);
-					if (ret != 0)
-						print_error(ret);
-					free_parsed(&parsed);
-				}
+				free_parsed(&parsed);
+				print_cmd(parsed);
 			}
 		}
 		free(command_buf);
@@ -86,29 +84,6 @@ static char	*get_input_from_prompt(void)
 	else if (isatty(STDIN_FILENO) && command_buf && command_buf[0])
 		add_history(command_buf);
 	return (command_buf);
-}
-
-int	first_command(int ac, char **av)
-{
-	char 	*grouped;
-	t_list	*lexed;
-	t_list	*parsed;
-	int		ret;
-
-	parsed = NULL;
-	grouped = group_av(ac, av);
-	lexed = lexer(grouped);
-	ret = create_cmd_list(lexed, &parsed);
-	if (ret != 0)
-	{
-		print_error(ret);
-		return (ret);
-	}
-	ret = execute_command(parsed, NULL);
-	if (ret != 0)
-		print_error(ret);
-	free_parsed(&parsed);
-	return (ret);
 }
 
 char	*group_av(int ac, char **av)
@@ -147,4 +122,4 @@ char	*group_av(int ac, char **av)
 	}
 	str[j] = '\0';
 	return (str);
-}		
+}

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/13 15:13:20 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:44:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,28 @@ int	free_lexer(t_list *lst)
 	return (0);
 }
 
-int	free_before_quit(t_env *env)
+int	free_env(t_env *env)
 {
-	free_parsed(&env->parsed);
 	free(env->command_buf);
-	free_env(env);//TODO LE LOUP : pas le temps mais il faut encore free argv et cmd_fd 
+	free_envdup(env);//TODO LE LOUP : pas le temps mais il faut encore free argv et cmd_fd 
 	return (0);
 }
 
-int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd)
+int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)
 {
-	free_before_quit(env);
+	free_env(env);
 	free(argv);
 	free(cmd_fd);
+	free_parsed(apsd);
+	return (0);
+}
+
+int	free_child(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)
+{
+	free_env(env);
+	free(argv);
+	free(cmd_fd);
+	free_parsed(apsd);
 	return (0);
 }
 
@@ -68,7 +77,7 @@ char	**free_ptr(char **ptr)
 	return (NULL);
 }
 
-void	free_env(t_env	*env)
+void	free_envdup(t_env *env)
 {
 	t_list	*tmp;
 
@@ -113,7 +122,7 @@ void	free_parsed(t_list **parsed)
 	while (tmp)
 	{
 		ft_lstclear(&((t_cmd *)tmp->content)->arg, &free_token);
-		ft_lstclear(&((t_cmd *)tmp->content)->rd, free);
+		ft_lstclear(&((t_cmd *)tmp->content)->rd, &free_token);
 		tmp = tmp->next;
 	}
 	ft_lstclear(parsed, free);

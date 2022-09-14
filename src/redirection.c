@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/05 16:51:54 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:55:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 {
-	int	ret;
+	int		ret;
+	t_list	*tmp;
 
+	tmp = cmd->rd;
 	while (cmd->rd)
 	{
 		if (((t_token *)cmd->rd->content)->type == GREAT)
@@ -42,6 +44,7 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 		}
 		cmd->rd = cmd->rd->next;
 	}
+	cmd->rd = tmp;
 	return (0);
 }
 

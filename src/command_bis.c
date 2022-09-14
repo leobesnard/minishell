@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 16:57:37 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:29:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
-	{
 		exec_solo_command(argv, cmd_fd, env);
-	}
-//	printf("in command_bis : %s\n", argv[0]);
 	if (env->flag)
 		free(argv[0]);
 	free(argv);
@@ -90,6 +87,7 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 		if (cmd_fd->pid == 0)
 		{
 			signal(SIGQUIT, SIG_DFL);
+			print_cmd(*apsd);
 			dup2(cmd_fd->tmp, STDIN_FILENO);
 			dup2(cmd_fd->fd[1], STDOUT_FILENO);
 			if (cmd_fd->fd[0] != 0)
@@ -102,7 +100,8 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 				builtin_env(env->envdup);
 			else if (!ft_strncmp(argv[0], "exit", 4))
 				builtin_exit(*apsd, env, argv, cmd_fd);
-			free_before_exit(env, argv, cmd_fd);
+			free_child(env, argv, cmd_fd, apsd);
+			print_cmd(*apsd);
 			exit(0);
 		}
 	}
@@ -152,7 +151,7 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
 			exec_command(argv, env, aparsed, cmd_fd);
-			free_before_exit(env, argv, cmd_fd);
+			free_child(env, argv, cmd_fd, aparsed);
 			exit(0);
 		}
 	}

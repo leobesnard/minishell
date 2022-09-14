@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 09:36:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/07/07 18:19:27 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/14 08:44:38 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	exit_cmd(t_list **parsed, int err_type, int flag, t_cmd *cmd)
 	tmp = NULL;
 	while (*parsed)
 	{
-		ft_lstclear(&((t_cmd *)(*parsed)->content)->arg, free);
-		ft_lstclear(&((t_cmd *)(*parsed)->content)->rd, free);
+		ft_lstclear(&((t_cmd *)(*parsed)->content)->arg, &free_token);
+		ft_lstclear(&((t_cmd *)(*parsed)->content)->rd, &free_token);
 		free((*parsed)->content);
 		tmp = (*parsed)->next;
 		free(*parsed);
