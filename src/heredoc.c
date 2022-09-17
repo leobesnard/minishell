@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 17:30:22 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:48:15 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 	cmd_fd->pid = fork();
 	if (cmd_fd->pid == 0)
 		heredoc_fork(cmd_fd, delimiter, env);
+	waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 	close(cmd_fd->fd_hdoc[1]);
 	cmd_fd->tmp = cmd_fd->fd_hdoc[0];
 	return (0);
@@ -54,7 +55,7 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 	str = expand(env->envdup, str);
 	dup2(cmd_fd->fd_hdoc[1], STDOUT_FILENO);
 	printf("%s", str);
-	close(cmd_fd->fd[1]);
+	close(cmd_fd->fd_hdoc[1]);
 	exit(0);
 }
 
