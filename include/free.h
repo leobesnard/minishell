@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:57:51 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/14 13:14:45 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 08:45:13 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_array(char ***args);
 
 void	free_parsed(t_list **parsed);
 int		free_env(t_env *env);
-int		free_child(t_env *env, char **argv, t_cmd_fd *cmd_fd, t_list **apsd);
+int		free_heredoc(t_env *env, t_cmd_fd *cmd_fd, char *str);
 int		free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd);
 int		free_lexer(t_list *lst);
 

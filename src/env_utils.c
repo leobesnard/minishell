@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/29 16:01:01 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:32:10 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,53 @@ t_env	*create_struct_env(char **envp)
 	env->envp = envp;
 	env->envdup = dup_env(envp);
 	return (env);
+}
+
+int	search_path(t_env *env)
+{
+	t_list	*tmp;
+
+	tmp = env->envdup;
+	while (tmp)
+	{
+		if (!ft_strncmp((char *)tmp->content, "PATH", 4))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+char **envdup_to_char_array(t_env *env)
+{
+	char	**char_arr;
+	int		i;
+	t_list	*tmp;
+
+	char_arr = malloc(sizeof(*char_arr) * (size_list(env->envdup) + 1));
+	if (!char_arr)
+		return (NULL);
+	i = 0;
+	tmp = env->envdup;
+	while (tmp)
+	{
+		char_arr[i] = strdup((char *)tmp->content);
+		i++;
+		tmp = tmp->next;
+	}
+	char_arr[i] = NULL;
+	return (char_arr);
+}
+
+char	*get_env_path(t_env *env)
+{
+	t_list	*tmp;
+
+	tmp = env->envdup;
+	while (tmp)
+	{
+		if (!ft_strncmp((char *)tmp->content, "PATH", 4))
+			return ((char *)tmp->content);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

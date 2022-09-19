@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/02 15:47:00 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:56:31 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	test_check_quotes(char *str)
 		{
 			i++;
 			while (str[i] && str[i] != '\"')
+			{
 				i++;
+			}
 			if (!str[i])
 				return (-1);
 		}

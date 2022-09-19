@@ -1,0 +1,7 @@
+Erreurs a corriger :
+>echo> : pb de token (t1 = >, t2 = echo >)
+Eventuellement les >>>>>>>>>> ou <<<<<<<<<<< (t1 = >>, t2 = >>>>>>>>>>>>>)
+Les `"' seuls : quitte le command_buf directement
+echo $PWD et echo $OLDPWD
+Expand a revoir : (ex: echo $?lolilol est censer retourner 0lolilol, idem $? + $? doit etre equivalent a 0 + 0)
+Lexer invalid read avec : echo 'asdqwe"'

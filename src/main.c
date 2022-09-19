@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 21:07:06 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 18:49:17 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		return (-1);
 	}
 	parsed = NULL;
+	usleep(1000);
 	while (1)
 	{
 		signal_management(NORMAL);
@@ -42,10 +43,6 @@ int	main(int argc, char **argv, char **envp)
 			env->parsed = NULL;
 			builtin_exit(parsed, env, NULL, NULL);
 		}	
-		if (test_check_quotes(command_buf))
-		{
-			printf("Error quote\n");
-		}
 		else
 		{
 			lexed = lexer(command_buf);

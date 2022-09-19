@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/13 15:19:33 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/19 15:29:03 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			get_args(t_list *list, char ***args, t_env *env);
 
 //		command_path.c
 
-int			exit_command(t_cmd_fd *cmd_fd, t_list *parsed);
+int			exit_command(t_cmd_fd *cmd_fd, t_list *parsed, t_env *env);
 int			get_path(char *arg, char **str, t_env *env);
 
 //		command_utils.c

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/17 14:48:15 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:30:34 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 	dup2(cmd_fd->fd_hdoc[1], STDOUT_FILENO);
 	printf("%s", str);
 	close(cmd_fd->fd_hdoc[1]);
+	free_heredoc(env, cmd_fd, str);
 	exit(0);
 }
 

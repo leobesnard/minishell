@@ -6,30 +6,50 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 12:01:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:56:25 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern t_minishell	g_minishell;
+
 static int	tok_error(char *str)
 {
 	printf("bash: syntax error near unexpected token `%s'\n", str);
+	g_minishell.last_exec_code = 2;
 	return (SYNTAX_ERROR);
 }
 
 static int	is_redirector(char *s)
 {
-	if (!ft_strncmp(s, ">", 2) || !ft_strncmp(s, "<", 2)
-			|| !ft_strncmp(s, ">>", 2) || !ft_strncmp(s, "<<", 3))
+	//if (!ft_strncmp(s, ">", 2) || !ft_strncmp(s, "<", 2)
+	//		|| !ft_strncmp(s, ">>", 2) || !ft_strncmp(s, "<<", 3))
+	if (s[0] && (s[0] == '>' || s[0] == '<'))
 		return (1);
+	return (0);
+}
+
+int	check_pipe_slash(t_list *list)
+{
+	char	*s;
+
+	s = ((t_token *)list->content)->word;
+	if (((t_token *)list->content)->type == PIPE)
+		return (tok_error(((t_token *)list->content)->word));
+	if (s[0] == '/' && !s[1])
+	{
+		printf("bash: %s: Is a directory\n", ((t_token *)list->content)->word);
+		g_minishell.last_exec_code = 126; 
+		return (SYNTAX_ERROR);
+	}
 	return (0);
 }
 
 int	check_syntax(t_list *list)
 {
-	if (((t_token *)list->content)->type == PIPE)
-		return (tok_error(((t_token *)list->content)->word));
+	if (check_pipe_slash(list) != 0)
+		return (SYNTAX_ERROR);
 	while (list)
 	{
 		if (is_redirector(((t_token *)list->content)->word))

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/14 20:48:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 08:44:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)
 	return (0);
 }
 
-int	free_child(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)
+int	free_heredoc(t_env *env, t_cmd_fd *cmd_fd, char *str)
 {
-	free_parsed(apsd);
+	free_parsed(&(env->parsed));
 	free_env(env);
-	free(argv);
 	free(cmd_fd);
+	free(str);
 	return (0);
 }
 

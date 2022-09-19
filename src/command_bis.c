@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/17 14:48:16 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:25:55 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
 		{
-			return (exit_command(cmd_fd, *aparsed));
+			return (exit_command(cmd_fd, *aparsed, env));
 		}
 	}
 	else
 	{
 		if (multiple_command(aparsed, cmd_fd, env) != 0)
-			return (exit_command(cmd_fd, *aparsed));
+			return (exit_command(cmd_fd, *aparsed, env));
 	}
 	return (0);
 }
 
-int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed)
+int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed, t_env *env)
 {
 	char	*str;
 	t_list	*arg;
@@ -46,7 +46,10 @@ int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed)
 	str = ((t_token *)arg->content)->word;
 	if (cmd_fd->ret != 0)
 	{
-		printf("%s: command not found\n", str);
+		if (search_path(env))
+			printf("%s: command not found\n", str);
+		else
+			printf("bash: %s: No such file or directory\n", str);
 		g_minishell.last_exec_code = 127;
 		return (0);
 	}
@@ -100,7 +103,7 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 				builtin_env(env->envdup);
 			else if (!ft_strncmp(argv[0], "exit", 4))
 				builtin_exit(*apsd, env, argv, cmd_fd);
-			free_child(env, argv, cmd_fd, &(env->parsed));
+			free_before_exit(env, argv, cmd_fd, &(env->parsed));
 			exit(0);
 		}
 	}
@@ -118,8 +121,21 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		execve(argv[0], argv, env->envp);
-		printf("Error execve\n");
+		execve(argv[0], argv, envdup_to_char_array(env));
+		if (argv[0][0] == '/')
+		{
+			ft_putstr_fd(argv[0], 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			free_before_exit(env, argv, cmd_fd, &(env->parsed));
+			exit(126);
+		}
+		else
+		{
+			ft_putstr_fd(argv[0], 2);
+			ft_putstr_fd(": Command not found\n", 2);
+			free_before_exit(env, argv, cmd_fd, &(env->parsed));
+			exit(127);
+		}
 	}
 	return (0);
 }
@@ -154,7 +170,7 @@ int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
 			exec_command(argv, env, aparsed, cmd_fd);
-			free_child(env, argv, cmd_fd, &env->parsed);
+			free_before_exit(env, argv, cmd_fd, &env->parsed);
 			exit(0);
 		}
 	}

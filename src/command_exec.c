@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 20:57:30 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/19 15:02:14 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,21 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd)
 		builtin_exit(*aparsed, env, argv, cmd_fd);
 	else
 	{
-		execve(argv[0], argv, env->envp);
-		printf("Execve\n");
+		execve(argv[0], argv, envdup_to_char_array(env));
+		if (argv[0][0] == '/')
+		{
+			ft_putstr_fd(argv[0], 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			free_before_exit(env, argv, cmd_fd, &(env->parsed));
+			exit(126);
+		}
+		else
+		{
+			ft_putstr_fd(argv[0], 2);
+			ft_putstr_fd(": Command not found\n", 2);
+			free_before_exit(env, argv, cmd_fd, &(env->parsed));
+			exit(127);
+		}
 	}
 	return ;
 }
