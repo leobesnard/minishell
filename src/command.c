@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 16:45:53 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 17:33:40 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	execute_command(t_list *parsed, t_env *env)
 	if (cmd_fd->tmp > 1)
 		close(cmd_fd->tmp);
 	wait_exec(cmd_fd);
-	//printf("Exit status = %d\n", g_minishell.last_exec_code);
 	free(cmd_fd);
 	return (0);
 }

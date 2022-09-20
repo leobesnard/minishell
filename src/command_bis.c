@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 16:25:55 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 17:34:03 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	t_list		*parsed;
 
 	parsed = *aparsed;
+	env->flag = 0;
+	printf("%s | ", ((t_token *)((t_cmd *)parsed->content)->arg->content)->word);
+	print_cmd_fd(cmd_fd, "before fill_fd_pipe");
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed, env);
+	printf("%s | ", ((t_token *)((t_cmd *)parsed->content)->arg->content)->word);
+	print_cmd_fd(cmd_fd, "after fill_fd_pipe");
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	if (cmd_fd->ret == 1)
@@ -62,14 +67,9 @@ int	one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	t_list	*parsed;
 
 	parsed = *aparsed;
-	env->flag = 0;
 	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv, env);
 	if (cmd_fd->ret < 0 || !argv[0])
-	{
-		if (argv)
-			free(argv);
-		return (cmd_fd->ret);
-	}
+		return (ret_cmd_not_found(cmd_fd, argv));
 	if (cmd_fd->ret == 1)
 		exec_solo_builtin(argv, env, aparsed, cmd_fd);
 	else
@@ -95,14 +95,7 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 			dup2(cmd_fd->fd[1], STDOUT_FILENO);
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
-			if (!ft_strncmp(argv[0], "echo", 5))
-				builtin_echo(argv);
-			else if (!ft_strncmp(argv[0], "pwd", 4))
-				builtin_pwd(env->envdup);
-			else if (!ft_strncmp(argv[0], "env", 4))
-				builtin_env(env->envdup);
-			else if (!ft_strncmp(argv[0], "exit", 4))
-				builtin_exit(*apsd, env, argv, cmd_fd);
+			exec_builtin_fork(cmd_fd, env, argv, &(env->parsed));
 			free_before_exit(env, argv, cmd_fd, &(env->parsed));
 			exit(0);
 		}
@@ -122,60 +115,7 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
 		execve(argv[0], argv, envdup_to_char_array(env));
-		if (argv[0][0] == '/')
-		{
-			ft_putstr_fd(argv[0], 2);
-			ft_putstr_fd(": Is a directory\n", 2);
-			free_before_exit(env, argv, cmd_fd, &(env->parsed));
-			exit(126);
-		}
-		else
-		{
-			ft_putstr_fd(argv[0], 2);
-			ft_putstr_fd(": Command not found\n", 2);
-			free_before_exit(env, argv, cmd_fd, &(env->parsed));
-			exit(127);
-		}
+		exit_fork(argv, cmd_fd, env);
 	}
-	return (0);
-}
-
-int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
-{
-	char	**argv;
-	t_list	*parsed;
-	int		ret;
-
-	parsed = *aparsed;
-	env->flag = 0;
-	cmd_fd->ret = get_args(((t_cmd *)parsed->content)->arg, &argv, env);
-	if (cmd_fd->ret < 0)
-	{
-		if (argv)
-			free(argv);
-		return (cmd_fd->ret);
-	}
-	ret = builtin_no_fork(cmd_fd, env, argv, aparsed);
-	if (ret < 1)
-		return (ret);
-	else
-	{
-		g_minishell.nb_exec++;
-		cmd_fd->pid = fork();
-		if (cmd_fd->pid == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			dup2(cmd_fd->tmp, STDIN_FILENO);
-			dup2(cmd_fd->fd[1], STDOUT_FILENO);
-			if (cmd_fd->fd[0] != 0)
-				close(cmd_fd->fd[0]);
-			exec_command(argv, env, aparsed, cmd_fd);
-			free_before_exit(env, argv, cmd_fd, &env->parsed);
-			exit(0);
-		}
-	}
-	if (env->flag)
-		free(argv[0]);
-	free(argv);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/14 18:50:44 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 12:18:49 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	ret_get_args(char ***argv, t_env *env)
 
 	if (check_for_builtin(*argv) == 1)
 		return (CMD_BUILTIN);
-	else if (check_arg_path((*argv)[0], &command_path) == 0)
+	else if (check_arg_path((*argv)[0], &command_path) == 1)
 		return (CMD_PATH_BINARY);
 	if (!(*argv)[0])
 		return (0);
@@ -102,7 +102,7 @@ static int	check_arg_path(char *arg, char **command_path)
 	if (access(arg, X_OK) == 0)
 	{
 		*command_path = arg;
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }

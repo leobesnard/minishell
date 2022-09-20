@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 15:29:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 14:27:17 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,20 @@ int			execute_command(t_list *parsed, t_env *env);
 
 int			exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 int			one_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
-int			exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd);
+int			exec_solo_builtin(char **argv, t_env *env, t_list **apsd,
+				t_cmd_fd *cmd_fd);
 int			exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env);
-int			multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
 
 //		command_exec.c
 
-void		exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd);
+void		exec_command(char **argv, t_env *env, t_list **aparsed,
+				t_cmd_fd *cmd_fd);
 int			check_for_builtin(char **argv);
-int			builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd);
+int			builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv,
+				t_list **apsd);
 int			builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv);
+int			exec_builtin_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv,
+				t_list **apsd);
 
 //		command_fd.c
 
@@ -79,6 +83,11 @@ t_cmd_fd	*initiate_cmd_fd(void);
 int			fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed,
 				t_env *env);
 int			get_args(t_list *list, char ***args, t_env *env);
+
+//		command_multiple.c
+
+int			multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env);
+void		mult_fork(t_list **apsd, t_cmd_fd *cmd_fd, t_env *env, char **argv);
 
 //		command_path.c
 
@@ -91,6 +100,11 @@ int			size_list(t_list *list);
 void		free_all_except_one_str(char **array, int x);
 char		**create_args(t_list *list);
 int			ft_min(int a, int b);
+
+//		command_utils2.c
+
+int			ret_cmd_not_found(t_cmd_fd *cmd_fd, char **argv);
+void		exit_fork(char **argv, t_cmd_fd *cmd_fd, t_env *env);
 
 //		global.c
 

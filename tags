@@ -119,6 +119,7 @@ empty_cmd	src/parser_utils.c	/^int	empty_cmd(t_cmd **cmd)$/;"	f	typeref:typename
 envdup	include/command.h	/^	t_list	*envdup;$/;"	m	struct:s_env	typeref:typename:t_list *
 envdup_to_char_array	src/env_utils.c	/^char **envdup_to_char_array(t_env *env)$/;"	f	typeref:typename:char **
 envp	include/command.h	/^	char	**envp;$/;"	m	struct:s_env	typeref:typename:char **
+exec_builtin_fork	src/command_exec.c	/^int	exec_builtin_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)$/;"	f	typeref:typename:int
 exec_command	src/command_exec.c	/^void	exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:void
 exec_simple_cmd	src/command_bis.c	/^int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 exec_solo_builtin	src/command_bis.c	/^int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
@@ -127,6 +128,7 @@ execute_command	src/command.c	/^int	execute_command(t_list *parsed, t_env *env)$
 exit_cmd	src/parser_utils.c	/^int	exit_cmd(t_list **parsed, int err_type, int flag, t_cmd *cmd)$/;"	f	typeref:typename:int
 exit_command	src/command_bis.c	/^int	exit_command(t_cmd_fd *cmd_fd, t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
 exit_exec_error	src/command.c	/^static int	exit_exec_error(t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int	file:
+exit_fork	src/command_utils2.c	/^void	exit_fork(char **argv, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:void
 exit_status	src/command.c	/^static void	exit_status(int status)$/;"	f	typeref:typename:void	file:
 expand	src/expand.c	/^char	*expand(t_list *env, char *str)$/;"	f	typeref:typename:char *
 expand_dollar	src/expand_utils2.c	/^void	expand_dollar(t_vars *var, t_list *env, char *str)$/;"	f	typeref:typename:void
@@ -253,7 +255,8 @@ libclean	Makefile	/^libclean:$/;"	t
 main	sandbox/multiple_pipe_test.c	/^int main()$/;"	f	typeref:typename:int
 main	sandbox/myecho.c	/^main(int argc, char *argv[])$/;"	f	typeref:typename:int
 main	src/main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f	typeref:typename:int
-multiple_command	src/command_bis.c	/^int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
+mult_fork	src/command_multiple.c	/^void	mult_fork(t_list **apsd, t_cmd_fd *cmd_fd, t_env *env, char **argv)$/;"	f	typeref:typename:void
+multiple_command	src/command_multiple.c	/^int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 n	include/command.h	/^	int		n;$/;"	m	struct:s_hdocjoin	typeref:typename:int
 nb_exec	include/command.h	/^	int		nb_exec;$/;"	m	struct:s_minishell	typeref:typename:int
 new_node	src/lexer.c	/^int	new_node(t_list **token_list, char *start, int size)$/;"	f	typeref:typename:int
@@ -279,6 +282,7 @@ re	Makefile	/^re: fclean all$/;"	t
 re	libft/Makefile	/^re: fclean all$/;"	t
 ret	include/command.h	/^	int	ret;$/;"	m	struct:s_cmd_fd	typeref:typename:int
 ret	include/expand.h	/^	char	*ret;$/;"	m	struct:s_vars	typeref:typename:char *
+ret_cmd_not_found	src/command_utils2.c	/^int	ret_cmd_not_found(t_cmd_fd *cmd_fd, char **argv)$/;"	f	typeref:typename:int
 ret_get_args	src/command_fd.c	/^static int	ret_get_args(char ***argv, t_env *env)$/;"	f	typeref:typename:int	file:
 s_cmd	include/parser.h	/^typedef struct s_cmd$/;"	s
 s_cmd_fd	include/command.h	/^typedef struct s_cmd_fd$/;"	s

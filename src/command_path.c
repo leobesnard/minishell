@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:17:23 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 16:32:22 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 12:49:29 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	get_path(char *arg, char **command_path, t_env *env)
 	char	*dup_arg;
 
 	dup_arg = ft_strdup(arg);
-	//path_array = ft_split(getenv("PATH"), ':');
 	path_array = ft_split(get_env_path(env), ':');
 	if (!path_array)
 		return (free(dup_arg), MEM_ERROR);
@@ -32,12 +31,11 @@ int	get_path(char *arg, char **command_path, t_env *env)
 	if (ret == CMD_NOT_FOUND)
 	{
 		free_array(&path_array);
-		*command_path = dup_arg;
 		free(dup_arg);
 		return (CMD_NOT_FOUND);
 	}
 	else
-		return (ret);
+		return (0);
 }
 
 static int	parse_path_array( char **path_array, char *dup_arg, char **cmd_pth)
