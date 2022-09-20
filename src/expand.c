@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 18:56:31 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/20 16:42:03 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,17 @@ int size_expand(char *str, t_list *env)
 	return (var.sz);
 }
 
-char	*expand(t_list *env, char *str)
+char	*expand(t_list *env, char *str, int *flag)
 {
 	t_vars	var;
 
-	if (test_check_quotes(str))
+	if (!str)
 		return (NULL);
+	if (test_check_quotes(str))
+	{
+		*flag = 1;
+		return (NULL);
+	}
 	var.ret = malloc(sizeof(char) * size_expand(str, env) + 1);
 	if (!var.ret)
 		return (NULL);
