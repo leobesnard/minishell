@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 16:43:19 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:01:41 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 	char	*command_buf;
 	int		ret;
-	int		flag;
 
 	env = create_struct_env(envp);
 	if (argc != 1)
@@ -35,17 +34,17 @@ int	main(int argc, char **argv, char **envp)
 	usleep(1000);
 	while (1)
 	{
-		flag = 0;
+		env->quote_flag = 0;
 		signal_management(NORMAL);
 		command_buf = get_input_from_prompt();
-		command_buf = expand(env->envdup, command_buf, &flag);
+		command_buf = expand(env->envdup, command_buf, &env->quote_flag);
 		env->command_buf = command_buf;
 		if (!command_buf)
 		{
 			env->parsed = NULL;
-			if (flag)
+			if (env->quote_flag)
 				ft_printf("Error quotes\n");
-			if (!flag)
+			if (!env->quote_flag)
 				builtin_exit(parsed, env, NULL, NULL);
 		}	
 		else
