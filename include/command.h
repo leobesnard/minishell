@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 11:47:48 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 20:15:06 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ typedef struct s_process
 
 typedef struct s_env
 {
-	t_list	*envdup;
-	char	**envp;
-	t_list	*parsed;
-	char	*command_buf;
-	int		flag;
-	int		quote_flag;
+	t_list		*envdup;
+	char		**envp;
+	t_list		*parsed;
+	char		*command_buf;
+	t_cmd_fd	*cmd_fd;
+	int			flag;
+	int			quote_flag;
 }	t_env;
 
 typedef struct s_hdocjoin

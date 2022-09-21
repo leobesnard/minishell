@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 10:49:30 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 20:15:25 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,15 @@ int	builtin_echo(char **str)
 	}
 	while (str[i])
 	{
-		if (!ft_strncmp(str[i], "$?", 3))
-			ft_printf("%d", g_minishell.last_exec_code);
+		if (!ft_strncmp(str[i], "$?", 2))
+			dollar_interro(str, i);
 		else
 		{
-			ft_printf("%s", str[i]	);
+			ft_printf("%s", str[i]);
 			if (str[i + 1])
 				ft_printf(" ");
 		}
 		i++;
-		
 	}
 	if (!tiret_n)
 		ft_printf("\n");
@@ -58,7 +57,7 @@ void	builtin_pwd(t_list *env)
 
 void	builtin_env(t_list *env)
 {
-	while(env)
+	while (env)
 	{
 		printf("%s\n", (char *)env->content);
 		env = env->next;

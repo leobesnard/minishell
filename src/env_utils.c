@@ -6,27 +6,15 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:21:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/19 16:32:10 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:34:52 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int		i;
-	int		n;
-
-	i = 0;
-	n = ft_strlen(s1);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < (n - 1))
-		i++;
-	return ((const char)s1[i] - (const char)s2[i]);
-}
-
 char	*get_var(char *env_i)
 {
-	char *equal;
+	char	*equal;
 
 	equal = ft_strchr(env_i, '=') + 1;
 	return (equal);
@@ -58,7 +46,7 @@ int	search_path(t_env *env)
 	return (0);
 }
 
-char **envdup_to_char_array(t_env *env)
+char	**envdup_to_char_array(t_env *env)
 {
 	char	**char_arr;
 	int		i;

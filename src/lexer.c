@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/19 18:52:36 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:18:51 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,28 @@ int	new_node(t_list **token_list, char *start, int size)
 	start = str;
 } */
 
-t_list	*lexer(char *str)
+t_list	*lexer(char *str, int *quote_flag)
 {
 	char	*start;
 	t_list	*token_list;
 	
 	start = str;
 	token_list = NULL;
+	if (test_check_quotes(str))
+	{
+		*quote_flag = 1;
+		return (NULL);
+	}
 	while (*str)
 	{
 		if (*str == '\'' || *str == '"')
 			skip_quotes(&str);
-		if (is_separator(str) || *(str + 1) == '\0')
+		if (*str == '\0')
+		{
+			if (!new_node(&token_list, start, str - start))
+				return (free_token_list(&token_list));
+		}
+		else if (is_separator(str) || *(str + 1) == '\0')
 		{
 			if (*(str + 1) == '\0' && *str != ' ')
 				str++;

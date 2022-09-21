@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 15:37:02 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:50:55 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_cd_path(t_list *env, char **args)
 int	change_pwd(t_list *env, char *path, char *oldpath)
 {
 	char	*var;
-	
+
 	var = ft_strjoin("OLDPWD=", oldpath);
 	if (!var)
 		return (1);
@@ -93,9 +93,6 @@ int	builtin_cd(t_list *env, char **args)
 		g_minishell.last_exec_code = 1;
 		return (ft_printf("cd: permission denied: %s\n", path));
 	}
-	oldpath = getcwd(0, 0);
-	chdir(path);
-	change_pwd(env, path, oldpath);
-	free(oldpath);
+	change_path(env, oldpath, path);
 	return (0);
 }

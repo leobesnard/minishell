@@ -6,13 +6,13 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 16:38:54 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/14 21:02:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:34:15 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_minishell g_minishell;
+extern t_minishell	g_minishell;
 
 int	is_arg_numeric(char *word)
 {
@@ -30,8 +30,8 @@ int	is_arg_numeric(char *word)
 
 int	builtin_exit(t_list *parsed, t_env *env, char **argv, t_cmd_fd *cmd_fd)
 {
-	t_list	*args;
-	char	*word;
+	t_list			*args;
+	char			*word;
 
 	if (parsed)
 		args = ((t_cmd *)parsed->content)->arg->next;
@@ -39,27 +39,9 @@ int	builtin_exit(t_list *parsed, t_env *env, char **argv, t_cmd_fd *cmd_fd)
 		args = NULL;
 	if (args)
 		word = ((t_token *)args->content)->word;
-	else 
+	else
 		word = NULL;
 	printf("exit\n");
-	if (word)
-	{
-		if (!is_arg_numeric(word))
-			return (free_before_exit(env, argv, cmd_fd, &env->parsed),
-			ft_putstr_fd("exit: numeric argument required\n", 2),
-			exit(2), 2);
-	}
-	if (args && args->next)
-		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
-	if (!args)
-	{
-		free_before_exit(env, argv, cmd_fd, &env->parsed);
-		exit(g_minishell.last_exec_code);
-	}
-	else
-	{
-		free_before_exit(env, argv, cmd_fd, &env->parsed);
-		exit((unsigned int)ft_atol(word));
-	}
-	return (0);
+	env->cmd_fd = cmd_fd;
+	return (exit_1(env, argv, word, args));
 }

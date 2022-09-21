@@ -6,12 +6,18 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:37:10 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/08/25 18:01:50 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 17:32:29 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	incr(char *str, t_vars *var)
+{
+	var->ret[var->u] = str[var->i];
+	var->u++;
+	var->i++;
+}
 
 void	var_incr(t_var *var)
 {
@@ -19,19 +25,19 @@ void	var_incr(t_var *var)
 	var->i++;
 }
 
-char    *var_str(char *str)
+char	*var_str(char *str)
 {
-    int        i;
-    char    *ret;
+	int		i;
+	char	*ret;
 
-    i = 0;
-    while (str[i] && ft_is_var_char(str[i]))
-        i++;
-    ret = malloc(sizeof(char) * (i + 1));
-    if (!ret)
-        return (NULL);
-    ft_strlcpy(ret, str, i + 1);
-    return (ret);
+	i = 0;
+	while (str[i] && ft_is_var_char(str[i]))
+		i++;
+	ret = malloc(sizeof(char) * (i + 1));
+	if (!ret)
+		return (NULL);
+	ft_strlcpy(ret, str, i + 1);
+	return (ret);
 }
 
 int	get_var_size(char *str, t_list *env)

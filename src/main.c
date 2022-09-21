@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 10:21:49 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 20:16:41 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ int	main(int argc, char **argv, char **envp)
 		env->quote_flag = 0;
 		signal_management(NORMAL);
 		command_buf = get_input_from_prompt();
-		command_buf = expand(env->envdup, command_buf, &env->quote_flag);
-		env->command_buf = command_buf;
 		if (!command_buf)
 		{
 			env->parsed = NULL;
-			if (env->quote_flag)
-				ft_printf("Error quotes\n");
-			if (!env->quote_flag)
-				builtin_exit(parsed, env, NULL, NULL);
+			builtin_exit(parsed, env, NULL, NULL);
 		}	
 		else
 		{
-			lexed = lexer(command_buf);
-			if (lexed)
+			lexed = lexer(command_buf, &env->quote_flag);
+			pass_expand(&lexed, env);
+			if (env->quote_flag)
+				ft_printf("Unmatching quote\n");
+			else if (lexed)
 			{
 				if (parser(lexed, &parsed) == MEM_ERROR)
 					print_error(MEM_ERROR);
@@ -70,8 +68,25 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
+int	pass_expand(t_list **lexer, t_env *env)
+{
+	t_list	*lst;
+
+	lst = *lexer;
+	while (lst)
+	{
+		((t_token *)lst->content)->word = expand(env->envdup,
+		((t_token *)lst->content)->word, &env->quote_flag);
+		if (!((t_token *)lst->content)->word)
+			return (-1);
+		lst = lst->next;
+	}
+	return (0);
+}
+
 static char	*get_input_from_prompt(void)
 {
+
 	char	*command_buf;
 
 	if (isatty(STDIN_FILENO))
