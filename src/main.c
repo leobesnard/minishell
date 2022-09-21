@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 14:07:23 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 10:21:49 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,18 @@ int	main(int argc, char **argv, char **envp)
 	usleep(1000);
 	while (1)
 	{
+		env->quote_flag = 0;
 		signal_management(NORMAL);
 		command_buf = get_input_from_prompt();
-		command_buf = expand(env->envdup, command_buf);
+		command_buf = expand(env->envdup, command_buf, &env->quote_flag);
 		env->command_buf = command_buf;
 		if (!command_buf)
 		{
 			env->parsed = NULL;
-			builtin_exit(parsed, env, NULL, NULL);
+			if (env->quote_flag)
+				ft_printf("Error quotes\n");
+			if (!env->quote_flag)
+				builtin_exit(parsed, env, NULL, NULL);
 		}	
 		else
 		{

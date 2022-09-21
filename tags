@@ -130,7 +130,7 @@ exit_command	src/command_bis.c	/^int	exit_command(t_cmd_fd *cmd_fd, t_list *pars
 exit_exec_error	src/command.c	/^static int	exit_exec_error(t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int	file:
 exit_fork	src/command_utils2.c	/^void	exit_fork(char **argv, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:void
 exit_status	src/command.c	/^static void	exit_status(int status)$/;"	f	typeref:typename:void	file:
-expand	src/expand.c	/^char	*expand(t_list *env, char *str)$/;"	f	typeref:typename:char *
+expand	src/expand.c	/^char	*expand(t_list *env, char *str, int *flag)$/;"	f	typeref:typename:char *
 expand_dollar	src/expand_utils2.c	/^void	expand_dollar(t_vars *var, t_list *env, char *str)$/;"	f	typeref:typename:void
 expand_single_quote	src/expand_utils2.c	/^void	expand_single_quote(t_vars *var, char *str)$/;"	f	typeref:typename:void
 fclean	Makefile	/^fclean: clean$/;"	t
@@ -227,7 +227,6 @@ ft_substr	libft/src/mandatory/ft_substr.c	/^char	*ft_substr(char const *str, uns
 ft_tolower	libft/src/mandatory/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f	typeref:typename:int
 ft_toupper	libft/src/mandatory/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f	typeref:typename:int
 ft_wrdcnt	libft/src/mandatory/ft_split.c	/^static int	ft_wrdcnt(char const*str, char c)$/;"	f	typeref:typename:int	file:
-g_minishell	src/main.c	/^t_minishell	g_minishell;$/;"	v	typeref:typename:t_minishell
 get_args	src/command_fd.c	/^int	get_args(t_list *list, char ***argv, t_env *env)$/;"	f	typeref:typename:int
 get_cd_path	src/builtin2.c	/^char	*get_cd_path(t_list *env, char **args)$/;"	f	typeref:typename:char *
 get_env_path	src/env_utils.c	/^char	*get_env_path(t_env *env)$/;"	f	typeref:typename:char *
@@ -274,6 +273,7 @@ print_cmd_fd	src/print_tools.c	/^void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)$
 print_error	src/print_tools.c	/^void	print_error(int ret)$/;"	f	typeref:typename:void
 print_tab	src/print_tools.c	/^void	print_tab(char **tab, char *str)$/;"	f	typeref:typename:void
 print_token_list	src/print_tools.c	/^void	print_token_list(t_list *list, char *str)$/;"	f	typeref:typename:void
+quote_flag	include/command.h	/^	int		quote_flag;$/;"	m	struct:s_env	typeref:typename:int
 rd	include/parser.h	/^	t_list		*rd;$/;"	m	struct:s_cmd	typeref:typename:t_list *
 rd_d_great	src/redirection.c	/^int	rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int
 rd_great	src/redirection.c	/^int	rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int
