@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 20:15:25 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 20:44:58 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,15 @@ void	builtin_env(t_list *env)
 
 t_list	*builtin_unset(t_list *env, char *str)
 {
+	if (!str)
+		return (env);
 	return (del_var(env, str));
 }
 
 t_list	*builtin_export(t_list *env, char *str)
 {
+	if (!str)
+		return (env);
 	if (!ft_strchr(str, '='))
 		return (env);
 	if (find_env_var(env, str))

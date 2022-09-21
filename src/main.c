@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 20:16:41 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:57:02 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			lexed = lexer(command_buf, &env->quote_flag);
-			pass_expand(&lexed, env);
+			if (lexed)
+			{
+				pass_expand(&lexed, env);
+				remove_empty(lexed);
+			}
 			if (env->quote_flag)
 				ft_printf("Unmatching quote\n");
 			else if (lexed)

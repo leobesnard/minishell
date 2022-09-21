@@ -6,11 +6,29 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 19:04:56 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 23:06:46 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	remove_empty(t_list *lexer)
+{
+	t_list	*tmp;
+	t_list	*lst;
+
+	lst = lexer;
+	while(lst && lst->next)
+	{
+		tmp = lst->next;
+		if (!(*((t_token *)tmp->content)->word))
+		{
+			 lst->next = tmp->next;
+			 ft_lstdelone(tmp, &free_token);
+		}
+		lst = lst->next;
+	}
+}
 
 int	simple_double_quotes(char *str, int i)
 {

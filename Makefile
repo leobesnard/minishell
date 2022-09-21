@@ -9,13 +9,10 @@ SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	free.c lexer_utils.c env.c env_utils.c builtin.c redirection.c command.c \
 	builtin2.c command_utils.c signal.c global.c builtin_exit.c heredoc.c \
 	command_exec.c expand.c command_bis.c builtin_utils.c expand_utils.c \
-<<<<<<< HEAD
-	command_fd.c command_path.c free2.c command_multiple.c command_utils2.c \
-	free3.c parser2.c
-=======
+	 command_multiple.c command_utils2.c \
+	free3.c parser2.c \
 	command_fd.c command_path.c free2.c env_utils2.c expand_utils2.c \
 	expand_utils3.c
->>>>>>> lbesnard
 
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
@@ -23,7 +20,7 @@ OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 CFLAGS = #-Wall -Wextra -Werror 
 LINK = -lft -lreadline
 
-CC = gcc -g
+CC = gcc -ggdb
 
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)

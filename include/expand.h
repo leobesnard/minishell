@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:12:43 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 19:05:17 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:43:07 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	var_incr(t_var *var);
 char    *var_str(char *str);
 int		get_var_size(char *str, t_list *env);
 int		ft_is_var_char(int c);
+void	remove_empty(t_list *lexer);
 
 /*expand_utils*/
 void	incr(char *str, t_vars *var);

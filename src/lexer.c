@@ -6,11 +6,19 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 15:18:51 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 23:32:16 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int is_ws(char a)
+{
+	if (a == '\t' || a == '\n' || a == '\r' || a == '\v' ||
+		a == '\f' || a == ' ')
+		return (1);
+	return (0);
+}
 
 int	is_separator(char *str)
 {
@@ -18,7 +26,7 @@ int	is_separator(char *str)
 		return (2);
 	if (!ft_strncmp(str, "<<", 2))
 		return (2);
-	if (!ft_strncmp(str," ", 1))
+	if (is_ws(*str))
 		return (1);
 	if (!ft_strncmp(str, "<", 1))
 		return (1);
