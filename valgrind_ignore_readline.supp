@@ -1,6 +1,0 @@
-{
-	Readline_supp
-	Memcheck:Leak
-	...
-	fun:readline
-}
