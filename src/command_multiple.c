@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:03:29 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 17:28:27 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:03:19 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	mult_fork(t_list **apsd, t_cmd_fd *cmd_fd, t_env *env, char **argv)
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
 		exec_command(argv, env, apsd, cmd_fd);
-		close(cmd_fd->fd[1]);
+		if (cmd_fd->fd[1] > 1)
+			close(cmd_fd->fd[1]);
+		if (cmd_fd->tmp > 1)
+			close(cmd_fd->tmp);
 		free_before_exit(env, argv, cmd_fd, &env->parsed);
 		exit(0);
 	}

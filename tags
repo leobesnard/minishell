@@ -253,8 +253,6 @@ is_separator	src/lexer.c	/^int	is_separator(char *str)$/;"	f	typeref:typename:in
 last_exec_code	include/command.h	/^	int		last_exec_code;$/;"	m	struct:s_minishell	typeref:typename:int
 lexer	src/lexer.c	/^t_list	*lexer(char *str)$/;"	f	typeref:typename:t_list *
 libclean	Makefile	/^libclean:$/;"	t
-main	sandbox/multiple_pipe_test.c	/^int main()$/;"	f	typeref:typename:int
-main	sandbox/myecho.c	/^main(int argc, char *argv[])$/;"	f	typeref:typename:int
 main	src/main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f	typeref:typename:int
 mult_fork	src/command_multiple.c	/^void	mult_fork(t_list **apsd, t_cmd_fd *cmd_fd, t_env *env, char **argv)$/;"	f	typeref:typename:void
 multiple_command	src/command_multiple.c	/^int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int

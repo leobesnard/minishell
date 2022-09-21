@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 13:54:37 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 14:27:04 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:04:50 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	ret_cmd_not_found(t_cmd_fd *cmd_fd, char **argv)
 
 void	exit_fork(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 {
+	if (cmd_fd->fd[1] > 1)
+		close(cmd_fd->fd[1]);
+	if (cmd_fd->tmp > 1)
+		close(cmd_fd->tmp);
 	if (argv[0][0] == '/')
 	{
 		ft_putstr_fd(argv[0], 2);

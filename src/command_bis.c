@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 12:30:41 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:04:50 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 
 int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 {
+	char	**char_envdup;
+
 	cmd_fd->pid = fork();
 	g_minishell.nb_exec++;
 	if (cmd_fd->pid == 0)
@@ -112,11 +114,9 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 		dup2(cmd_fd->fd[1], STDOUT_FILENO);
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
-		execve(argv[0], argv, envdup_to_char_array(env));
-		if (cmd_fd->fd[1] > 1)
-			close(cmd_fd->fd[1]);
-		if (cmd_fd->tmp > 1)
-			close(cmd_fd->tmp);
+		char_envdup = envdup_to_char_array(env);
+		execve(argv[0], argv, char_envdup);
+		free_array(&char_envdup);
 		exit_fork(argv, cmd_fd, env);
 	}
 	return (0);
