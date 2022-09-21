@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:26 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 12:56:25 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:46:34 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	parser(t_list *list, t_list **parsed)
 	tmp = NULL;
 	cmd = NULL;
 	(void)parsed;
-	if (check_syntax(list) == SYNTAX_ERROR || check_all_quotes(list))
+	if (check_syntax(list) == SYNTAX_ERROR) //|| check_all_quotes(list))
 		return (SYNTAX_ERROR);
 	while (list)
 	{

@@ -6,28 +6,27 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:30 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/01 17:38:12 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/21 18:21:21 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cpy_incr(t_vars *var, char *str)
+int	init_expand(t_vars *var, char *str, t_list *env)
 {
-	var->ret[var->u] = str[var->i];
-	var->u++;
-	var->i++;
+	var->ret = malloc(sizeof(char) * size_expand(str, env) + 1);
+	if (!var->ret)
+		return (-1);
+	var->i = 0;
+	var->u = 0;
+	return (0);
 }
 
-void	expand_single_quote(t_vars *var, char *str)
+void	expand_simple_quotes(char *str, t_vars *var)
 {
 	var->i++;
 	while (str[var->i] && str[var->i] != '\'')
-	{
-		var->ret[var->u] = str[var->i];
-		var->i++;
-		var->u++;
-	}
+		incr(str, var);
 	var->i++;
 }
 
@@ -47,5 +46,18 @@ void	expand_dollar(t_vars *var, t_list *env, char *str)
 			var->u += ft_strlen(var->var);
 	}
 	else
-		cpy_incr(var, str);
+		incr(str, var);
+}
+
+void	expand_double_quotes(t_vars *var, t_list *env, char *str)
+{
+	var->i++;
+	while (str[var->i] && str[var->i] != '\"')
+	{
+		if (str[var->i] == '$')
+			expand_dollar(var, env, str);
+		else
+			incr(str, var);
+	}
+	var->i++;
 }

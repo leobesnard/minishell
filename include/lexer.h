@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:17:39 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/12 13:59:29 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:54:05 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_token
 	t_token_type	type;
 }	t_token;
 
-t_list	*lexer(char *str);
+t_list	*lexer(char *str, int *quote_flag);
 
 /* lexer_utils */
 void	skip_quotes(char **str);
