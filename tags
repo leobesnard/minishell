@@ -112,7 +112,7 @@ create_args	src/command_utils.c	/^char	**create_args(t_list *list)$/;"	f	typeref
 create_struct_env	src/env_utils.c	/^t_env	*create_struct_env(char **envp)$/;"	f	typeref:typename:t_env *
 del_var	src/env.c	/^t_list	*del_var(t_list *env, char	*var)$/;"	f	typeref:typename:t_list *
 dup_env	src/env.c	/^t_list	*dup_env(char **envp)$/;"	f	typeref:typename:t_list *
-dup_token	src/parser.c	/^t_token	*dup_token(t_token *tok)$/;"	f	typeref:typename:t_token *
+dup_token	src/parser2.c	/^t_token	*dup_token(t_token *tok)$/;"	f	typeref:typename:t_token *
 e_cmd_type	include/parser.h	/^typedef enum e_cmd_type$/;"	g
 e_token_type	include/lexer.h	/^typedef enum e_token_type$/;"	g
 empty_cmd	src/parser_utils.c	/^int	empty_cmd(t_cmd **cmd)$/;"	f	typeref:typename:int
@@ -120,7 +120,7 @@ envdup	include/command.h	/^	t_list	*envdup;$/;"	m	struct:s_env	typeref:typename:
 envdup_to_char_array	src/env_utils.c	/^char **envdup_to_char_array(t_env *env)$/;"	f	typeref:typename:char **
 envp	include/command.h	/^	char	**envp;$/;"	m	struct:s_env	typeref:typename:char **
 exec_builtin_fork	src/command_exec.c	/^int	exec_builtin_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)$/;"	f	typeref:typename:int
-exec_command	src/command_exec.c	/^void	exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:void
+exec_command	src/command_exec.c	/^void	exec_command(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:void
 exec_simple_cmd	src/command_bis.c	/^int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 exec_solo_builtin	src/command_bis.c	/^int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
 exec_solo_command	src/command_bis.c	/^int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
@@ -137,27 +137,28 @@ fclean	Makefile	/^fclean: clean$/;"	t
 fclean	libft/Makefile	/^fclean: clean$/;"	t
 fd	include/command.h	/^	int	fd[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
 fd_hdoc	include/command.h	/^	int	fd_hdoc[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
-fill_cmd	src/parser.c	/^int	fill_cmd(t_list **alist, t_cmd *cmd)$/;"	f	typeref:typename:int
-fill_cmd_pipe	src/parser.c	/^int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
-fill_cmd_rd	src/parser.c	/^int	fill_cmd_rd(t_list **alst, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_cmd	src/parser2.c	/^int	fill_cmd(t_list **alist, t_cmd *cmd)$/;"	f	typeref:typename:int
+fill_cmd_pipe	src/parser2.c	/^int	fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
+fill_cmd_rd	src/parser2.c	/^int	fill_cmd_rd(t_list **alst, t_cmd *cmd)$/;"	f	typeref:typename:int
 fill_fd_pipe	src/command_fd.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)$/;"	f	typeref:typename:int
 fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)$/;"	f	typeref:typename:int
-fill_normal_cmd	src/parser.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
+fill_fd_rd_loop	src/redirection.c	/^static int	fill_fd_rd_loop(t_cmd_fd *cmd_fd, t_cmd **acmd)$/;"	f	typeref:typename:int	file:
+fill_normal_cmd	src/parser2.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
 find_env_var	src/env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
 flag	include/command.h	/^	int		flag;$/;"	m	struct:s_env	typeref:typename:int
 free_all_except_one_str	src/command_utils.c	/^void	free_all_except_one_str(char **array, int x)$/;"	f	typeref:typename:void
-free_array	src/free.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
-free_before_exit	src/free.c	/^int	free_before_exit(t_env *env, char **argv,  t_cmd_fd *cmd_fd, t_list **apsd)$/;"	f	typeref:typename:int
+free_array	src/free2.c	/^void	free_array(char ***args)$/;"	f	typeref:typename:void
+free_before_exit	src/free.c	/^int	free_before_exit(t_env *env, char **argv, t_cmd_fd *cmd_fd, t_list **apsd)$/;"	f	typeref:typename:int
 free_env	src/free.c	/^int	free_env(t_env *env)$/;"	f	typeref:typename:int
-free_envdup	src/free.c	/^void	free_envdup(t_env *env)$/;"	f	typeref:typename:void
+free_envdup	src/free2.c	/^void	free_envdup(t_env *env)$/;"	f	typeref:typename:void
 free_heredoc	src/free.c	/^int	free_heredoc(t_env *env, t_cmd_fd *cmd_fd, char *str)$/;"	f	typeref:typename:int
 free_lexer	src/free.c	/^int	free_lexer(t_list *lst)$/;"	f	typeref:typename:int
-free_node	src/free.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
-free_parsed	src/free.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
+free_node	src/free2.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
+free_parsed	src/free3.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
 free_ptr	libft/src/extra/get_next_line_bonus.c	/^static char	*free_ptr(char **ptr)$/;"	f	typeref:typename:char *	file:
-free_ptr	src/free.c	/^char	**free_ptr(char **ptr)$/;"	f	typeref:typename:char **
+free_ptr	src/free2.c	/^char	**free_ptr(char **ptr)$/;"	f	typeref:typename:char **
 free_token	src/free.c	/^void	free_token(void *token)$/;"	f	typeref:typename:void
-free_token_list	src/free.c	/^t_list *free_token_list(t_list **list)$/;"	f	typeref:typename:t_list *
+free_token_list	src/free2.c	/^t_list	*free_token_list(t_list **list)$/;"	f	typeref:typename:t_list *
 ft_atoi	libft/src/mandatory/ft_atoi.c	/^int	ft_atoi(const char *nptr)$/;"	f	typeref:typename:int
 ft_atol	src/builtin_utils.c	/^int	ft_atol(const char *nptr)$/;"	f	typeref:typename:int
 ft_bzero	libft/src/mandatory/ft_bzero.c	/^void	*ft_bzero(void *s, size_t n)$/;"	f	typeref:typename:void *

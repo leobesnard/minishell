@@ -6,14 +6,15 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 10:21:33 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 11:47:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
 
-# define HEREDOC_EOF "bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n"
+# define HEREDOC_EOF "bash: warning: here-document at line %d \
+	delimited by end-of-file (wanted `%s')\n"
 
 typedef struct s_cmd_fd
 {
@@ -69,7 +70,7 @@ int			exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env);
 
 //		command_exec.c
 
-void		exec_command(char **argv, t_env *env, t_list **aparsed,
+void		exec_command(char **argv, t_env *env, t_list **apsd,
 				t_cmd_fd *cmd_fd);
 int			check_for_builtin(char **argv);
 int			builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv,

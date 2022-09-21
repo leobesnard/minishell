@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 16:58:36 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 11:47:48 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_minishell	g_minishell;
 
-void	exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd)
+void	exec_command(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 {
 	if (!ft_strncmp(argv[0], "echo", 5))
 		builtin_echo(argv);
@@ -29,7 +29,7 @@ void	exec_command(char **argv, t_env *env, t_list **aparsed, t_cmd_fd *cmd_fd)
 	else if (!ft_strncmp(argv[0], "env", 4))
 		builtin_env(env->envdup);
 	else if (!ft_strncmp(argv[0], "exit", 5))
-		builtin_exit(*aparsed, env, argv, cmd_fd);
+		builtin_exit(*apsd, env, argv, cmd_fd);
 	else
 	{
 		execve(argv[0], argv, envdup_to_char_array(env));

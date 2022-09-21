@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 17:34:03 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:30:41 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,13 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 
 	parsed = *aparsed;
 	env->flag = 0;
-	printf("%s | ", ((t_token *)((t_cmd *)parsed->content)->arg->content)->word);
-	print_cmd_fd(cmd_fd, "before fill_fd_pipe");
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed, env);
-	printf("%s | ", ((t_token *)((t_cmd *)parsed->content)->arg->content)->word);
-	print_cmd_fd(cmd_fd, "after fill_fd_pipe");
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	if (cmd_fd->ret == 1)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
-		{
 			return (exit_command(cmd_fd, *aparsed, env));
-		}
 	}
 	else
 	{
@@ -96,6 +90,10 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 			if (cmd_fd->fd[0] != 0)
 				close(cmd_fd->fd[0]);
 			exec_builtin_fork(cmd_fd, env, argv, &(env->parsed));
+			if (cmd_fd->fd[1] > 1)
+				close(cmd_fd->fd[1]);
+			if (cmd_fd->tmp > 1)
+				close(cmd_fd->tmp);
 			free_before_exit(env, argv, cmd_fd, &(env->parsed));
 			exit(0);
 		}
@@ -115,6 +113,10 @@ int	exec_solo_command(char **argv, t_cmd_fd *cmd_fd, t_env *env)
 		if (cmd_fd->fd[0] != 0)
 			close(cmd_fd->fd[0]);
 		execve(argv[0], argv, envdup_to_char_array(env));
+		if (cmd_fd->fd[1] > 1)
+			close(cmd_fd->fd[1]);
+		if (cmd_fd->tmp > 1)
+			close(cmd_fd->tmp);
 		exit_fork(argv, cmd_fd, env);
 	}
 	return (0);

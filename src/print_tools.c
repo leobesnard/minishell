@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:22:10 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/16 18:08:08 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:38:38 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	print_tab(char **tab, char *str)
 
 void	print_cmd_fd(t_cmd_fd *cmd_fd, char *str)
 {
-	printf("%s: STDIN:%d-STDOUT:%d-fd[0]:%d-fd[1]:%d-tmp:%d-fd_hd[0]=%d-fd_hd[1]=%d\n", 
+	printf("%s: STDIN:%d-STDOUT:%d-fd[0]:%d-fd[1]:%d"
+		"-tmp:%d-fd_hd[0]=%d-fd_hd[1]=%d\n",
 		str, STDIN_FILENO, STDOUT_FILENO, cmd_fd->fd[0], cmd_fd->fd[1],
 		cmd_fd->tmp, cmd_fd->fd_hdoc[0], cmd_fd->fd_hdoc[1]);
 }	
@@ -65,8 +66,6 @@ void	print_error(int ret)
 {
 	if (ret == MEM_ERROR)
 		printf("Memory error, get yourself another computer now.\n");
-	//else if (ret == SYNTAX_ERROR)
-		//printf("Syntax error, go back to SHELL00.\n");
 	else if (ret == PIPE_ERROR)
 		printf("Can't create a pipe correctly, call a plumber.\n");
 	else if (ret == FD_ERROR)

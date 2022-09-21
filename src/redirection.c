@@ -6,11 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 09:29:14 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:04:45 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	fill_fd_rd_loop(t_cmd_fd *cmd_fd, t_cmd **acmd);
 
 int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 {
@@ -20,24 +22,12 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 	tmp = cmd->rd;
 	while (cmd->rd)
 	{
-		if (((t_token *)cmd->rd->content)->type == GREAT)
-		{
-			if (rd_great(cmd_fd, &cmd) == FD_ERROR)
-				return (FD_ERROR);
-		}
-		else if (((t_token *)cmd->rd->content)->type == D_GREAT)
-		{
-			if (rd_d_great(cmd_fd, &cmd) == FD_ERROR)
-				return (FD_ERROR);
-		}
-		else if (((t_token *)cmd->rd->content)->type == LESS)
-		{
-			if (rd_less(cmd_fd, &cmd) == FD_ERROR)
-				return (FD_ERROR);
-		}
+		if (fill_fd_rd_loop(cmd_fd, &cmd) == FD_ERROR)
+			return (FD_ERROR);
 		else if (((t_token *)cmd->rd->content)->type == D_LESS)
 		{
-			ret = heredoc(((t_token *)cmd->rd->next->content)->word, cmd_fd, env);
+			ret = heredoc(((t_token *)cmd->rd->next->content)->word,
+					cmd_fd, env);
 			if (ret)
 				return (ret);
 			cmd->rd = cmd->rd->next;
@@ -45,6 +35,26 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 		cmd->rd = cmd->rd->next;
 	}
 	cmd->rd = tmp;
+	return (0);
+}
+
+static int	fill_fd_rd_loop(t_cmd_fd *cmd_fd, t_cmd **acmd)
+{
+	if (((t_token *)(*acmd)->rd->content)->type == GREAT)
+	{
+		if (rd_great(cmd_fd, acmd) == FD_ERROR)
+			return (FD_ERROR);
+	}
+	else if (((t_token *)(*acmd)->rd->content)->type == D_GREAT)
+	{
+		if (rd_d_great(cmd_fd, acmd) == FD_ERROR)
+			return (FD_ERROR);
+	}
+	else if (((t_token *)(*acmd)->rd->content)->type == LESS)
+	{
+		if (rd_less(cmd_fd, acmd) == FD_ERROR)
+			return (FD_ERROR);
+	}
 	return (0);
 }
 
