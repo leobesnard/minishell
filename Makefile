@@ -17,10 +17,10 @@ SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
-CFLAGS = #-Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror 
 LINK = -lft -lreadline
 
-CC = gcc -ggdb
+CC = gcc -g
 
 INCPATH = -I$(INCDIR) -I$(INDIR)
 LIBPATH = -L$(FTPATH)

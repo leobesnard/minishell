@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 22:33:25 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 22:55:57 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(command_buf);
 		free_parsed(&parsed);
+		(void)argv;
 	}
 	return (0);
 }

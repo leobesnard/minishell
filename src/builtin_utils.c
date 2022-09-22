@@ -6,7 +6,7 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:39:49 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 16:43:50 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 23:02:00 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	exit_1(t_env *env, char **argv, char *word, t_list *args)
 	if (word)
 	{
 		if (!is_arg_numeric(word))
-			return (free_before_exit(env, argv, env->cmd_fd, &env->parsed),
+			return (free_before_exit(env, argv, env->cmd_fd),
 				ft_putstr_fd("exit: numeric argument required\n", 2),
 				exit(2), 2);
 	}
@@ -84,13 +84,13 @@ int	exit_1(t_env *env, char **argv, char *word, t_list *args)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	if (!args)
 	{
-		free_before_exit(env, argv, env->cmd_fd, &env->parsed);
+		free_before_exit(env, argv, env->cmd_fd);
 		exit(g_minishell.last_exec_code);
 	}
 	else
 	{
 		ret = ft_atol(word);
-		free_before_exit(env, argv, env->cmd_fd, &env->parsed);
+		free_before_exit(env, argv, env->cmd_fd);
 		exit((unsigned int)ret);
 	}
 	return (0);

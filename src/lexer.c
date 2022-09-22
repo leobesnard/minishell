@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:16:24 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/22 21:47:51 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 22:58:37 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ int	new_node(t_list **token_list, char *start, int size)
 
 t_list	*lexer(char *str, int *quote_flag)
 {
-	char	*start;
 	t_list	*token_list;
-
 	if (init_lexer(&token_list, quote_flag, str))
 		return (NULL);
 	while (*str)

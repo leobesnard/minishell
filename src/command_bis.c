@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 18:53:12 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/22 23:01:05 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 				close(cmd_fd->fd[1]);
 			if (cmd_fd->tmp > 1)
 				close(cmd_fd->tmp);
-			free_before_exit(env, argv, cmd_fd, &(env->parsed));
+			free_before_exit(env, argv, cmd_fd);
 			exit(0);
 		}
 	}
