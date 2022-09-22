@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 12:29:58 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 18:58:45 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		first_command(int ac, char **av);
 char	*group_av(int ac, char **av);
 void	print_error(int ret);
 int		pass_expand(t_list **lexer, t_env *env);
+void	print_lexer(t_list *lexer);
 
 #endif
