@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:45:38 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 20:15:52 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 14:42:15 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	free_lexer(t_list *lst)
 
 int	free_env(t_env *env)
 {
-	//free(env->command_buf);
-	free_envdup(env); 
+	free_envdup(env);
 	return (0);
 }
 

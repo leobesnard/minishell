@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 19:02:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/22 22:00:52 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 t_minishell	g_minishell;
 
 static char	*get_input_from_prompt(void);
+
+void	print_lexer(t_list *lexer)
+{
+	while (lexer)
+	{
+		ft_printf("%s\n", ((t_token *)lexer->content)->word);
+		lexer = lexer->next;
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -44,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			lexed = lexer(command_buf, &env->quote_flag);
+		//	print_lexer(lexed);
 			if (lexed)
 			{
 				pass_expand(&lexed, env);
@@ -56,18 +66,15 @@ int	main(int argc, char **argv, char **envp)
 				if (parser(lexed, &parsed) == MEM_ERROR)
 					print_error(MEM_ERROR);
 				env->parsed = parsed;
-				ft_lstclear(&lexed, &free_token);	
+				ft_lstclear(&lexed, &free_token);
 				ret = execute_command(parsed, env);
 				if (ret != 0)
 					print_error(ret);
 			}
 		}
 		free(command_buf);
-		free_parsed(&parsed); //TODO faire ce free quand adviens un command not found
+		free_parsed(&parsed);
 	}
-	(void)argc;
-	(void)argv;
-	(void)envp;
 	return (0);
 }
 
@@ -79,7 +86,7 @@ int	pass_expand(t_list **lexer, t_env *env)
 	while (lst)
 	{
 		((t_token *)lst->content)->word = expand(env->envdup,
-		((t_token *)lst->content)->word, &env->quote_flag);
+				((t_token *)lst->content)->word, &env->quote_flag);
 		if (!((t_token *)lst->content)->word)
 			return (-1);
 		lst = lst->next;
@@ -89,7 +96,6 @@ int	pass_expand(t_list **lexer, t_env *env)
 
 static char	*get_input_from_prompt(void)
 {
-
 	char	*command_buf;
 
 	if (isatty(STDIN_FILENO))

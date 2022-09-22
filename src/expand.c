@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 14:56:45 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 23:06:46 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 14:45:45 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	remove_empty(t_list *lexer)
 	t_list	*lst;
 
 	lst = lexer;
-	while(lst && lst->next)
+	while (lst && lst->next)
 	{
 		tmp = lst->next;
 		if (!(*((t_token *)tmp->content)->word))
 		{
-			 lst->next = tmp->next;
-			 ft_lstdelone(tmp, &free_token);
+			lst->next = tmp->next;
+			ft_lstdelone(tmp, &free_token);
 		}
 		lst = lst->next;
 	}
