@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 17:04:50 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/22 18:53:12 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	parsed = *aparsed;
 	env->flag = 0;
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed, env);
+	if (!((t_cmd *)(*aparsed)->content)->arg)
+	{
+		return (0);
+	}
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	if (cmd_fd->ret == 1)

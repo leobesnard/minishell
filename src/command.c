@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 12:37:22 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/22 18:55:47 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	execute_command(t_list *parsed, t_env *env)
 	{
 		if (exec_simple_cmd(&parsed, cmd_fd, env) != 0)
 			return (exit_exec_error(cmd_fd));
-		if (!ft_strncmp(((t_token *)
-					((t_cmd *)parsed->content)->arg->content)->word, "echo", 5))
-			waitpid(cmd_fd->pid, &cmd_fd->status, 0);
+		//if (!ft_strncmp(((t_token *)
+		//			((t_cmd *)parsed->content)->arg->content)->word, "echo", 5))
+		//	waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;
@@ -56,6 +56,8 @@ static void	wait_exec(t_cmd_fd *cmd_fd)
 	{
 		i = g_minishell.nb_exec;
 		waitpid(cmd_fd->pid, &cmd_fd->status, 0);
+		if (i == 0)
+			i++;
 		while (--i)
 			waitpid(-1, NULL, 0);
 		exit_status(cmd_fd->status);

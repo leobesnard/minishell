@@ -10,7 +10,7 @@
 >
 <
 >>
-<<
+
 <>
 >>>>>
 >>>>>>>>>>>>>>>
@@ -579,7 +579,6 @@ ls hola
 "env | grep SHLVL
 ./minishell
 env | grep SHLVL
-exit
 env | grep SHLVL
 touch hola
 ./hola"
@@ -595,60 +594,9 @@ env -i ./minishell
 cd
 env -i ./minishell
 cd ~"
-exit
-exit exit
-exit hola
-exit hola que tal
-exit 42
-exit 000042
-exit 666
-exit 666 666
-exit -666 666
-exit hola 666
-exit 666 666 666 666
-exit 666 hola 666
-exit hola 666 666
-exit 259
-exit -4
-exit -42
-exit -0000042
-exit -259
-exit -666
-exit +666
-exit 0
-exit +0
-exit -0
-exit +42
-exit -69 -96
-exit --666
-exit ++++666
-exit ++++++0
-exit ------0
-exit "666"
-exit '666'
-exit '-666'
-exit '+666'
-exit '----666'
-exit '++++666'
-exit '6'66
-exit '2'66'32'
-exit "'666'"
-exit '"666"'
-exit '666'"666"666
-exit +'666'"666"666
-exit -'666'"666"666
-exit 9223372036854775807
-exit 9223372036854775808
-exit -9223372036854775808
-exit -9223372036854775809
 cat | cat | cat | ls
-ls | exit
-ls | exit 42
-exit | ls
 "echo hola > bonjour
-exit | cat -e bonjour
 echo hola > bonjour
-cat -e bonjour | exit"
 echo | echo
 echo hola | echo que tal
 pwd | echo hola
@@ -701,8 +649,6 @@ env | grep PROUT"
 export | echo hola
 sleep 3 | sleep 3
 time sleep 3 | sleep 3
-sleep 3 | exit
-exit | sleep 3
 "echo hola > a
 >>b echo que tal
 cat a | <b cat | cat > c | cat"

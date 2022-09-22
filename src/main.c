@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 22:57:02 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:02:51 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		return (-1);
 	}
 	parsed = NULL;
-	usleep(1000);
 	while (1)
 	{
 		env->quote_flag = 0;
