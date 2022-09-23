@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 22:55:57 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:50:27 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,68 +15,62 @@
 t_minishell	g_minishell;
 
 static char	*get_input_from_prompt(void);
-
-void	print_lexer(t_list *lexer)
-{
-	while (lexer)
-	{
-		ft_printf("%s\n", ((t_token *)lexer->content)->word);
-		lexer = lexer->next;
-	}
-}
+static void	loop_start(t_env *env);
+static void	loop_else(t_big *big);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*lexed;
-	t_list	*parsed;
-	t_env	*env;
-	char	*command_buf;
-	int		ret;
+	t_big	big;	
 
-	env = create_struct_env(envp);
+	big.env = create_struct_env(envp);
 	if (argc != 1)
-	{
-		printf("No arguments\n");
-		return (-1);
-	}
-	parsed = NULL;
+		return (printf("No arguments\n"), -1);
+	big.parsed = NULL;
 	while (1)
 	{
-		env->quote_flag = 0;
-		signal_management(NORMAL);
-		command_buf = get_input_from_prompt();
-		if (!command_buf)
+		usleep(100000);
+		loop_start(big.env);
+		big.command_buf = get_input_from_prompt();
+		if (!big.command_buf)
 		{
-			env->parsed = NULL;
-			builtin_exit(parsed, env, NULL, NULL);
+			big.env->parsed = NULL;
+			builtin_exit(big.parsed, big.env, NULL, NULL);
 		}	
 		else
-		{
-			lexed = lexer(command_buf, &env->quote_flag);
-		//	print_lexer(lexed);
-			if (lexed)
-			{
-				pass_expand(&lexed, env);
-				remove_empty(lexed);
-			}
-			if (env->quote_flag)
-				ft_printf("Unmatching quote\n");
-			else if (lexed)
-			{
-				if (parser(lexed, &parsed) == MEM_ERROR)
-					print_error(MEM_ERROR);
-				env->parsed = parsed;
-				ft_lstclear(&lexed, &free_token);
-				ret = execute_command(parsed, env);
-				if (ret != 0)
-					print_error(ret);
-			}
-		}
-		free(command_buf);
-		free_parsed(&parsed);
+			loop_else(&big);
+		free(big.command_buf);
+		free_parsed(&big.parsed);
 		(void)argv;
 	}
 	return (0);
+}
+
+static void	loop_else(t_big *big)
+{
+	big->lexed = lexer(big->command_buf, &big->env->quote_flag);
+	if (big->lexed)
+	{
+		pass_expand(&big->lexed, big->env);
+		remove_empty(big->lexed);
+	}
+	if (big->env->quote_flag)
+		ft_printf("Unmatching quote\n");
+	else if (big->lexed)
+	{
+		if (parser(big->lexed, &big->parsed) == MEM_ERROR)
+			print_error(MEM_ERROR);
+		big->env->parsed = big->parsed;
+		ft_lstclear(&big->lexed, &free_token);
+		big->ret = execute_command(big->parsed, big->env);
+		if (big->ret != 0)
+			print_error(big->ret);
+	}
+}
+
+static void	loop_start(t_env *env)
+{
+	env->quote_flag = 0;
+	signal_management(NORMAL);
 }
 
 int	pass_expand(t_list **lexer, t_env *env)
@@ -103,48 +97,9 @@ static char	*get_input_from_prompt(void)
 		command_buf = readline("minicheh> ");
 	else
 		command_buf = readline("minicheh> ");
-		//command_buf = get_next_line(STDIN_FILENO);
 	if (!command_buf)
 		return (NULL);
 	else if (isatty(STDIN_FILENO) && command_buf && command_buf[0])
 		add_history(command_buf);
 	return (command_buf);
-}
-
-char	*group_av(int ac, char **av)
-{
-	int		sz;
-	int		i;
-	int		j;
-	int		k;
-	char	*str;
-
-	sz = 0;
-	i = 0;
-	j = 0;
-	k = 0;
-	while (i++ < ac - 1)
-	{
-		sz += ft_strlen(av[i]);
-	}
-	str = malloc(sz + ac - 2 + 1);
-	if (!str)
-		return (NULL);
-	i = 1;
-	while (i < ac)
-	{
-		while (av[i][k])
-		{
-			str[j] = av[i][k];
-			j++;
-			k++;
-		}
-		i++;
-		if (i < ac)
-			str[j] = ' ';
-		j++;
-		k = 0;
-	}
-	str[j] = '\0';
-	return (str);
 }

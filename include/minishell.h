@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:19:28 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 18:58:45 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:48:06 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,14 @@
 # include "signal_minishell.h"
 # include "expand.h"
 
-//t_minishell	g_minishell;
+typedef struct s_big
+{
+	t_list	*lexed;
+	t_list	*parsed;
+	t_env	*env;
+	char	*command_buf;
+	int		ret;
+}	t_big;
 
 //	main.c
 
@@ -56,6 +63,5 @@ int		first_command(int ac, char **av);
 char	*group_av(int ac, char **av);
 void	print_error(int ret);
 int		pass_expand(t_list **lexer, t_env *env);
-void	print_lexer(t_list *lexer);
 
 #endif

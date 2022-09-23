@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 18:55:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/23 14:10:39 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	execute_command(t_list *parsed, t_env *env)
 	{
 		if (exec_simple_cmd(&parsed, cmd_fd, env) != 0)
 			return (exit_exec_error(cmd_fd));
-		//if (!ft_strncmp(((t_token *)
-		//			((t_cmd *)parsed->content)->arg->content)->word, "echo", 5))
-		//	waitpid(cmd_fd->pid, &cmd_fd->status, 0);
+		if (!ft_strncmp(((t_token *)
+					((t_cmd *)parsed->content)->arg->content)->word, "echo", 5))
+			waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;

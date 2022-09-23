@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 19:02:51 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:48:44 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 		{
 			ret = heredoc(((t_token *)cmd->rd->next->content)->word,
 					cmd_fd, env);
-				return (ret);
+			return (ret);
 			cmd->rd = cmd->rd->next;
 		}
 		cmd->rd = cmd->rd->next;

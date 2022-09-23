@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 16:59:01 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 14:43:38 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/23 12:48:15 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern t_minishell	g_minishell;
 void	exec_command(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 {
 	char	**char_envdup;
-	
+
 	if (!ft_strncmp(argv[0], "echo", 5))
 		builtin_echo(argv);
 	else if (!ft_strncmp(argv[0], "pwd", 4))

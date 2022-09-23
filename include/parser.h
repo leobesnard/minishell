@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:37:52 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/19 11:32:14 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/23 14:49:41 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_cmd
 
 int		check_pipe_slash(t_list *list);
 int		parser(t_list *list, t_list **parsed);
-int 	fill_cmd(t_list **alist, t_cmd *cmd);
+int		fill_cmd(t_list **alist, t_cmd *cmd);
 int		fill_cmd_pipe(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type);
 int		fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type);
-int 	fill_cmd_rd(t_list **alst, t_cmd *cmd);
+int		fill_cmd_rd(t_list **alst, t_cmd *cmd);
 
 //		parser_utils.c
 

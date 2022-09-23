@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 23:01:05 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/23 13:19:24 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ extern t_minishell	g_minishell;
 
 int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 {
-	t_list		*parsed;
+	t_list	*parsed;
+	t_cmd	*cmd;
 
 	parsed = *aparsed;
 	env->flag = 0;
-	cmd_fd->ret = fill_fd_pipe(cmd_fd, (t_cmd *)parsed->content, parsed, env);
-	if (!((t_cmd *)(*aparsed)->content)->arg)
-	{
+	cmd = (t_cmd *)parsed->content;
+	cmd_fd->ret = fill_fd_pipe(cmd_fd, cmd, parsed, env);
+	if (!cmd->arg || ((t_token *)cmd->arg->content)->word[0] == '\0')
 		return (0);
-	}
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
 	if (cmd_fd->ret == 1)
