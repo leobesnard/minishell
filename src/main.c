@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/26 12:45:37 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/26 18:01:19 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ static void	loop_else(t_big *big)
 		ft_printf("Unmatching quote\n");
 	else if (big->lexed)
 	{
+		print_token_list(big->lexed, "lexer");
 		if (parser(big->lexed, &big->parsed) == MEM_ERROR)
 			print_error(MEM_ERROR);
+		print_cmd(big->parsed);
 		big->env->parsed = big->parsed;
 		ft_lstclear(&big->lexed, &free_token);
 		big->ret = execute_command(big->parsed, big->env);

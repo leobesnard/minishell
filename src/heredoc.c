@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 17:01:05 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/26 20:53:25 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 {
 	if (cmd_fd->tmp > 0)
 		close(cmd_fd->tmp);
+	if (cmd_fd->fd_hdoc[0] > 1)
+		close(cmd_fd->fd_hdoc[0]);
 	if (pipe(cmd_fd->fd_hdoc) == PIPE_ERROR)
 		return (PIPE_ERROR);
 	cmd_fd->pid = fork();
@@ -40,7 +42,7 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 	close(cmd_fd->fd_hdoc[0]);
 	str = NULL;
 	entry = readline("> ");
-	while (ft_strncmp(entry, delimiter, ft_strlen(delimiter)))
+	while (ft_strncmp(entry, delimiter, ft_strlen(delimiter) + 1))
 	{
 		if (!entry || g_minishell.heredoc)
 			break ;
@@ -53,9 +55,13 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 		printf(HEREDOC_EOF, count_line(str), delimiter);
 	free (entry);
 	str = expand(env->envdup, str, &env->quote_flag);
+	printf("free_heredoc\n");
+	printf("fd_hdoc[0] = %d | fd_hdoc[1] = %d\n", cmd_fd->fd_hdoc[0], cmd_fd->fd_hdoc[1]);
 	dup2(cmd_fd->fd_hdoc[1], STDOUT_FILENO);
 	printf("%s", str);
-	close(cmd_fd->fd_hdoc[1]);
+	if (cmd_fd->fd_hdoc[1] > 1)
+		close(cmd_fd->fd_hdoc[1]);
+	ft_putstr_fd("On free heredoc\n", 2);
 	free_heredoc(env, cmd_fd, str);
 	exit(0);
 }

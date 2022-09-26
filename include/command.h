@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/21 20:15:06 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:06:49 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void		finish_job_status(void);
 //		redirection.c
 
 int			fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd	*cmd, t_env *env);
-int			rd_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
-int			rd_d_great(t_cmd_fd *cmd_fd, t_cmd **acmd);
-int			rd_less(t_cmd_fd *cmd_fd, t_cmd **acmd);
+int			rd_great(t_cmd_fd *cmd_fd, t_list **atmp);
+int			rd_d_great(t_cmd_fd *cmd_fd, t_list **atmp);
+int			rd_less(t_cmd_fd *cmd_fd, t_list **atmp);
 
 //		heredoc.c
 

@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/23 14:10:39 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/26 19:11:11 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 extern t_minishell	g_minishell;
 
+static void	close_fd(t_cmd_fd *cmd_fd);
 static void	wait_exec(t_cmd_fd *cmd_fd);
 static int	exit_exec_error(t_cmd_fd *cmd_fd);
 static void	exit_status(int status);
@@ -29,22 +30,30 @@ int	execute_command(t_list *parsed, t_env *env)
 	{
 		if (exec_simple_cmd(&parsed, cmd_fd, env) != 0)
 			return (exit_exec_error(cmd_fd));
-		if (!ft_strncmp(((t_token *)
+		if (((t_cmd *)parsed->content)->arg && !ft_strncmp(((t_token *)
 					((t_cmd *)parsed->content)->arg->content)->word, "echo", 5))
 			waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 		parsed = parsed->next;
 		if (parsed && ((t_cmd *)parsed->content)->type == PIPE_CMD)
 			parsed = parsed->next;
 	}
+	close_fd(cmd_fd);
+	printf("on arrive ici\n");
+	if (!parsed)
+		free_parsed(&parsed);
+	wait_exec(cmd_fd);
+	free(cmd_fd);
+	return (0);
+}
+
+static void	close_fd(t_cmd_fd *cmd_fd)
+{
 	if (cmd_fd->tmp > 1)
 		close(cmd_fd->tmp);
 	if (cmd_fd->fd[1] > 1)
 		close(cmd_fd->fd[1]);
 	if (cmd_fd->fd[0] > 1)
 		close(cmd_fd->fd[0]);
-	wait_exec(cmd_fd);
-	free(cmd_fd);
-	return (0);
 }
 
 static void	wait_exec(t_cmd_fd *cmd_fd)
