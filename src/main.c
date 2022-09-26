@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/23 14:50:27 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/26 12:45:37 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ static char	*get_input_from_prompt(void)
 {
 	char	*command_buf;
 
-	if (isatty(STDIN_FILENO))
-		command_buf = readline("minicheh> ");
-	else
-		command_buf = readline("minicheh> ");
+	command_buf = readline("minicheh> ");
 	if (!command_buf)
 		return (NULL);
 	else if (isatty(STDIN_FILENO) && command_buf && command_buf[0])
