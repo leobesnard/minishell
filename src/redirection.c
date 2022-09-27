@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/27 16:45:52 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 22:11:02 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	rd_less(t_cmd_fd *cmd_fd, t_list **atmp)
 
 	tmp = *atmp;
 	tmp = tmp->next;
-	if (cmd_fd->tmp != 0)
+	if (cmd_fd->tmp > 0)
 		close(cmd_fd->tmp);
 	cmd_fd->tmp = open(((t_token *)tmp->content)->word,
 			O_RDONLY, 0777);

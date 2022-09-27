@@ -93,11 +93,12 @@ all	libft/Makefile	/^all: ${NAME}$/;"	t
 arg	include/parser.h	/^	t_list		*arg;$/;"	m	struct:s_cmd	typeref:typename:t_list *
 args	.vscode/launch.json	/^            "args": [],$/;"	a	object:configurations.0
 args	.vscode/tasks.json	/^            "args": [$/;"	a	object:tasks.0
+bigger_str	src/env_utils2.c	/^int	bigger_str(char *str1, char *str2)$/;"	f	typeref:typename:int
 builtin_cd	src/builtin2.c	/^int	builtin_cd(t_list *env, char **args)$/;"	f	typeref:typename:int
 builtin_echo	src/builtin.c	/^int	builtin_echo(char **str)$/;"	f	typeref:typename:int
 builtin_env	src/builtin.c	/^void	builtin_env(t_list *env)$/;"	f	typeref:typename:void
 builtin_exit	src/builtin_exit.c	/^int	builtin_exit(t_list *parsed, t_env *env, char **argv, t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:int
-builtin_export	src/builtin.c	/^t_list	*builtin_export(t_list *env, char *str)$/;"	f	typeref:typename:t_list *
+builtin_export	src/builtin.c	/^t_list	*builtin_export(t_list *env, char **str, char *stri)$/;"	f	typeref:typename:t_list *
 builtin_no_fork	src/command_exec.c	/^int	builtin_no_fork(t_cmd_fd *cmd_fd, t_env *env, char **argv, t_list **apsd)$/;"	f	typeref:typename:int
 builtin_no_fork_m	src/command_exec.c	/^int	builtin_no_fork_m(t_cmd_fd *cmd_fd, t_env *env, char **argv)$/;"	f	typeref:typename:int
 builtin_pwd	src/builtin.c	/^void	builtin_pwd(t_list *env)$/;"	f	typeref:typename:void
@@ -162,7 +163,7 @@ expand_dollar	src/expand_utils2.c	/^void	expand_dollar(t_vars *var, t_list *env,
 expand_double_quotes	src/expand_utils2.c	/^void	expand_double_quotes(t_vars *var, t_list *env, char *str)$/;"	f	typeref:typename:void
 expand_simple_quotes	src/expand_utils2.c	/^void	expand_simple_quotes(char *str, t_vars *var)$/;"	f	typeref:typename:void
 externalConsole	.vscode/launch.json	/^            "externalConsole": false,$/;"	b	object:configurations.0
-fclean	Makefile	/^fclean: clean$/;"	t
+fclean	Makefile	/^fclean: clean libclean$/;"	t
 fclean	libft/Makefile	/^fclean: clean$/;"	t
 fd	include/command.h	/^	int	fd[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
 fd_hdoc	include/command.h	/^	int	fd_hdoc[2];$/;"	m	struct:s_cmd_fd	typeref:typename:int[2]
@@ -173,6 +174,7 @@ fill_fd_pipe	src/command_fd.c	/^int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t
 fill_fd_rd	src/redirection.c	/^int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)$/;"	f	typeref:typename:int
 fill_fd_rd_loop	src/redirection.c	/^static int	fill_fd_rd_loop(t_cmd_fd *cmd_fd, t_list **atmp)$/;"	f	typeref:typename:int	file:
 fill_normal_cmd	src/parser2.c	/^int	fill_normal_cmd(t_cmd *cmd, t_list **alst, t_cmd_type cmd_type)$/;"	f	typeref:typename:int
+find_before_equal	src/builtin_utils2.c	/^char	*find_before_equal(char *str)$/;"	f	typeref:typename:char *
 find_env_var	src/env.c	/^char	*find_env_var(t_list *env, char *var)$/;"	f	typeref:typename:char *
 flag	include/command.h	/^	int			flag;$/;"	m	struct:s_env	typeref:typename:int
 free_all_except_one_str	src/command_utils.c	/^void	free_all_except_one_str(char **array, int x)$/;"	f	typeref:typename:void
@@ -183,6 +185,7 @@ free_envdup	src/free2.c	/^void	free_envdup(t_env *env)$/;"	f	typeref:typename:vo
 free_heredoc	src/free.c	/^int	free_heredoc(t_env *env, t_cmd_fd *cmd_fd, char *str)$/;"	f	typeref:typename:int
 free_lexer	src/free.c	/^int	free_lexer(t_list *lst)$/;"	f	typeref:typename:int
 free_node	src/free2.c	/^void	free_node(t_list *node)$/;"	f	typeref:typename:void
+free_node_and_equal	src/env_utils2.c	/^void	free_node_and_equal(t_list *node, char *str)$/;"	f	typeref:typename:void
 free_parsed	src/free3.c	/^void	free_parsed(t_list **parsed)$/;"	f	typeref:typename:void
 free_ptr	libft/src/extra/get_next_line_bonus.c	/^static char	*free_ptr(char **ptr)$/;"	f	typeref:typename:char *	file:
 free_ptr	src/free2.c	/^char	**free_ptr(char **ptr)$/;"	f	typeref:typename:char **
@@ -196,6 +199,7 @@ ft_createstr	libft/src/mandatory/ft_itoa.c	/^static char	*ft_createstr(int n)$/;
 ft_fill	libft/src/mandatory/ft_split.c	/^static char	**ft_fill(char **tab, char *str, int x, char c)$/;"	f	typeref:typename:char **	file:
 ft_free	libft/src/mandatory/ft_split.c	/^static char	**ft_free(char **tab, int x)$/;"	f	typeref:typename:char **	file:
 ft_getsize	libft/src/mandatory/ft_itoa.c	/^static int	ft_getsize(int n)$/;"	f	typeref:typename:int	file:
+ft_getsize	src/expand_utils3.c	/^static int	ft_getsize(int n)$/;"	f	typeref:typename:int	file:
 ft_getwrd	libft/src/mandatory/ft_split.c	/^static char	*ft_getwrd(char const *str, char c)$/;"	f	typeref:typename:char *	file:
 ft_init_stat	libft/src/extra/get_next_line_bonus.c	/^static char	*ft_init_stat(void)$/;"	f	typeref:typename:char *	file:
 ft_is_in_set	libft/src/mandatory/ft_strtrim.c	/^static int	ft_is_in_set(const char *set, int c)$/;"	f	typeref:typename:int	file:
@@ -284,6 +288,7 @@ isDefault	.vscode/tasks.json	/^                "isDefault": true$/;"	b	object:ta
 is_arg_numeric	src/builtin_exit.c	/^int	is_arg_numeric(char *word)$/;"	f	typeref:typename:int
 is_redirector	src/parser.c	/^static int	is_redirector(char *s)$/;"	f	typeref:typename:int	file:
 is_separator	src/lexer.c	/^int	is_separator(char *str)$/;"	f	typeref:typename:int
+is_var	src/builtin_utils2.c	/^int	is_var(char *str)$/;"	f	typeref:typename:int
 is_ws	src/lexer.c	/^int	is_ws(char a)$/;"	f	typeref:typename:int
 kind	.vscode/tasks.json	/^                "kind": "build",$/;"	s	object:tasks.0.group
 label	.vscode/tasks.json	/^            "label": "C\/C++: gcc build active file",$/;"	s	object:tasks.0
@@ -294,7 +299,9 @@ libclean	Makefile	/^libclean:$/;"	t
 loop_else	src/main.c	/^static void	loop_else(t_big *big)$/;"	f	typeref:typename:void	file:
 loop_start	src/main.c	/^static void	loop_start(t_env *env)$/;"	f	typeref:typename:void	file:
 main	src/main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f	typeref:typename:int
+main	test.c	/^main(int argc, char **argv)$/;"	f
 mult_fork	src/command_multiple.c	/^void	mult_fork(t_list **apsd, t_cmd_fd *cmd_fd, t_env *env, char **argv)$/;"	f	typeref:typename:void
+multi_unset	src/command_exec.c	/^static void	multi_unset(t_env *env, char **str)$/;"	f	typeref:typename:void	file:
 multiple_command	src/command_multiple.c	/^int	multiple_command(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 n	include/command.h	/^	int		n;$/;"	m	struct:s_hdocjoin	typeref:typename:int
 name	.vscode/launch.json	/^            "name": "(gdb) Launch",$/;"	s	object:configurations.0
@@ -384,6 +391,7 @@ test_check_quotes	src/expand.c	/^int	test_check_quotes(char *str)$/;"	f	typeref:
 text	.vscode/launch.json	/^                    "text": "-enable-pretty-printing",$/;"	s	object:configurations.0.setupCommands.0
 text	.vscode/launch.json	/^                    "text": "-gdb-set disassembly-flavor intel",$/;"	s	object:configurations.0.setupCommands.1
 tmp	include/command.h	/^	int	tmp;$/;"	m	struct:s_cmd_fd	typeref:typename:int
+to_next_node	src/env_utils2.c	/^void	to_next_node(t_list **tmp, t_list **node,char *str)$/;"	f	typeref:typename:void
 tok_error	src/parser.c	/^static int	tok_error(char *str)$/;"	f	typeref:typename:int	file:
 token_type	src/lexer.c	/^t_token_type	token_type(char *str)$/;"	f	typeref:typename:t_token_type
 type	.vscode/launch.json	/^            "type": "cppdbg",$/;"	s	object:configurations.0
