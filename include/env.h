@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:47 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/27 16:14:28 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:29:29 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /* env.c */
 char	*find_env_var(t_list *env, char *var);
 t_list	*del_var(t_list *env, char *var);
-int		add_var(t_list *env, char *var);
+int		add_var(t_list **env, char *var);
 t_list	*dup_env(char **envp);
 
 /* env_utils.c */
@@ -29,6 +29,5 @@ t_env	*create_struct_env(char **envp);
 char	**envdup_to_char_array(t_env *env);
 char	*get_env_path(t_env *env);
 int		search_path(t_env *env);
-
 
 #endif

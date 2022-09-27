@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:49:55 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/27 17:46:27 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:29:03 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,31 +73,22 @@ t_list	*builtin_unset(t_list *env, char *str)
 	return (del_var(env, str));
 }
 
-t_list	*builtin_export(t_list *env, char **str, char *stri)
+t_list	*builtin_export(t_list *env, char *str)
 {
 	char	*before_equal;
-	int		i;
 
-	if (!stri)
-		i = 1;
-	else
-		i = 0;
-	while (str[i])
+	if (!str)
+		return (env);
+	if (ft_isdigit(str[0]))
+		return (ft_printf("'%s' : not a valid identifier\n", str), env);
+	if (!ft_strchr(str, '='))
+		return (env);
+	before_equal = find_before_equal(str);
+	if (find_env_var(env, before_equal))
 	{
-		if (!str[i])
-			return (env);
-		if (ft_isdigit(str[i][0]))
-			return (ft_printf("'%s' : not a valid identifier\n", str[i]), env);
-		if (!ft_strchr(str[i], '='))
-			return (env);
-		before_equal = find_before_equal(str[i]); 
-		if (find_env_var(env, before_equal))
-		{
-			env = builtin_unset(env, before_equal);
-		}
-		free(before_equal);
-		add_var(env, str[i]);
-		i++;
+		env = builtin_unset(env, before_equal);
 	}
+	free(before_equal);
+	add_var(&env, str);
 	return (env);
 }

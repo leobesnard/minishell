@@ -6,12 +6,39 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:09:20 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/27 16:10:25 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:34:37 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	multi_unset(t_env *env, char **str)
+{
+	int	i;
+
+	i = 1;
+	if (!env->envdup)
+		return ;
+	while (str[i])
+	{
+		env->envdup = builtin_unset(env->envdup, str[i]);
+		i++;
+	}
+}
+
+void	multi_export(t_env *env, char **str)
+{
+	int	i;
+
+	i = 1;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		env->envdup = builtin_export(env->envdup, str[i]);
+		i++;
+	}
+}
 
 int	is_var(char *str)
 {

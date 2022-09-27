@@ -6,7 +6,7 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:32:00 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/27 16:02:28 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 21:22:33 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((const char)s1[i] - (const char)s2[i]);
 }
 
-void	to_next_node(t_list **tmp, t_list **node,char *str)
+void	to_next_node(t_list **tmp, t_list **node, char *str)
 {
 	*tmp = *node;
 	*node = (*node)->next;
