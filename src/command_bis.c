@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:05:00 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/23 13:19:24 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:50:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	exec_simple_cmd(t_list **aparsed, t_cmd_fd *cmd_fd, t_env *env)
 	env->flag = 0;
 	cmd = (t_cmd *)parsed->content;
 	cmd_fd->ret = fill_fd_pipe(cmd_fd, cmd, parsed, env);
-	if (!cmd->arg || ((t_token *)cmd->arg->content)->word[0] == '\0')
-		return (0);
+	g_minishell.heredoc = 0;
 	if (cmd_fd->ret < 0)
 		return (cmd_fd->ret);
+	if (!cmd->arg || ((t_token *)cmd->arg->content)->word[0] == '\0')
+		return (0);
 	if (cmd_fd->ret == 1)
 	{
 		if (one_command(aparsed, cmd_fd, env) != 0)
@@ -99,6 +100,8 @@ int	exec_solo_builtin(char **argv, t_env *env, t_list **apsd, t_cmd_fd *cmd_fd)
 			if (cmd_fd->tmp > 1)
 				close(cmd_fd->tmp);
 			free_before_exit(env, argv, cmd_fd);
+			close(STDOUT_FILENO);
+			close(STDIN_FILENO);
 			exit(0);
 		}
 	}

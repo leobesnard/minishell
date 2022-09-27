@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 17:45:25 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/20 12:18:49 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:50:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)
 {
 	int	ret;
 
+	ret = 0;
 	if (cmd_fd->fd[1] > 1)
 		close(cmd_fd->fd[1]);
 	if (cmd_fd->tmp > 1)
@@ -54,7 +55,7 @@ int	fill_fd_pipe(t_cmd_fd *cmd_fd, t_cmd *cmd, t_list *parsed, t_env *env)
 	else
 		cmd_fd->fd[1] = 1;
 	ret = fill_fd_rd(cmd_fd, cmd, env);
-	if (ret)
+	if (ret != 0)
 		return (ret);
 	if (parsed->next)
 		return (2);

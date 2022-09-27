@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 20:09:38 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/26 21:06:49 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:55:28 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int			ft_min(int a, int b);
 
 int			ret_cmd_not_found(t_cmd_fd *cmd_fd, char **argv);
 void		exit_fork(char **argv, t_cmd_fd *cmd_fd, t_env *env);
+char		*heredoc_join(char *s1, char *s2);
 
 //		global.c
 
@@ -125,6 +126,5 @@ int			rd_less(t_cmd_fd *cmd_fd, t_list **atmp);
 
 int			heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env);
 void		heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env);
-char		*heredoc_join(char *s1, char *s2);
 
 #endif

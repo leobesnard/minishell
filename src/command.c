@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:28:34 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/26 19:11:11 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:50:58 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	execute_command(t_list *parsed, t_env *env)
 			parsed = parsed->next;
 	}
 	close_fd(cmd_fd);
-	printf("on arrive ici\n");
 	if (!parsed)
 		free_parsed(&parsed);
 	wait_exec(cmd_fd);

@@ -6,11 +6,13 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 09:19:50 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/26 21:28:18 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:45:52 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 static int	fill_fd_rd_loop(t_cmd_fd *cmd_fd, t_list **atmp);
 
@@ -19,6 +21,7 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 	int		ret;
 	t_list	*tmp;
 
+	ret = 0;
 	tmp = cmd->rd;
 	while (tmp)
 	{
@@ -33,6 +36,8 @@ int	fill_fd_rd(t_cmd_fd *cmd_fd, t_cmd *cmd, t_env *env)
 		}
 		tmp = tmp->next;
 	}
+	if (g_minishell.heredoc)
+		return (SIGINT_HEREDOC);
 	return (ret);
 }
 

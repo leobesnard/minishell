@@ -1,14 +1,10 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
-!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
-!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
-!_TAG_PROC_CWD	/mnt/nfs/homes/rmorel/Documents/minishell_github/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	5.9.0	//
+!_TAG_PROGRAM_VERSION	0.0.0	//
 $(LIBFT)	Makefile	/^$(LIBFT): $/;"	t
 $(NAME)	Makefile	/^$(NAME): $(OBJDIR) $(LIBFT) $(OBJS)$/;"	t
 $(OBJDIR)	Makefile	/^$(OBJDIR):$/;"	t
@@ -113,11 +109,13 @@ check_arg_path	src/command_fd.c	/^static int	check_arg_path(char *arg, char **co
 check_for_builtin	src/command_exec.c	/^int	check_for_builtin(char **argv)$/;"	f	typeref:typename:int
 check_pipe_slash	src/parser.c	/^int	check_pipe_slash(t_list *list)$/;"	f	typeref:typename:int
 check_quotes	src/parser_utils.c	/^int	check_quotes(t_token *token)$/;"	f	typeref:typename:int
+check_sigint	src/heredoc.c	/^static void	check_sigint(t_cmd_fd *cmd_fd, t_env *env, char *str)$/;"	f	typeref:typename:void	file:
 check_syntax	src/parser.c	/^int	check_syntax(t_list *list)$/;"	f	typeref:typename:int
 check_tiret_n	src/builtin_utils.c	/^int	check_tiret_n(char *str)$/;"	f	typeref:typename:int
 clean	Makefile	/^clean:$/;"	t
 clean	libft/Makefile	/^clean:$/;"	t
 close_fd	src/command.c	/^static void	close_fd(t_cmd_fd *cmd_fd)$/;"	f	typeref:typename:void	file:
+close_fd_hdoc	src/heredoc.c	/^static void	close_fd_hdoc(t_cmd_fd *cmd_fd, t_env *env, char *str)$/;"	f	typeref:typename:void	file:
 cmd_fd	include/command.h	/^	t_cmd_fd	*cmd_fd;$/;"	m	struct:s_env	typeref:typename:t_cmd_fd *
 command	.vscode/tasks.json	/^            "command": "\/usr\/bin\/gcc",$/;"	s	object:tasks.0
 command_buf	include/command.h	/^	char		*command_buf;$/;"	m	struct:s_env	typeref:typename:char *
@@ -272,7 +270,7 @@ group	.vscode/tasks.json	/^            "group": {$/;"	o	object:tasks.0
 heredoc	include/command.h	/^	int		heredoc;$/;"	m	struct:s_minishell	typeref:typename:int
 heredoc	src/heredoc.c	/^int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)$/;"	f	typeref:typename:int
 heredoc_fork	src/heredoc.c	/^void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)$/;"	f	typeref:typename:void
-heredoc_join	src/heredoc.c	/^char	*heredoc_join(char *s1, char *s2)$/;"	f	typeref:typename:char *
+heredoc_join	src/command_utils2.c	/^char	*heredoc_join(char *s1, char *s2)$/;"	f	typeref:typename:char *
 i	include/command.h	/^	int		i;$/;"	m	struct:s_hdocjoin	typeref:typename:int
 i	include/expand.h	/^	int		i;$/;"	m	struct:s_var	typeref:typename:int
 i	include/expand.h	/^	int		i;$/;"	m	struct:s_vars	typeref:typename:int

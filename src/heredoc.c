@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 22:40:33 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/26 20:53:25 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:56:28 by rmorel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 extern t_minishell	g_minishell;
 
 static int	count_line(char *str);
+static void	close_fd_hdoc(t_cmd_fd *cmd_fd, t_env *env, char *str);
+static void	check_sigint(t_cmd_fd *cmd_fd, t_env *env, char *str);
 
 int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 {
-	if (cmd_fd->tmp > 0)
+	if (cmd_fd->tmp > 1)
 		close(cmd_fd->tmp);
 	if (cmd_fd->fd_hdoc[0] > 1)
 		close(cmd_fd->fd_hdoc[0]);
@@ -26,9 +28,19 @@ int	heredoc(char *delimiter, t_cmd_fd *cmd_fd, t_env *env)
 		return (PIPE_ERROR);
 	cmd_fd->pid = fork();
 	if (cmd_fd->pid == 0)
+	{
+		signal_management(HEREDOC);
 		heredoc_fork(cmd_fd, delimiter, env);
+	}
 	waitpid(cmd_fd->pid, &cmd_fd->status, 0);
 	close(cmd_fd->fd_hdoc[1]);
+	if (WEXITSTATUS(cmd_fd->status) == 130)
+	{
+		g_minishell.heredoc = 1;
+		close(cmd_fd->fd_hdoc[0]);
+		g_minishell.last_exec_code = 130;
+		return (SIGINT_HEREDOC);
+	}
 	cmd_fd->tmp = cmd_fd->fd_hdoc[0];
 	return (0);
 }
@@ -38,7 +50,6 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 	char	*entry;
 	char	*str;
 
-	signal_management(HEREDOC);
 	close(cmd_fd->fd_hdoc[0]);
 	str = NULL;
 	entry = readline("> ");
@@ -53,46 +64,34 @@ void	heredoc_fork(t_cmd_fd *cmd_fd, char *delimiter, t_env *env)
 	}
 	if (!entry && !g_minishell.heredoc)
 		printf(HEREDOC_EOF, count_line(str), delimiter);
+	check_sigint(cmd_fd, env, str);
 	free (entry);
 	str = expand(env->envdup, str, &env->quote_flag);
-	printf("free_heredoc\n");
-	printf("fd_hdoc[0] = %d | fd_hdoc[1] = %d\n", cmd_fd->fd_hdoc[0], cmd_fd->fd_hdoc[1]);
 	dup2(cmd_fd->fd_hdoc[1], STDOUT_FILENO);
 	printf("%s", str);
-	if (cmd_fd->fd_hdoc[1] > 1)
-		close(cmd_fd->fd_hdoc[1]);
-	ft_putstr_fd("On free heredoc\n", 2);
-	free_heredoc(env, cmd_fd, str);
+	close_fd_hdoc(cmd_fd, env, str);
+	close(STDOUT_FILENO);
 	exit(0);
 }
 
-char	*heredoc_join(char *s1, char *s2)
+static void	check_sigint(t_cmd_fd *cmd_fd, t_env *env, char *str)
 {
-	t_hdocjoin	hd;
+	if (g_minishell.heredoc)
+	{
+		close_fd_hdoc(cmd_fd, env, str);
+		exit(130);
+	}
+}
 
-	hd.i = 0;
-	hd.n = 0;
-	if (s1 == 0 && s2 == 0)
-		return (NULL);
-	hd.p = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
-	if (!hd.p)
-		return (NULL);
-	while (s1 && s1[hd.i])
-	{
-		hd.p[hd.i] = s1[hd.i];
-		hd.i++;
-	}
-	while (s2 && s2[hd.n])
-	{
-		hd.p[hd.i] = s2[hd.n];
-		hd.i++;
-		hd.n++;
-	}
-	hd.p[hd.i++] = '\n';
-	hd.p[hd.i] = '\0';
-	if (s1)
-		free (s1);
-	return (hd.p);
+static void	close_fd_hdoc(t_cmd_fd *cmd_fd, t_env *env, char *str)
+{
+	if (cmd_fd->fd_hdoc[1] > 1)
+		close(cmd_fd->fd_hdoc[1]);
+	if (cmd_fd->fd[1] > 1)
+		close(cmd_fd->fd[1]);
+	if (cmd_fd->fd[0] > 1)
+		close(cmd_fd->fd[0]);
+	free_heredoc(env, cmd_fd, str);
 }
 
 static int	count_line(char *str)
