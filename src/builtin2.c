@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:52:14 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/22 23:00:18 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:42:53 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	change_pwd(t_list *env, char *path, char *oldpath)
 	if (!var)
 		return (1);
 	if (find_env_var(env, "OLDPWD"))
-		builtin_export(env, "OLDPWD");
+		builtin_export(env, NULL, "OLDPWD");
 	free(var);
 	var = ft_strjoin("PWD=", path);
 	if (!var)
 		return (1);
 	if (find_env_var(env, "PWD"))
-		builtin_export(env, "PWD");
+		builtin_export(env, NULL, "PWD");
 	free(var);
 	return (0);
 }

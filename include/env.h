@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:47 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/22 14:49:15 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:14:28 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ t_env	*create_struct_env(char **envp);
 char	**envdup_to_char_array(t_env *env);
 char	*get_env_path(t_env *env);
 int		search_path(t_env *env);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:36:34 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/22 14:51:42 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:53:34 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /* builtin.c */
 t_list	*builtin_unset(t_list *env, char *str);
-t_list	*builtin_export(t_list *env, char *str);
+t_list	*builtin_export(t_list *env, char **str, char *stri);
 int		builtin_cd(t_list *env, char **args);
 int		builtin_echo(char **str);
 void	builtin_pwd(t_list *env);
@@ -36,5 +36,15 @@ int		check_tiret_n(char *str);
 void	dollar_interro(char **str, int i);
 int		exit_1(t_env *env, char **argv, char *word, t_list *args);
 void	change_path(t_list *env, char *oldpath, char *path);
+
+
+/*env_utils2.c*/
+void	to_next_node(t_list **tmp, t_list **node,char *str);
+void	free_node_and_equal(t_list *node, char *str);
+int		bigger_str(char *str1, char *str2);
+
+/*builtin_utils2.c*/
+char	*find_before_equal(char *str);
+int		is_var(char *str);
 
 #endif

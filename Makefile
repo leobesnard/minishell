@@ -12,7 +12,7 @@ SRC = main.c lexer.c parser.c parser_utils.c print_tools.c \
 	 command_multiple.c command_utils2.c \
 	free3.c parser2.c \
 	command_fd.c command_path.c free2.c env_utils2.c expand_utils2.c \
-	expand_utils3.c
+	expand_utils3.c builtin_utils2.c
 
 
 OBJS = $(addprefix $(OBJDIR),$(SRC:.c=.o))
@@ -47,7 +47,7 @@ $(OBJDIR):
 clean:
 	rm -rf $(OBJDIR)
 
-fclean: clean
+fclean: clean libclean
 	rm -f $(NAME)
 
 libclean:

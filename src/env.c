@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/08/25 14:08:22 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:02:24 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,22 @@ t_list	*del_var(t_list *env, char	*var)
 {
 	t_list	*tmp;
 	t_list	*node;
+	char	*before_equal;
 
 	node = env;
-	if (!ft_strcmp(var, node->content))
-	{
-		env = env->next;
-		return (env);
-	}
-	tmp = node;
-	node = node->next;
+	before_equal = find_before_equal(node->content);
+	if (!ft_strncmp(before_equal, var, bigger_str(before_equal, var)))
+		return (env = env->next, free_node_and_equal(node, before_equal), env);
+	to_next_node(&tmp, &node, before_equal);
 	while (node)
 	{
-		if (!ft_strcmp(var, node->content))
+		before_equal = find_before_equal(node->content);
+		if (!ft_strncmp(before_equal, var, bigger_str(before_equal, var)))
 		{
 			tmp->next = node->next;
-			free(node->content);
-			free(node);
-			return (env);
+			return (free_node_and_equal(node, before_equal), env);
 		}
-		tmp = node;
-		node = node->next;
+		to_next_node(&tmp, &node, before_equal);
 	}
 	return (env);
 }

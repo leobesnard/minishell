@@ -6,11 +6,13 @@
 /*   By: lbesnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:26:30 by lbesnard          #+#    #+#             */
-/*   Updated: 2022/09/21 18:21:21 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:05:58 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 int	init_expand(t_vars *var, char *str, t_list *env)
 {
@@ -32,7 +34,17 @@ void	expand_simple_quotes(char *str, t_vars *var)
 
 void	expand_dollar(t_vars *var, t_list *env, char *str)
 {
-	if (str[var->i + 1] && ft_is_var_char(str[var->i + 1]))
+	char	*exec_code;
+
+	if (str[var->i + 1] == '?')
+	{
+		exec_code = ft_itoa(g_minishell.last_exec_code);
+		ft_strlcpy(&var->ret[var->u], exec_code, ft_strlen(exec_code) + 1);
+		var->i += 2;
+		var->u += ft_strlen(exec_code);
+		free(exec_code);
+	}
+	else if (str[var->i + 1] && ft_is_var_char(str[var->i + 1]))
 	{
 		var->i++;
 		var->str = var_str(&str[var->i]);
