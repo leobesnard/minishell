@@ -6,7 +6,7 @@
 /*   By: rmorel <rmorel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:12:43 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/22 14:53:05 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:11:03 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,12 @@ int		init_expand(t_vars *var, char *str, t_list *env);
 void	dollar_size(t_var *var, char *str, t_list *env);
 void	simple_quote_size(t_var *var, char *str);
 void	double_quote_size(t_var *var, char *str, t_list *env);
+
+/*expand_utils4.c*/
+char	*expand_before(t_list *env, char *str, int *flag);
+int		init_first_expand(t_vars *var, char *str, t_list *env);
+int		size_first_expand(char *str, t_list *env);
+void	to_next_simple_quote(char *str, t_vars *var);
+void	sizeof_simple_quote(t_var *var, char *str);
 
 #endif 

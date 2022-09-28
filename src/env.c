@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 21:30:04 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/27 22:35:10 by lbesnard         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:20:06 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,14 @@ int	add_var(t_list **env, char *var)
 
 char	*find_env_var(t_list *env, char *var)
 {
+	char	*before_equal;
+
 	while (env)
 	{
-		if (!ft_strcmp(var, env->content))
-			return (get_var(env->content));
+		before_equal = find_before_equal(env->content);
+		if (!ft_strncmp(var, before_equal, bigger_str(var, before_equal)))
+			return (free(before_equal), get_var(env->content));
+		free(before_equal);
 		env = env->next;
 	}
 	return (NULL);

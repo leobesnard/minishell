@@ -6,7 +6,7 @@
 /*   By: lbesnard <lbesnard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:18:39 by rmorel            #+#    #+#             */
-/*   Updated: 2022/09/27 17:50:47 by rmorel           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:26:14 by lbesnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ int	main(int argc, char **argv, char **envp)
 
 static void	loop_else(t_big *big)
 {
+	big->command_buf = expand_before(big->env->envdup, big->command_buf,
+			&big->env->quote_flag);
 	big->lexed = lexer(big->command_buf, &big->env->quote_flag);
+	free(big->command_buf);
+	big->command_buf = NULL;
 	if (big->lexed)
 	{
 		pass_expand(&big->lexed, big->env);
